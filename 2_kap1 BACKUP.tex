@@ -1,0 +1,83 @@
+\section{Theoretische Grundlagen}\label{kapitel1}
+
+\subsection{Bloch-Theorem}\label{kapitel11}
+
+\subsection{Effektive-Massen-Näherung}\label{kapitel111}
+Teilchen im periodischen Ionenpotential $V(\vec{r})$ eines Kristall verhalten sich wie freie Teilchen mit einer effektiven Masse
+$m_{eff}$. Die statonäre Einteilchen-Schrödingergleichung 
+\begin{align}
+\mathcal{H}\psi_{\lambda,\vec{k}}(\vec{r})=
+\left(-\frac{\hbar^2}{2m}\Delta_{\vec{r}}+V(\vec{r})\right)\psi_{\lambda,\vec{k}}(\vec{r})=
+E_{\lambda,\vec{k}}\psi_{\lambda,\vec{k}}(\vec{r})
+\end{align}
+wird dann in dieser Näherung zu:
+\begin{align}
+\mathcal{H}\psi_{\lambda,\vec{k}}(\vec{r})=
+\left(-\frac{\hbar^2}{2m_{eff}}\Delta_{\vec{r}}\right)\psi_{\lambda,\vec{k}}(\vec{r})=
+E_{\lambda,\vec{k}}\psi_{\lambda,\vec{k}}(\vec{r})
+\end{align} 
+mit 
+\begin{align}
+E_{\lambda,\vec{k}}\approx E_\lambda(\vec{k}_0)+\frac{\hbar^2\vec{k}^2}{2m_{eff}}
+\end{align}
+
+\subsection{Exzitonen Schrödingergleichung}\label{kapitel12}
+Die Effektive-Massen-Näherung wird nun benutzt um die stationäre Exzitonen Schrödingergleichung aufzustellen.
+Sei $\psi\left({\vec{r}_e,\vec{r}_h}\right)$ die Zweiteilchenwellenfunktion eines Exzitons mit der Elektronen- bzw. Lochkoordinate $\vec{r}_e$ bzw. $\vec{r}_h$.
+Diese Wellenfunktion wird in Elektron- und Lochwellenfunktion separiert:
+
+\begin{align}
+ \psi\left({\vec{r}_e,\vec{r}_h}\right)=\psi_{L,\vec{k}}(\vec{r}_e)\psi_{V,\vec{k}}(\vec{r}_h)
+\end{align} wobei der Index L bzw. V für Leitungs- bzw. Valenband stehen.
+Mit einem zusätzlichen Potential $V(\vec{r}_e,\vec{r}_h)$ ist der Zweiteilchen-Hamiltonian im Halbleiter gegeben durch
+\begin{align}
+\mathcal{H}=\mathcal{H}_e+\mathcal{H}_h+V(\vec{r}_e,\vec{r}_h)
+\end{align}
+und es gilt
+\begin{align}
+\mathcal{H}_e\psi_{L,\vec{k}}(\vec{r}_e)=& E_{L,\vec{k}}\psi_{L,\vec{k}}(\vec{r}_e)\\
+\mathcal{H}_h\psi_{V,\vec{k}}(\vec{r}_h)=& E_{V,\vec{k}}\psi_{V,\vec{k}}(\vec{r}_h)
+\end{align}
+
+\begin{align}
+\mathcal{H} \psi\left({\vec{r}_e,\vec{r}_h}\right)=&
+\left[\mathcal{H}_e+\mathcal{H}_h+V(\vec{r}_e,\vec{r}_h)\right]\psi_{L,\vec{k}}(\vec{r}_e)\psi_{V,\vec{k}}(\vec{r}_h)\\
+=& \left[E_{L,\vec{k}}+E_{V,\vec{k}}+V(\vec{r}_e,\vec{r}_h)\right] \psi\left({\vec{r}_e,\vec{r}_h}\right)\\
+=&\left[E_L(\vec{k}_0)+\frac{\hbar^2\vec{k}^2}{2m_{e,eff}}+E_V(\vec{k}_0)+\frac{\hbar^2\vec{k}^2}{2m_{h,eff}}\right] \psi\left({\vec{r}_e,\vec{r}_h}\right)\\
+=&\left[E_L(\vec{k}_0)-\frac{\hbar^2\Delta_{\vec{r}_e}}{2m_{e,eff}}+E_V(\vec{k}_0)-\frac{\hbar^2\Delta_{\vec{r}_h}}{2m_{h,eff}}\right] \psi\left({\vec{r}_e,\vec{r}_h}\right)\\
+\end{align}
+Betrachtet man einen direkten Halbleiter mit $E_{\lambda}(\vec{k}_0)=E_{\lambda}(0)$ und setzt den Energienullpunkt auf $E_V(0)$
+so erhält man die stationöre Schrödingergleichung für das Exziton im Potential $V(\vec{r}_e,\vec{r}_h)$
+\begin{align}
+\mathcal{H} \psi\left({\vec{r}_e,\vec{r}_h}\right)
+=\left[E_G-\frac{\hbar^2\Delta_{\vec{r}_e}}{2m_{e,eff}}-\frac{\hbar^2\Delta_{\vec{r}_h}}{2m_{h,eff}}+V(\vec{r}_e,\vec{r}_h)\right] \psi\left({\vec{r}_e,\vec{r}_h}\right)=E\psi\left({\vec{r}_e,\vec{r}_h}\right)\\
+\end{align}
+mit der Bandlückenenergie $E_G$.\\
+Es ist zweckmäßig, eine Transformation in das Schwerpunktsystem $\vec{R}$ (Schwerpunktkoordinate) und $\vec{r}$ (Relativkoordinate) durchzuführen 
+\begin{alignat*}{3}
+&\psi\left({\vec{r}_e,\vec{r}_h}\right)&&\rightarrow \psi\left({\vec{R},\vec{r}}\right)
+\\
+&\mathcal{H}_{0} &&:= -\frac{\hbar ^2}{2M}\vec{\Delta} _{\vec{R}} -\frac{\hbar ^2}{2\mu}\vec{\Delta} _{\vec{r}} +V\left(\vec{R},\vec{r}\right),
+\end{alignat*}
+mit den Transformaitonen
+\begin{align*}
+M		&= m_e+m_h  				&\mu		&=\frac{m_e m_h}{M}\\
+\vec{r}	&=\vec{r} _e-\vec{r} _h  	&\vec{R} 	&=\frac{m_e\vec{r} _e+m_h\vec{r} _h}{M}.
+\end{align*}
+Im Schwerpunktsystem erhält man damit die Eigenwertgleichung
+\begin{align}
+\mathcal{H}_0 \psi\left({\vec{R},\vec{r}}\right)
+=\left[\frac{-\hbar^2\Delta_{\vec{r}}}{2M}-\frac{\hbar^2\Delta_{\vec{R}}}{2\mu}+V(\vec{R},\vec{r})\right] \psi\left({\vec{R},\vec{r}}\right)=(E-E_G)\psi\left({\vec{R},\vec{r}}\right)
+\end{align}
+
+
+\subsection{Optische Anregung}\label{kapitel13}
+Regt man das exzitonische System mit einem äußerem Lichtfeld an, so erhält man in Rotating Wave Approximation (RWA) und Dipolnäherung eine modifizierte Schrödingergleichung:
+\begin{align*}
+i\hbar \partial_t \psi(\vec{r},\vec{R},t)=\mathcal{H}_0\psi(\vec{r},\vec{R},t) + \mathcal{Q}
+\end{align*}
+
+
+\subsection{Zeitliche Entwicklung}\label{kapitel14}
+
+\subsection{Wellenpaketdynamik}\label{kapitel15}
