@@ -43,21 +43,24 @@
             // 
             // elementHost1
             // 
+            this.elementHost1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.elementHost1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.elementHost1.Location = new System.Drawing.Point(229, 34);
             this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(425, 389);
+            this.elementHost1.Size = new System.Drawing.Size(453, 445);
             this.elementHost1.TabIndex = 0;
             this.elementHost1.Text = "elementHost1";
             this.elementHost1.Child = null;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(553, 433);
+            this.button1.Location = new System.Drawing.Point(352, 8);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(124, 23);
             this.button1.TabIndex = 1;
-            this.button1.Text = "relayout+rnd value";
+            this.button1.Text = "Relayout";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -66,13 +69,13 @@
             this.textBox1.Location = new System.Drawing.Point(12, 34);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(158, 192);
+            this.textBox1.Size = new System.Drawing.Size(211, 215);
             this.textBox1.TabIndex = 2;
             this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(12, 232);
+            this.button2.Location = new System.Drawing.Point(12, 255);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 3;
@@ -92,7 +95,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 269);
+            this.label3.Location = new System.Drawing.Point(12, 303);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(93, 13);
             this.label3.TabIndex = 6;
@@ -100,10 +103,12 @@
             // 
             // textBox2
             // 
+            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.textBox2.Location = new System.Drawing.Point(12, 319);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(172, 104);
+            this.textBox2.Size = new System.Drawing.Size(211, 160);
             this.textBox2.TabIndex = 7;
             // 
             // iterationTimer
@@ -125,7 +130,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(694, 464);
+            this.ClientSize = new System.Drawing.Size(694, 491);
             this.Controls.Add(this.runButton);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label3);
