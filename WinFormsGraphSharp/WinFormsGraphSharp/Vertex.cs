@@ -6,22 +6,39 @@ using System.Diagnostics;
 using System.Windows.Media;
 using System.ComponentModel;
 
+
 namespace WinFormsGraphSharp
 {
-   //eigener Vertex. Entspricht einem knoten des graphens mit dessen wert "Value".
+    //eigener Vertex. Entspricht einem knoten des graphens mit dessen wert "Value".
+
 
     [DebuggerDisplay("{ID}-{Value}")]
     public class Vertex : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged; 
+       private Color[] cluster_colors = new Color[] { Colors.Red,Colors.Blue,Colors.Green,Colors.Yellow,Colors.Indigo };
+
+        public event PropertyChangedEventHandler PropertyChanged;
         public string ID { get; set; }
-        private int _Value;
-        public int Value
+        private int _Cluster;
+        public int Cluster
         {
-            get { return _Value; }
+            get { return _Cluster; }
             set
             {
-                _Value = value;
+                _Cluster = value;
+                //benachrichtigung damit binding aktualisiert wird
+                if (PropertyChanged != null)
+                    PropertyChanged(this, new PropertyChangedEventArgs("Brush"));
+            }
+
+        }
+        private double _Value;
+        public double Value
+        {
+                        get { return _Value; }
+            set
+            {
+                _Value = Math.Min(Math.Max(-1,value),1);
                 //benachrichtigung damit binding aktualisiert wird
                 if (PropertyChanged != null)
                     PropertyChanged(this, new PropertyChangedEventArgs("Brush"));
@@ -32,15 +49,21 @@ namespace WinFormsGraphSharp
         {
             get
             {
-                //im moment nur rotkanal je nach wert anders.
-                return new SolidColorBrush(Color.FromRgb(Convert.ToByte(_Value), 0, 0));
+                Color basecolor = cluster_colors[_Cluster % cluster_colors.Length];
+                double modifier = (Value);
+                int offset = 255;
+                //vllt nochmal bessere farben überlegen
+                
+                return new SolidColorBrush(Color.FromRgb(Convert.ToByte(Math.Min(Math.Max(0, basecolor.R +offset* modifier),255)), Convert.ToByte(Math.Min(Math.Max(0, basecolor.G +offset* modifier),255)),Convert.ToByte(Math.Min(Math.Max(0, basecolor.B +offset* modifier),255))));
+                
             }
         }
 
-        public Vertex(string id, int value)
+        public Vertex(string id, int value, int cluster)
         {
             ID = id;
             Value = value;
+            Cluster = cluster;
         }
 
         public override string ToString()
