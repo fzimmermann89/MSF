@@ -119,23 +119,30 @@ namespace ClusterNum
             dreadnautcmd += "x o q";
 
             //dreadnaut starten
+
+            string path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "dreadnaut.exe");
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardInput = true;
             startInfo.RedirectStandardOutput = true;
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = Environment.CurrentDirectory + @"\dreadnaut.exe";
+            startInfo.FileName = path;
             Process process = new Process();
             process.StartInfo = startInfo;
-            try { process.Start(); }
-            catch (Win32Exception ex)
+            try
             {
-                MessageBox.Show("Ist die dreadnaut.exe im gleichen Ordner?", "dreadnaut-Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.IO.File.WriteAllBytes(path, ClusterNum.Properties.Resources.dreadnaut);
+                process.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("dreadnaut konnte nicht gestartet werden", "dreadnaut-Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             process.StandardInput.WriteLine(dreadnautcmd);
             process.WaitForExit();
+            System.IO.File.Delete(path);
             string ergebnis = process.StandardOutput.ReadToEnd();
 
             //letzte zeile der ausgabe enthält orbits.
