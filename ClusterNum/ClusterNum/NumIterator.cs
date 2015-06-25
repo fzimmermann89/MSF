@@ -7,12 +7,15 @@ namespace ClusterNum
 {
     public class NumIterator
     {
+        public static Random rand = new Random();
+
         public int vertexCount;
         public int[][] adjMatrix;
 
         public double beta, sigma, delta;
 
         public List<double[]> xt = new List<double[]>();
+        public double pertubation = 0.01;
 
         public NumIterator(int[][] adjMatrix, double beta, double sigma, double delta)
         {
@@ -27,17 +30,25 @@ namespace ClusterNum
 
         public void iterate()
         {
-            double[] oldxi=xt[xt.Count-1];
+            double[] oldxi = xt[xt.Count - 1];
+
+            double[] pertIntensity = new double[vertexCount];
+            for (int i = 0; i < pertIntensity.Length; i++)
+            {
+                double err = (rand.NextDouble() - 0.5) * 2.0 * pertubation;
+                pertIntensity[i] = intensity(oldxi[i]);
+                pertIntensity[i] += err;
+            }
+
             double[] newxi = new double[vertexCount];
             for (int i = 0; i < vertexCount; i++)
             {
-               
                 double sum = 0;
                 for (int j = 0; j < vertexCount; j++)
                 {
-                    sum += (double)adjMatrix[i][j] * intensity(oldxi[j]);
+                    sum += (double)adjMatrix[i][j] * pertIntensity[j];
                 }
-                double tmp = beta * intensity(oldxi[i]) + sigma * sum + delta;
+                double tmp = beta * pertIntensity[i] + sigma * sum + delta;
                 newxi[i] = tmp % (2.0 * Math.PI);
             }
 
@@ -51,9 +62,11 @@ namespace ClusterNum
             }
         }
 
-        public static double intensity(double x)
+
+        public double intensity(double x)
         {
-            return (1 - Math.Cos(x)) / 2.0;
+            double ret = (1 - Math.Cos(x)) / 2.0;
+            return ret;
         }
     }
 }

@@ -15,14 +15,14 @@
     <UserControl.Resources>
         <!-- kanten färben-->
         <Style TargetType="{x:Type graph:EdgeControl}">
-            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Foreground" Value="Gray"/>
         </Style>
 
         <!--template für die einzelnen punkte-->
         <DataTemplate x:Key="NodeTemplate" DataType="{x:Type local:Vertex}">
 
 
-            <Label Content="{Binding ID}" Background="{Binding Brush}" Width="40" Height="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label Content="{Binding ID}" Background="{Binding Brush}" Width="30" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
         </DataTemplate>
 

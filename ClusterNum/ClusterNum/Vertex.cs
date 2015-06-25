@@ -15,7 +15,7 @@ namespace ClusterNum
     [DebuggerDisplay("{ID}-{Value}")]
     public class Vertex : INotifyPropertyChanged
     {
-        private static Color[] cluster_colors = new Color[] { Colors.Red,Colors.Blue,Colors.Green,Colors.Yellow,Colors.Indigo };
+        public static Color[] cluster_colors = new Color[] { Colors.Red, Colors.Magenta, Colors.Green, Colors.Blue, Colors.White };
 
         public event PropertyChangedEventHandler PropertyChanged;
         public string ID { get; set; }
@@ -52,7 +52,9 @@ namespace ClusterNum
             {
                 Color basecolor = cluster_colors[_Cluster % cluster_colors.Length];
                 Color col = Color.Multiply(basecolor, (float)_Value);
-                col.A = 255;
+                col.R = basecolor.R;
+                col.B = basecolor.B;
+                col.G = basecolor.G;
                 return new SolidColorBrush(col);
 
                 //int offset = 255;
