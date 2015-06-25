@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using GraphSharp;
 using QuickGraph;
 using GraphSharp.Controls;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace WinFormsGraphSharp
 {
@@ -22,7 +24,7 @@ namespace WinFormsGraphSharp
             InitializeComponent();
 
             var g = new NodeGraph();
-          //  var ug = new UndirectedBidirectionalGraph<Vertex,UndirectedEdge<Vertex>>(g); //klappt nicht
+            //  var ug = new UndirectedBidirectionalGraph<Vertex,UndirectedEdge<Vertex>>(g); //klappt nicht
             //einfach mal irgendwas darstellen.
             var vertices = new Vertex[30];
             for (int i = 0; i < 8; i++)
@@ -31,41 +33,41 @@ namespace WinFormsGraphSharp
 
                 g.AddVertex(vertices[i]);
             }
-           
+
             g.AddEdge(new Edge<Vertex>(vertices[0], vertices[1]));
-           g.AddEdge(new Edge<Vertex>(vertices[1], vertices[0]));
-           g.AddEdge(new Edge<Vertex>(vertices[1], vertices[2]));
-           g.AddEdge(new Edge<Vertex>(vertices[2], vertices[1]));
-           g.AddEdge(new Edge<Vertex>(vertices[2], vertices[3]));
-           g.AddEdge(new Edge<Vertex>(vertices[3], vertices[2]));
-           g.AddEdge(new Edge<Vertex>(vertices[3], vertices[4]));
-           g.AddEdge(new Edge<Vertex>(vertices[4], vertices[3]));
-           g.AddEdge(new Edge<Vertex>(vertices[4], vertices[5]));
-           g.AddEdge(new Edge<Vertex>(vertices[5], vertices[4]));
-           g.AddEdge(new Edge<Vertex>(vertices[5], vertices[6]));
-           g.AddEdge(new Edge<Vertex>(vertices[6], vertices[5]));
-           g.AddEdge(new Edge<Vertex>(vertices[6], vertices[7]));
-           g.AddEdge(new Edge<Vertex>(vertices[7], vertices[6]));
-           g.AddEdge(new Edge<Vertex>(vertices[7], vertices[0]));
+            g.AddEdge(new Edge<Vertex>(vertices[1], vertices[0]));
+            g.AddEdge(new Edge<Vertex>(vertices[1], vertices[2]));
+            g.AddEdge(new Edge<Vertex>(vertices[2], vertices[1]));
+            g.AddEdge(new Edge<Vertex>(vertices[2], vertices[3]));
+            g.AddEdge(new Edge<Vertex>(vertices[3], vertices[2]));
+            g.AddEdge(new Edge<Vertex>(vertices[3], vertices[4]));
+            g.AddEdge(new Edge<Vertex>(vertices[4], vertices[3]));
+            g.AddEdge(new Edge<Vertex>(vertices[4], vertices[5]));
+            g.AddEdge(new Edge<Vertex>(vertices[5], vertices[4]));
+            g.AddEdge(new Edge<Vertex>(vertices[5], vertices[6]));
+            g.AddEdge(new Edge<Vertex>(vertices[6], vertices[5]));
+            g.AddEdge(new Edge<Vertex>(vertices[6], vertices[7]));
+            g.AddEdge(new Edge<Vertex>(vertices[7], vertices[6]));
+            g.AddEdge(new Edge<Vertex>(vertices[7], vertices[0]));
 
-           g.AddEdge(new Edge<Vertex>(vertices[0], vertices[4]));
-           g.AddEdge(new Edge<Vertex>(vertices[4], vertices[0]));
+            g.AddEdge(new Edge<Vertex>(vertices[0], vertices[4]));
+            g.AddEdge(new Edge<Vertex>(vertices[4], vertices[0]));
 
-           g.AddEdge(new Edge<Vertex>(vertices[5], vertices[2]));
-           g.AddEdge(new Edge<Vertex>(vertices[2], vertices[5]));
+            g.AddEdge(new Edge<Vertex>(vertices[5], vertices[2]));
+            g.AddEdge(new Edge<Vertex>(vertices[2], vertices[5]));
 
-           g.AddEdge(new Edge<Vertex>(vertices[2], vertices[7]));
-           g.AddEdge(new Edge<Vertex>(vertices[7], vertices[2]));
+            g.AddEdge(new Edge<Vertex>(vertices[2], vertices[7]));
+            g.AddEdge(new Edge<Vertex>(vertices[7], vertices[2]));
 
             GraphControl = new GraphSharpControl();
-            
+
             //Parameter für die anordnung. einfach irgendwelche genommen. nochmal drüber nachdenken/nachlesen
             GraphControl.layout.LayoutMode = LayoutMode.Simple;
             GraphControl.layout.LayoutAlgorithmType = "CompoundFDP";
             GraphControl.layout.OverlapRemovalConstraint = AlgorithmConstraints.Must;
             GraphControl.layout.OverlapRemovalAlgorithmType = "FSA";
             GraphControl.layout.HighlightAlgorithmType = "Simple";
-            
+
             GraphControl.layout.Graph = g;
 
             elementHost1.Child = GraphControl;
@@ -92,5 +94,95 @@ namespace WinFormsGraphSharp
             }
 
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            //einlesen der matrix, darstellung, orbitsuche, einfärben der cluster
+
+            var g = new NodeGraph();
+
+
+            string[] strarr = textBox1.Text.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+            int dim = strarr.Length;
+            Vertex[] vertices = new Vertex[dim];
+            for (int k = 0; k < dim; k++)
+            {
+                vertices[k] = new Vertex(k.ToString(), 0);
+
+                g.AddVertex(vertices[k]);
+            }
+
+            int[][] adjmatrix = new int[dim][];
+
+            int i = 0;
+            string dreadnautcmd = "n=" + dim + " g ";
+            foreach (string line in strarr)
+            {
+                string[] strsplitarr = line.Split(' ');
+                if (strsplitarr.Length != dim)
+                {
+                    MessageBox.Show("nicht quadratisch");
+                    return;
+                }
+
+                int[] intsplitarr = Array.ConvertAll(strsplitarr, int.Parse);
+                for (int j = 0; j < dim; j++)
+                {
+                    if (intsplitarr[j] != 0)
+                    {//verbunden
+                        dreadnautcmd += " " + j.ToString();
+
+                        g.AddEdge(new Edge<Vertex>(vertices[i], vertices[j]));
+
+                    }
+                }
+                adjmatrix[i] = intsplitarr;
+
+                dreadnautcmd += ";";
+                i++;
+            }
+            dreadnautcmd += "x o q";
+
+            //dreadnaut starten
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.UseShellExecute = false;
+            startInfo.RedirectStandardInput = true;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = Environment.CurrentDirectory + @"\dreadnaut.exe";
+            Process process = new Process();
+            process.StartInfo = startInfo;
+            process.Start();
+
+            process.StandardInput.WriteLine(dreadnautcmd);
+            process.WaitForExit();
+            string ergebnis = process.StandardOutput.ReadToEnd();
+
+            //letzte zeile der ausgabe enthält orbits.
+            string[] s = ergebnis.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+            MatchCollection matches = Regex.Matches(s[s.Length - 2], @"([0-9 ]+)(\(([^)]*)\))?;");
+
+
+            foreach (Match m in matches)
+            {
+               textBox2.Text+=m.Groups[1].Value+"\r\n";
+            }
+
+            GraphControl = new GraphSharpControl();
+
+            //Parameter für die anordnung. einfach irgendwelche genommen. nochmal drüber nachdenken/nachlesen
+            GraphControl.layout.LayoutMode = LayoutMode.Simple;
+            GraphControl.layout.LayoutAlgorithmType = "CompoundFDP";
+            GraphControl.layout.OverlapRemovalConstraint = AlgorithmConstraints.Must;
+            GraphControl.layout.OverlapRemovalAlgorithmType = "FSA";
+            GraphControl.layout.HighlightAlgorithmType = "Simple";
+            GraphControl.layout.Graph = g;
+
+            elementHost1.Child = GraphControl;
+        }
+
+
+
     }
 }
