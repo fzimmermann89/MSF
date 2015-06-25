@@ -39,15 +39,8 @@ namespace ClusterNum
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
-            //nur zum testen ob das change event funktioniert...
-            Random rnd = new Random();
-            for (int i = 0; i < 8; i++)
-            {
-                GraphControl.layout.Graph.Vertices.ElementAt(i).Value = rnd.NextDouble() * 2 - 1;
-                GraphControl.layout.ContinueLayout();
-            }
-
+        {           
+            GraphControl.layout.ContinueLayout();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -64,14 +57,14 @@ namespace ClusterNum
             vertices = new Vertex[dim];
             for (int k = 0; k < dim; k++)
             {
-                vertices[k] = new Vertex(k.ToString(), 0, 0);
+                vertices[k] = new Vertex(k.ToString(), 1.0, 0);
 
                 graph.AddVertex(vertices[k]);
             }
 
             adjmatrix = new int[dim][];
 
-     
+
             int i = 0;
             string dreadnautcmd = "n=" + dim + " g ";
 
@@ -101,8 +94,7 @@ namespace ClusterNum
                 i++;
             }
 
-            iterator = new NumIterator(adjmatrix, 0.72 * Math.PI, 0.67 * Math.PI, 0.525 * Math.PI);
-
+          
 
 
             dreadnautcmd += "x o q";
@@ -132,11 +124,11 @@ namespace ClusterNum
                 textBox2.Text += "cluster " + j + " mit Knoten: ";
                 string[] arr;
                 cluster[j] = Array.ConvertAll(matches[j].Groups[1].Value.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries), int.Parse);
-              foreach (int k in cluster[j])
-              {
-                  textBox2.Text += k + " ";
-                  vertices[k].Cluster = j;
-              }
+                foreach (int k in cluster[j])
+                {
+                    textBox2.Text += k + " ";
+                    vertices[k].Cluster = j;
+                }
                 textBox2.Text += "\r\n";
             }
 
@@ -155,11 +147,23 @@ namespace ClusterNum
 
         private void runButton_Click(object sender, EventArgs e)
         {
-            iterationTimer.Start();
+
+            if (iterationTimer.Enabled == false)
+            {
+                iterator = new NumIterator(adjmatrix, 0.72 * Math.PI, 0.67 * Math.PI, 0.525 * Math.PI);
+                iterationTimer.Start();
+                runButton.Text = "Stop Simulation";
+            }
+            else
+            {
+                iterationTimer.Stop();
+                runButton.Text = "Run Simulation";
+            }
         }
 
         private void iterationTimer_Tick(object sender, EventArgs e)
         {
+
             iterator.iterate();
             double[] xs = iterator.xt[iterator.xt.Count - 1];
             for (int i = 0; i < iterator.vertexCount; i++)
