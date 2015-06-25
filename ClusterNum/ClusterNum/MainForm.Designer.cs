@@ -38,6 +38,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.iterationTimer = new System.Windows.Forms.Timer(this.components);
+            this.runButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // elementHost1
@@ -105,11 +106,27 @@
             this.textBox2.Size = new System.Drawing.Size(172, 104);
             this.textBox2.TabIndex = 7;
             // 
+            // iterationTimer
+            // 
+            this.iterationTimer.Interval = 16;
+            this.iterationTimer.Tick += new System.EventHandler(this.iterationTimer_Tick);
+            // 
+            // runButton
+            // 
+            this.runButton.Location = new System.Drawing.Point(229, 8);
+            this.runButton.Name = "runButton";
+            this.runButton.Size = new System.Drawing.Size(117, 23);
+            this.runButton.TabIndex = 8;
+            this.runButton.Text = "Run Simulation";
+            this.runButton.UseVisualStyleBackColor = true;
+            this.runButton.Click += new System.EventHandler(this.runButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(694, 464);
+            this.Controls.Add(this.runButton);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
@@ -135,6 +152,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Timer iterationTimer;
+        private System.Windows.Forms.Button runButton;
 
        }
 }

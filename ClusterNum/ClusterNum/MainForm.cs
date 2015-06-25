@@ -20,6 +20,10 @@ namespace ClusterNum
 
         public GraphSharpControl GraphControl { get; set; }
 
+        public NumIterator iterator;
+        NodeGraph g;
+        Vertex[] vertices;
+
         public MainForm()
         {
             InitializeComponent();
@@ -38,7 +42,7 @@ namespace ClusterNum
             Random rnd = new Random();
             for (int i = 0; i < 8; i++)
             {
-                GraphControl.layout.Graph.Vertices.ElementAt(i).Value = rnd.NextDouble()*2-1;
+                GraphControl.layout.Graph.Vertices.ElementAt(i).Value = rnd.NextDouble() * 2 - 1;
                 GraphControl.layout.ContinueLayout();
             }
 
@@ -49,22 +53,22 @@ namespace ClusterNum
             //TODO: einfärben. code aufräumen
             //einlesen der matrix, darstellung, orbitsuche, einfärben der cluster
 
-            var g = new NodeGraph();
+            g = new NodeGraph();
 
             string[] strarr = textBox1.Text.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
             int dim = strarr.Length;
 
-            Vertex[] vertices = new Vertex[dim];
+            vertices = new Vertex[dim];
             for (int k = 0; k < dim; k++)
             {
-                vertices[k] = new Vertex(k.ToString(), 0,0);
+                vertices[k] = new Vertex(k.ToString(), 0, 0);
 
                 g.AddVertex(vertices[k]);
             }
 
             int[][] adjmatrix = new int[dim][];
 
-     
+
             int i = 0;
             string dreadnautcmd = "n=" + dim + " g ";
 
@@ -94,13 +98,8 @@ namespace ClusterNum
                 i++;
             }
 
-            NumIterator iterator = new NumIterator(adjmatrix, 0.72 * Math.PI, 0.67 * Math.PI, 0.525 * Math.PI);
-            iterator.iterate(50);
-            double[] x0s = iterator.xt[iterator.xt.Count-1];
-            for (i = 0; i < iterator.vertexCount; i++)
-            {
-                vertices[i].Value = x0s[i];
-            }
+            iterator = new NumIterator(adjmatrix, 0.72 * Math.PI, 0.67 * Math.PI, 0.525 * Math.PI);
+
 
 
             dreadnautcmd += "x o q";
@@ -123,19 +122,19 @@ namespace ClusterNum
             string[] s = ergebnis.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
             MatchCollection matches = Regex.Matches(s[s.Length - 2], @"([0-9 ]+)(\(([^)]*)\))?;");
 
-            int[][] cluster=new int[matches.Count][];
-            textBox2.Text="";
-            for (int j=0;j<matches.Count;j++)
+            int[][] cluster = new int[matches.Count][];
+            textBox2.Text = "";
+            for (int j = 0; j < matches.Count; j++)
             {
-                textBox2.Text += "cluster " + j+" mit Knoten: ";
-                string[] arr ;
-              cluster[j]= Array.ConvertAll(  matches[j].Groups[1].Value.Split(new string[] {" "},StringSplitOptions.RemoveEmptyEntries), int.Parse);
-              foreach (int k in cluster[j])
-              {
-                  textBox2.Text += k + " ";
-                  vertices[k].Cluster = j;
-              }
-                textBox2.Text+="\r\n";
+                textBox2.Text += "cluster " + j + " mit Knoten: ";
+                string[] arr;
+                cluster[j] = Array.ConvertAll(matches[j].Groups[1].Value.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries), int.Parse);
+                foreach (int k in cluster[j])
+                {
+                    textBox2.Text += k + " ";
+                    vertices[k].Cluster = j;
+                }
+                textBox2.Text += "\r\n";
             }
 
             GraphControl = new GraphSharpControl();
@@ -149,6 +148,21 @@ namespace ClusterNum
             GraphControl.layout.Graph = g;
 
             elementHost1.Child = GraphControl;
+        }
+
+        private void runButton_Click(object sender, EventArgs e)
+        {
+            iterationTimer.Start();
+        }
+
+        private void iterationTimer_Tick(object sender, EventArgs e)
+        {
+            iterator.iterate();
+            double[] xs = iterator.xt[iterator.xt.Count - 1];
+            for (int i = 0; i < iterator.vertexCount; i++)
+            {
+                vertices[i].Value = (xs[i] / (2.0 * Math.PI));
+            }
         }
 
 

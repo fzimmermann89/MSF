@@ -11,6 +11,7 @@ namespace ClusterNum
         public int[][] adjMatrix;
 
         public double beta, sigma, delta;
+        public double timescale = 1.0;
 
         public List<double[]> xt = new List<double[]>();
 
@@ -38,6 +39,7 @@ namespace ClusterNum
                     sum += (double)adjMatrix[i][j] * intensity(oldxi[j]);
                 }
                 double tmp = beta * intensity(oldxi[i]) + sigma * sum + delta;
+                tmp *= timescale;
                 newxi[i] = tmp % (2.0 * Math.PI);
             }
 
