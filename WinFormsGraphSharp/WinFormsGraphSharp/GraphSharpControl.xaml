@@ -5,7 +5,6 @@
         xmlns:graph="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"      
         xmlns:Controls="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
         xmlns:local="clr-namespace:WinFormsGraphSharp"
-		xmlns:WPFExtensions_AttachedBehaviours="clr-namespace:WPFExtensions.AttachedBehaviours;assembly=WPFExtensions" xmlns:Sample="clr-namespace:GraphSharp.Sample;assembly=GraphSharp.Sample" Height="300"
         Width="300" FontSize="8" BorderThickness="100">
 
     <local:NodeGraphLayout x:Name="layout" >
