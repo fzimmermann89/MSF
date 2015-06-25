@@ -50,10 +50,11 @@ namespace WinFormsGraphSharp
             get
             {
                 Color basecolor = cluster_colors[_Cluster % cluster_colors.Length];
-                double modifier = (Value + 2) / 2;
+                double modifier = (Value);
+                int offset = 255;
                 //vllt nochmal bessere farben überlegen
                 
-                return new SolidColorBrush(Color.FromRgb(Convert.ToByte(Math.Min(255, basecolor.R * modifier)), Convert.ToByte(Math.Min(255, basecolor.G * modifier)),Convert.ToByte( Math.Min(255, basecolor.B * modifier))));
+                return new SolidColorBrush(Color.FromRgb(Convert.ToByte(Math.Min(Math.Max(0, basecolor.R +offset* modifier),255)), Convert.ToByte(Math.Min(Math.Max(0, basecolor.G +offset* modifier),255)),Convert.ToByte(Math.Min(Math.Max(0, basecolor.B +offset* modifier),255))));
                 
             }
         }
