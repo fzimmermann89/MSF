@@ -64,6 +64,7 @@ namespace ClusterNum
 
             int[][] adjmatrix = new int[dim][];
 
+     
             int i = 0;
             string dreadnautcmd = "n=" + dim + " g ";
 
@@ -92,6 +93,16 @@ namespace ClusterNum
                 dreadnautcmd += ";";
                 i++;
             }
+
+            NumIterator iterator = new NumIterator(adjmatrix, 0.72 * Math.PI, 0.67 * Math.PI, 0.525 * Math.PI);
+            iterator.iterate(50);
+            double[] x0s = iterator.xt[iterator.xt.Count-1];
+            for (i = 0; i < iterator.vertexCount; i++)
+            {
+                vertices[i].Value = x0s[i];
+            }
+
+
             dreadnautcmd += "x o q";
 
             //dreadnaut starten

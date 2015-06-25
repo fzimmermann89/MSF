@@ -7,12 +7,12 @@ namespace ClusterNum
 {
     public class NumIterator
     {
-        int vertexCount;
-        int[][] adjMatrix;
+        public int vertexCount;
+        public int[][] adjMatrix;
 
-        double beta, sigma, delta;
+        public double beta, sigma, delta;
 
-        List<double[]> xt = new List<double[]>();
+        public List<double[]> xt = new List<double[]>();
 
         public NumIterator(int[][] adjMatrix, double beta, double sigma, double delta)
         {
@@ -42,6 +42,13 @@ namespace ClusterNum
             }
 
             xt.Add(newxi);
+        }
+        public void iterate(int numIteration)
+        {
+            for (int i = 0; i < numIteration; i++)
+            {
+                iterate();
+            }
         }
 
         public static double intensity(double x)
