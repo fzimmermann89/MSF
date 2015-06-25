@@ -193,6 +193,7 @@ namespace ClusterNum
             iterateButton.Enabled = false;
             initIteratorButton.Enabled = true;
             layoutButton.Enabled = true;
+            betaRunButton.Enabled = true;
         }
 
         private void runButton_Click(object sender, EventArgs e)
@@ -300,6 +301,16 @@ namespace ClusterNum
             epsilon = (double)epsilonUpDown.Value;
             runButton.Enabled = false;
             iterateButton.Enabled = false;
+        }
+
+        private void tabPage1_Enter(object sender, EventArgs e)
+        {
+            betaUpDown.Enabled = true;
+        }
+
+        private void tabPage2_Enter(object sender, EventArgs e)
+        {
+            betaUpDown.Enabled = false;
         }
 
 
