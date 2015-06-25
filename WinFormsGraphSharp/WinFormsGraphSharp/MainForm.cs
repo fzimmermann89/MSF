@@ -23,60 +23,8 @@ namespace WinFormsGraphSharp
         {
             InitializeComponent();
 
-            var g = new NodeGraph();
-            //  var ug = new UndirectedBidirectionalGraph<Vertex,UndirectedEdge<Vertex>>(g); //klappt nicht
-            //einfach mal irgendwas darstellen.
-            var vertices = new Vertex[30];
-            for (int i = 0; i < 8; i++)
-            {
-                vertices[i] = new Vertex(i.ToString(), i * 100 % 255);
-
-                g.AddVertex(vertices[i]);
-            }
-
-            g.AddEdge(new Edge<Vertex>(vertices[0], vertices[1]));
-            g.AddEdge(new Edge<Vertex>(vertices[1], vertices[0]));
-            g.AddEdge(new Edge<Vertex>(vertices[1], vertices[2]));
-            g.AddEdge(new Edge<Vertex>(vertices[2], vertices[1]));
-            g.AddEdge(new Edge<Vertex>(vertices[2], vertices[3]));
-            g.AddEdge(new Edge<Vertex>(vertices[3], vertices[2]));
-            g.AddEdge(new Edge<Vertex>(vertices[3], vertices[4]));
-            g.AddEdge(new Edge<Vertex>(vertices[4], vertices[3]));
-            g.AddEdge(new Edge<Vertex>(vertices[4], vertices[5]));
-            g.AddEdge(new Edge<Vertex>(vertices[5], vertices[4]));
-            g.AddEdge(new Edge<Vertex>(vertices[5], vertices[6]));
-            g.AddEdge(new Edge<Vertex>(vertices[6], vertices[5]));
-            g.AddEdge(new Edge<Vertex>(vertices[6], vertices[7]));
-            g.AddEdge(new Edge<Vertex>(vertices[7], vertices[6]));
-            g.AddEdge(new Edge<Vertex>(vertices[7], vertices[0]));
-
-            g.AddEdge(new Edge<Vertex>(vertices[0], vertices[4]));
-            g.AddEdge(new Edge<Vertex>(vertices[4], vertices[0]));
-
-            g.AddEdge(new Edge<Vertex>(vertices[5], vertices[2]));
-            g.AddEdge(new Edge<Vertex>(vertices[2], vertices[5]));
-
-            g.AddEdge(new Edge<Vertex>(vertices[2], vertices[7]));
-            g.AddEdge(new Edge<Vertex>(vertices[7], vertices[2]));
-
-            GraphControl = new GraphSharpControl();
-
-            //Parameter für die anordnung. einfach irgendwelche genommen. nochmal drüber nachdenken/nachlesen
-            GraphControl.layout.LayoutMode = LayoutMode.Simple;
-            GraphControl.layout.LayoutAlgorithmType = "CompoundFDP";
-            GraphControl.layout.OverlapRemovalConstraint = AlgorithmConstraints.Must;
-            GraphControl.layout.OverlapRemovalAlgorithmType = "FSA";
-            GraphControl.layout.HighlightAlgorithmType = "Simple";
-
-            GraphControl.layout.Graph = g;
-
-            elementHost1.Child = GraphControl;
-
 
         }
-
-
-
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -97,14 +45,14 @@ namespace WinFormsGraphSharp
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            //TODO: einfärben. code aufräumen
             //einlesen der matrix, darstellung, orbitsuche, einfärben der cluster
 
             var g = new NodeGraph();
 
-
             string[] strarr = textBox1.Text.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
             int dim = strarr.Length;
+
             Vertex[] vertices = new Vertex[dim];
             for (int k = 0; k < dim; k++)
             {
@@ -117,6 +65,7 @@ namespace WinFormsGraphSharp
 
             int i = 0;
             string dreadnautcmd = "n=" + dim + " g ";
+
             foreach (string line in strarr)
             {
                 string[] strsplitarr = line.Split(' ');
@@ -154,7 +103,6 @@ namespace WinFormsGraphSharp
             Process process = new Process();
             process.StartInfo = startInfo;
             process.Start();
-
             process.StandardInput.WriteLine(dreadnautcmd);
             process.WaitForExit();
             string ergebnis = process.StandardOutput.ReadToEnd();
@@ -166,7 +114,7 @@ namespace WinFormsGraphSharp
 
             foreach (Match m in matches)
             {
-               textBox2.Text+=m.Groups[1].Value+"\r\n";
+                textBox2.Text += m.Groups[1].Value + "\r\n";
             }
 
             GraphControl = new GraphSharpControl();
