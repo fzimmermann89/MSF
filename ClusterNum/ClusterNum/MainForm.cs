@@ -17,12 +17,14 @@ namespace ClusterNum
 {
     public partial class MainForm : Form
     {
+        private NodeGraph graph;
+        private Vertex[] vertices;
+        private int[][] adjmatrix;
 
         public GraphSharpControl GraphControl { get; set; }
 
         public NumIterator iterator;
-        NodeGraph g;
-        Vertex[] vertices;
+
 
         public MainForm()
         {
@@ -53,7 +55,8 @@ namespace ClusterNum
             //TODO: einfärben. code aufräumen
             //einlesen der matrix, darstellung, orbitsuche, einfärben der cluster
 
-            g = new NodeGraph();
+            graph = new NodeGraph();
+
 
             string[] strarr = textBox1.Text.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
             int dim = strarr.Length;
@@ -63,12 +66,12 @@ namespace ClusterNum
             {
                 vertices[k] = new Vertex(k.ToString(), 0, 0);
 
-                g.AddVertex(vertices[k]);
+                graph.AddVertex(vertices[k]);
             }
 
-            int[][] adjmatrix = new int[dim][];
+            adjmatrix = new int[dim][];
 
-
+     
             int i = 0;
             string dreadnautcmd = "n=" + dim + " g ";
 
@@ -88,7 +91,7 @@ namespace ClusterNum
                     {//verbunden
                         dreadnautcmd += " " + j.ToString();
 
-                        g.AddEdge(new Edge<Vertex>(vertices[i], vertices[j]));
+                        graph.AddEdge(new Edge<Vertex>(vertices[i], vertices[j]));
 
                     }
                 }
@@ -129,11 +132,11 @@ namespace ClusterNum
                 textBox2.Text += "cluster " + j + " mit Knoten: ";
                 string[] arr;
                 cluster[j] = Array.ConvertAll(matches[j].Groups[1].Value.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries), int.Parse);
-                foreach (int k in cluster[j])
-                {
-                    textBox2.Text += k + " ";
-                    vertices[k].Cluster = j;
-                }
+              foreach (int k in cluster[j])
+              {
+                  textBox2.Text += k + " ";
+                  vertices[k].Cluster = j;
+              }
                 textBox2.Text += "\r\n";
             }
 
@@ -145,7 +148,7 @@ namespace ClusterNum
             GraphControl.layout.OverlapRemovalConstraint = AlgorithmConstraints.Must;
             GraphControl.layout.OverlapRemovalAlgorithmType = "FSA";
             GraphControl.layout.HighlightAlgorithmType = "Simple";
-            GraphControl.layout.Graph = g;
+            GraphControl.layout.Graph = graph;
 
             elementHost1.Child = GraphControl;
         }
