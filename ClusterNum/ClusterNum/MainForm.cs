@@ -40,14 +40,7 @@ namespace ClusterNum
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //nur zum testen ob das change event funktioniert...
-            Random rnd = new Random();
-            for (int i = 0; i < 8; i++)
-            {
-                GraphControl.layout.Graph.Vertices.ElementAt(i).Value = rnd.NextDouble() * 2 - 1;
-                GraphControl.layout.ContinueLayout();
-            }
-
+            GraphControl.layout.ContinueLayout();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -59,7 +52,7 @@ namespace ClusterNum
 
 
             string[] strarr = textBox1.Text.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
-             dim = strarr.Length;
+            int dim = strarr.Length;
             adjmatrix = new int[dim][];
 
             int i = 0;
@@ -73,51 +66,9 @@ namespace ClusterNum
                 }
 
                 int[] intsplitarr = Array.ConvertAll(strsplitarr, int.Parse);
-                for (int j = 0; j < dim; j++)
-                {
-           
-                }
                 adjmatrix[i++] = intsplitarr;
-               
-            }
-            adjmatrix = new int[dim][];
-            
-            string dreadnautcmd = "n=" + dim + " g ";
-            for (int irow = 0; irow < dim; irow++)
-            {
-                for (int icol = 0; icol < dim; icol++)
-                {
-                    if (adjmatrix[irow][icol] != 0) { 
-                    //verbunden}
-                        
-                }
 
             }
-            //string dreadnautcmd = "n=" + dim + " g ";
-
-            //int i = 0;
-            //foreach (string line in strarr)
-            //{
-            //    string[] strsplitarr = line.Split(' ');
-            //    if (strsplitarr.Length != dim)
-            //    {
-            //        MessageBox.Show("nicht quadratisch");
-            //        return;
-            //    }
-
-            //    int[] intsplitarr = Array.ConvertAll(strsplitarr, int.Parse);
-            //    for (int j = 0; j < dim; j++)
-            //    {
-            //        if (intsplitarr[j] != 0)
-            //        {//verbunden
-            //            dreadnautcmd += " " + j.ToString();
-            //            graph.AddEdge(new Edge<Vertex>(vertices[i], vertices[j]));
-            //        }
-            //    }
-            //    adjmatrix[i] = intsplitarr;
-            //    dreadnautcmd += ";";
-            //    i++;
-            //}
 
             vertices = new Vertex[dim];
             for (int k = 0; k < dim; k++)
@@ -127,6 +78,26 @@ namespace ClusterNum
                 graph.AddVertex(vertices[k]);
             }
 
+
+            string dreadnautcmd = "n=" + dim + " g ";
+            for (int irow = 0; irow < dim; irow++)
+            {
+                for (int icol = 0; icol < dim; icol++)
+                {
+                    if (adjmatrix[irow][icol] != 0)
+                    {
+                        graph.AddEdge(new Edge<Vertex>(vertices[irow], vertices[icol]));
+                        dreadnautcmd += icol + " ";
+                    }
+                
+
+                
+                }
+                dreadnautcmd += ";";
+
+            }
+            
+            
             dreadnautcmd += "x o q";
 
             //dreadnaut starten
@@ -161,7 +132,7 @@ namespace ClusterNum
                 textBox2.Text += "\r\n";
             }
 
-           
+
 
             //Parameter für die anordnung. einfach irgendwelche genommen. nochmal drüber nachdenken/nachlesen
             GraphControl = new GraphSharpControl();
@@ -176,11 +147,23 @@ namespace ClusterNum
 
         private void runButton_Click(object sender, EventArgs e)
         {
-            iterationTimer.Start();
+
+            if (iterationTimer.Enabled == false)
+            {
+                iterator = new NumIterator(adjmatrix, 0.72 * Math.PI, 0.67 * Math.PI, 0.525 * Math.PI);
+                iterationTimer.Start();
+                runButton.Text = "Stop Simulation";
+            }
+            else
+            {
+                iterationTimer.Stop();
+                runButton.Text = "Run Simulation";
+            }
         }
 
         private void iterationTimer_Tick(object sender, EventArgs e)
         {
+
             iterator.iterate();
             double[] xs = iterator.xt[iterator.xt.Count - 1];
             for (int i = 0; i < iterator.vertexCount; i++)

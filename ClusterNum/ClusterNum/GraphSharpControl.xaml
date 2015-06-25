@@ -5,7 +5,7 @@
         xmlns:graph="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"      
         xmlns:Controls="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
         xmlns:local="clr-namespace:ClusterNum"
-        Width="300" FontSize="8" BorderThickness="100">
+        >
 
     <local:NodeGraphLayout x:Name="layout" >
 
@@ -20,7 +20,10 @@
 
         <!--template für die einzelnen punkte-->
         <DataTemplate x:Key="NodeTemplate" DataType="{x:Type local:Vertex}">
-            <Rectangle Width="20" Height="20" Fill="{Binding Brush}" />
+
+
+            <Label Content="{Binding ID}" Background="{Binding Brush}" Width="40" Height="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
         </DataTemplate>
 
         <Style TargetType="{x:Type graph:VertexControl}">

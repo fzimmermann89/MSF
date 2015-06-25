@@ -108,6 +108,7 @@
             // 
             // iterationTimer
             // 
+            this.iterationTimer.Interval = 200;
             this.iterationTimer.Tick += new System.EventHandler(this.iterationTimer_Tick);
             // 
             // runButton
