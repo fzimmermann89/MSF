@@ -20,7 +20,7 @@ namespace ClusterNum
         private NodeGraph graph;
         private Vertex[] vertices;
         private int[][] adjmatrix;
-
+        private int dim;
         public GraphSharpControl GraphControl { get; set; }
 
         public NumIterator iterator;
@@ -59,22 +59,10 @@ namespace ClusterNum
 
 
             string[] strarr = textBox1.Text.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
-            int dim = strarr.Length;
-
-            vertices = new Vertex[dim];
-            for (int k = 0; k < dim; k++)
-            {
-                vertices[k] = new Vertex(k.ToString(), 0, 0);
-
-                graph.AddVertex(vertices[k]);
-            }
-
+             dim = strarr.Length;
             adjmatrix = new int[dim][];
 
-     
             int i = 0;
-            string dreadnautcmd = "n=" + dim + " g ";
-
             foreach (string line in strarr)
             {
                 string[] strsplitarr = line.Split(' ');
@@ -87,23 +75,57 @@ namespace ClusterNum
                 int[] intsplitarr = Array.ConvertAll(strsplitarr, int.Parse);
                 for (int j = 0; j < dim; j++)
                 {
-                    if (intsplitarr[j] != 0)
-                    {//verbunden
-                        dreadnautcmd += " " + j.ToString();
-
-                        graph.AddEdge(new Edge<Vertex>(vertices[i], vertices[j]));
-
-                    }
+           
                 }
-                adjmatrix[i] = intsplitarr;
-
-                dreadnautcmd += ";";
-                i++;
+                adjmatrix[i++] = intsplitarr;
+               
             }
+            adjmatrix = new int[dim][];
+            
+            string dreadnautcmd = "n=" + dim + " g ";
+            for (int irow = 0; irow < dim; irow++)
+            {
+                for (int icol = 0; icol < dim; icol++)
+                {
+                    if (adjmatrix[irow][icol] != 0) { 
+                    //verbunden}
+                        
+                }
 
-            iterator = new NumIterator(adjmatrix, 0.72 * Math.PI, 0.67 * Math.PI, 0.525 * Math.PI);
+            }
+            //string dreadnautcmd = "n=" + dim + " g ";
 
+            //int i = 0;
+            //foreach (string line in strarr)
+            //{
+            //    string[] strsplitarr = line.Split(' ');
+            //    if (strsplitarr.Length != dim)
+            //    {
+            //        MessageBox.Show("nicht quadratisch");
+            //        return;
+            //    }
 
+            //    int[] intsplitarr = Array.ConvertAll(strsplitarr, int.Parse);
+            //    for (int j = 0; j < dim; j++)
+            //    {
+            //        if (intsplitarr[j] != 0)
+            //        {//verbunden
+            //            dreadnautcmd += " " + j.ToString();
+            //            graph.AddEdge(new Edge<Vertex>(vertices[i], vertices[j]));
+            //        }
+            //    }
+            //    adjmatrix[i] = intsplitarr;
+            //    dreadnautcmd += ";";
+            //    i++;
+            //}
+
+            vertices = new Vertex[dim];
+            for (int k = 0; k < dim; k++)
+            {
+                vertices[k] = new Vertex(k.ToString(), 0, 0);
+
+                graph.AddVertex(vertices[k]);
+            }
 
             dreadnautcmd += "x o q";
 
@@ -130,26 +152,25 @@ namespace ClusterNum
             for (int j = 0; j < matches.Count; j++)
             {
                 textBox2.Text += "cluster " + j + " mit Knoten: ";
-                string[] arr;
                 cluster[j] = Array.ConvertAll(matches[j].Groups[1].Value.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries), int.Parse);
-              foreach (int k in cluster[j])
-              {
-                  textBox2.Text += k + " ";
-                  vertices[k].Cluster = j;
-              }
+                foreach (int k in cluster[j])
+                {
+                    textBox2.Text += k + " ";
+                    vertices[k].Cluster = j;
+                }
                 textBox2.Text += "\r\n";
             }
 
-            GraphControl = new GraphSharpControl();
+           
 
             //Parameter für die anordnung. einfach irgendwelche genommen. nochmal drüber nachdenken/nachlesen
+            GraphControl = new GraphSharpControl();
             GraphControl.layout.LayoutMode = LayoutMode.Simple;
             GraphControl.layout.LayoutAlgorithmType = "CompoundFDP";
             GraphControl.layout.OverlapRemovalConstraint = AlgorithmConstraints.Must;
             GraphControl.layout.OverlapRemovalAlgorithmType = "FSA";
             GraphControl.layout.HighlightAlgorithmType = "Simple";
             GraphControl.layout.Graph = graph;
-
             elementHost1.Child = GraphControl;
         }
 
