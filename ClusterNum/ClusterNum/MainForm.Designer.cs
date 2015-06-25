@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.layoutButton = new System.Windows.Forms.Button();
@@ -48,26 +48,26 @@
             this.clusterBox = new System.Windows.Forms.RichTextBox();
             this.matrixBox = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.betaUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.sigmaUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label10 = new System.Windows.Forms.Label();
-            this.deltaUpDown = new System.Windows.Forms.NumericUpDown();
             this.label12 = new System.Windows.Forms.Label();
             this.epsilonUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
+            this.deltaUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.sigmaUpDown = new System.Windows.Forms.NumericUpDown();
+            this.betaUpDown = new System.Windows.Forms.NumericUpDown();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rmsChart)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.betaUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sigmaUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.deltaUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.epsilonUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.deltaUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sigmaUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.betaUpDown)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -80,7 +80,7 @@
             this.elementHost1.BackColor = System.Drawing.Color.Black;
             this.elementHost1.Location = new System.Drawing.Point(133, 6);
             this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(599, 314);
+            this.elementHost1.Size = new System.Drawing.Size(584, 314);
             this.elementHost1.TabIndex = 0;
             this.elementHost1.Text = "elementHost1";
             this.elementHost1.Child = null;
@@ -109,7 +109,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 224);
+            this.label1.Location = new System.Drawing.Point(9, 192);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 13);
             this.label1.TabIndex = 4;
@@ -118,7 +118,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 412);
+            this.label3.Location = new System.Drawing.Point(12, 396);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(93, 13);
             this.label3.TabIndex = 6;
@@ -158,7 +158,12 @@
             0});
             this.numericUpDown1.Location = new System.Drawing.Point(13, 93);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            1000000,
+            6000,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
@@ -207,13 +212,17 @@
             // 
             this.rmsChart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea3.Name = "ChartArea1";
-            this.rmsChart.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.rmsChart.Legends.Add(legend3);
+            chartArea1.AxisY.ScrollBar.IsPositionedInside = false;
+            chartArea1.CursorY.Interval = 0.01D;
+            chartArea1.CursorY.IsUserEnabled = true;
+            chartArea1.CursorY.IsUserSelectionEnabled = true;
+            chartArea1.Name = "ChartArea1";
+            this.rmsChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.rmsChart.Legends.Add(legend1);
             this.rmsChart.Location = new System.Drawing.Point(10, 340);
             this.rmsChart.Name = "rmsChart";
-            this.rmsChart.Size = new System.Drawing.Size(722, 189);
+            this.rmsChart.Size = new System.Drawing.Size(707, 189);
             this.rmsChart.TabIndex = 15;
             this.rmsChart.Text = "chart1";
             // 
@@ -222,18 +231,18 @@
             this.clusterBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.clusterBox.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.clusterBox.Location = new System.Drawing.Point(12, 428);
+            this.clusterBox.Location = new System.Drawing.Point(12, 412);
             this.clusterBox.Name = "clusterBox";
             this.clusterBox.ReadOnly = true;
-            this.clusterBox.Size = new System.Drawing.Size(133, 149);
+            this.clusterBox.Size = new System.Drawing.Size(148, 165);
             this.clusterBox.TabIndex = 16;
             this.clusterBox.Text = "";
             // 
             // matrixBox
             // 
-            this.matrixBox.Location = new System.Drawing.Point(12, 252);
+            this.matrixBox.Location = new System.Drawing.Point(12, 208);
             this.matrixBox.Name = "matrixBox";
-            this.matrixBox.Size = new System.Drawing.Size(133, 153);
+            this.matrixBox.Size = new System.Drawing.Size(148, 175);
             this.matrixBox.TabIndex = 17;
             this.matrixBox.Text = resources.GetString("matrixBox.Text");
             // 
@@ -255,128 +264,6 @@
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = " Settings";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(102, 21);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(17, 19);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "π";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(9, 21);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(30, 19);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "β =";
-            // 
-            // betaUpDown
-            // 
-            this.betaUpDown.DecimalPlaces = 3;
-            this.betaUpDown.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.betaUpDown.Location = new System.Drawing.Point(45, 23);
-            this.betaUpDown.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.betaUpDown.Name = "betaUpDown";
-            this.betaUpDown.Size = new System.Drawing.Size(51, 20);
-            this.betaUpDown.TabIndex = 0;
-            this.betaUpDown.Value = new decimal(new int[] {
-            72,
-            0,
-            0,
-            131072});
-            this.betaUpDown.ValueChanged += new System.EventHandler(this.betaUpDown_ValueChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(102, 47);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(17, 19);
-            this.label7.TabIndex = 21;
-            this.label7.Text = "π";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(9, 47);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(31, 19);
-            this.label8.TabIndex = 20;
-            this.label8.Text = "σ =";
-            // 
-            // sigmaUpDown
-            // 
-            this.sigmaUpDown.DecimalPlaces = 3;
-            this.sigmaUpDown.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.sigmaUpDown.Location = new System.Drawing.Point(45, 49);
-            this.sigmaUpDown.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.sigmaUpDown.Name = "sigmaUpDown";
-            this.sigmaUpDown.Size = new System.Drawing.Size(51, 20);
-            this.sigmaUpDown.TabIndex = 19;
-            this.sigmaUpDown.Value = new decimal(new int[] {
-            67,
-            0,
-            0,
-            131072});
-            this.sigmaUpDown.ValueChanged += new System.EventHandler(this.sigmaUpDown_ValueChanged);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(9, 73);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(30, 19);
-            this.label10.TabIndex = 23;
-            this.label10.Text = "δ =";
-            // 
-            // deltaUpDown
-            // 
-            this.deltaUpDown.DecimalPlaces = 3;
-            this.deltaUpDown.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.deltaUpDown.Location = new System.Drawing.Point(45, 75);
-            this.deltaUpDown.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.deltaUpDown.Name = "deltaUpDown";
-            this.deltaUpDown.Size = new System.Drawing.Size(51, 20);
-            this.deltaUpDown.TabIndex = 22;
-            this.deltaUpDown.Value = new decimal(new int[] {
-            525,
-            0,
-            0,
-            196608});
-            this.deltaUpDown.ValueChanged += new System.EventHandler(this.deltaUpDown_ValueChanged);
             // 
             // label12
             // 
@@ -412,6 +299,128 @@
             131072});
             this.epsilonUpDown.ValueChanged += new System.EventHandler(this.epsilonUpDown_ValueChanged);
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(9, 73);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(30, 19);
+            this.label10.TabIndex = 23;
+            this.label10.Text = "δ =";
+            // 
+            // deltaUpDown
+            // 
+            this.deltaUpDown.DecimalPlaces = 3;
+            this.deltaUpDown.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.deltaUpDown.Location = new System.Drawing.Point(45, 75);
+            this.deltaUpDown.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.deltaUpDown.Name = "deltaUpDown";
+            this.deltaUpDown.Size = new System.Drawing.Size(51, 20);
+            this.deltaUpDown.TabIndex = 22;
+            this.deltaUpDown.Value = new decimal(new int[] {
+            525,
+            0,
+            0,
+            196608});
+            this.deltaUpDown.ValueChanged += new System.EventHandler(this.deltaUpDown_ValueChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(102, 47);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(17, 19);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "π";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(102, 21);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(17, 19);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "π";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(9, 47);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(31, 19);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "σ =";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(9, 21);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(30, 19);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "β =";
+            // 
+            // sigmaUpDown
+            // 
+            this.sigmaUpDown.DecimalPlaces = 3;
+            this.sigmaUpDown.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.sigmaUpDown.Location = new System.Drawing.Point(45, 49);
+            this.sigmaUpDown.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.sigmaUpDown.Name = "sigmaUpDown";
+            this.sigmaUpDown.Size = new System.Drawing.Size(51, 20);
+            this.sigmaUpDown.TabIndex = 19;
+            this.sigmaUpDown.Value = new decimal(new int[] {
+            67,
+            0,
+            0,
+            131072});
+            this.sigmaUpDown.ValueChanged += new System.EventHandler(this.sigmaUpDown_ValueChanged);
+            // 
+            // betaUpDown
+            // 
+            this.betaUpDown.DecimalPlaces = 3;
+            this.betaUpDown.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.betaUpDown.Location = new System.Drawing.Point(45, 23);
+            this.betaUpDown.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.betaUpDown.Name = "betaUpDown";
+            this.betaUpDown.Size = new System.Drawing.Size(51, 20);
+            this.betaUpDown.TabIndex = 0;
+            this.betaUpDown.Value = new decimal(new int[] {
+            72,
+            0,
+            0,
+            131072});
+            this.betaUpDown.ValueChanged += new System.EventHandler(this.betaUpDown_ValueChanged);
+            // 
             // tabControl1
             // 
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -419,10 +428,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(151, 12);
+            this.tabControl1.Location = new System.Drawing.Point(166, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(754, 561);
+            this.tabControl1.Size = new System.Drawing.Size(739, 561);
             this.tabControl1.TabIndex = 19;
             // 
             // tabPage1
@@ -439,7 +448,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(746, 535);
+            this.tabPage1.Size = new System.Drawing.Size(731, 535);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Graph View";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -449,7 +458,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(746, 535);
+            this.tabPage2.Size = new System.Drawing.Size(731, 535);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Kevin";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -473,10 +482,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.rmsChart)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.betaUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sigmaUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.deltaUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.epsilonUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.deltaUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sigmaUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.betaUpDown)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();

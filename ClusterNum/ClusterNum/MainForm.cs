@@ -37,9 +37,7 @@ namespace ClusterNum
         public MainForm()
         {
             InitializeComponent();
-
-
-
+            Application.EnableVisualStyles();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -178,7 +176,7 @@ namespace ClusterNum
 
             if (iterationTimer.Enabled == false)
             {
-               
+
                 iterationTimer.Start();
                 runButton.Text = "Stop Simulation";
             }
@@ -247,27 +245,40 @@ namespace ClusterNum
             }
             runButton.Enabled = true;
             iterateButton.Enabled = true;
+            rmsChart.ChartAreas[0].AxisY.ScaleView.ZoomReset();
+
         }
 
         private void betaUpDown_ValueChanged(object sender, EventArgs e)
         {
             beta = (double)betaUpDown.Value;
+            runButton.Enabled = false;
+            iterateButton.Enabled = false;
+
         }
 
         private void sigmaUpDown_ValueChanged(object sender, EventArgs e)
         {
             sigma = (double)sigmaUpDown.Value;
+            runButton.Enabled = false;
+            iterateButton.Enabled = false;
         }
 
         private void deltaUpDown_ValueChanged(object sender, EventArgs e)
         {
             delta = (double)deltaUpDown.Value;
+            runButton.Enabled = false;
+            iterateButton.Enabled = false;
         }
 
         private void epsilonUpDown_ValueChanged(object sender, EventArgs e)
         {
             epsilon = (double)epsilonUpDown.Value;
+            runButton.Enabled = false;
+            iterateButton.Enabled = false;
         }
+
+
 
 
 
