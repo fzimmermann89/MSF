@@ -37,7 +37,7 @@ namespace WinFormsGraphSharp
             Random rnd = new Random();
             for (int i = 0; i < 8; i++)
             {
-                GraphControl.layout.Graph.Vertices.ElementAt(i).Value = rnd.Next(0, 255);
+                GraphControl.layout.Graph.Vertices.ElementAt(i).Value = rnd.NextDouble()*2-1;
                 GraphControl.layout.ContinueLayout();
             }
 
@@ -56,7 +56,7 @@ namespace WinFormsGraphSharp
             Vertex[] vertices = new Vertex[dim];
             for (int k = 0; k < dim; k++)
             {
-                vertices[k] = new Vertex(k.ToString(), 0);
+                vertices[k] = new Vertex(k.ToString(), 0,0);
 
                 g.AddVertex(vertices[k]);
             }
@@ -111,10 +111,19 @@ namespace WinFormsGraphSharp
             string[] s = ergebnis.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
             MatchCollection matches = Regex.Matches(s[s.Length - 2], @"([0-9 ]+)(\(([^)]*)\))?;");
 
-
-            foreach (Match m in matches)
+            int[][] cluster=new int[matches.Count][];
+            textBox2.Text="";
+            for (int j=0;j<matches.Count;j++)
             {
-                textBox2.Text += m.Groups[1].Value + "\r\n";
+                textBox2.Text += "cluster " + j+" mit Knoten: ";
+                string[] arr ;
+              cluster[j]= Array.ConvertAll(  matches[j].Groups[1].Value.Split(new string[] {" "},StringSplitOptions.RemoveEmptyEntries), int.Parse);
+              foreach (int k in cluster[j])
+              {
+                  textBox2.Text += k + " ";
+                  vertices[k].Cluster = j;
+              }
+                textBox2.Text+="\r\n";
             }
 
             GraphControl = new GraphSharpControl();

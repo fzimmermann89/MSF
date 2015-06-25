@@ -53,7 +53,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(124, 23);
             this.button1.TabIndex = 1;
-            this.button1.Text = "randomize values";
+            this.button1.Text = "relayout+rnd value";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -62,7 +62,7 @@
             this.textBox1.Location = new System.Drawing.Point(12, 34);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(149, 192);
+            this.textBox1.Size = new System.Drawing.Size(158, 192);
             this.textBox1.TabIndex = 2;
             this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
