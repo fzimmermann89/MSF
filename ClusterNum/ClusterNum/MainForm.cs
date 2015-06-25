@@ -60,6 +60,7 @@ namespace ClusterNum
 
             string[] strarr = matrixBox.Text.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
             int dim = strarr.Length;
+
             adjmatrix = new int[dim][];
 
             int i = 0;
@@ -68,11 +69,21 @@ namespace ClusterNum
                 string[] strsplitarr = line.Split(' ');
                 if (strsplitarr.Length != dim)
                 {
-                    MessageBox.Show("nicht quadratisch");
+                    MessageBox.Show("Matrix ist nicht quadratisch", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                int[] intsplitarr;
+                try
+                {
+
+                    intsplitarr = Array.ConvertAll(strsplitarr, int.Parse);
+                }
+                catch (FormatException ex)
+                {
+                    MessageBox.Show("Matrix ungültig", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                int[] intsplitarr = Array.ConvertAll(strsplitarr, int.Parse);
                 adjmatrix[i++] = intsplitarr;
 
             }
@@ -113,10 +124,16 @@ namespace ClusterNum
             startInfo.RedirectStandardInput = true;
             startInfo.RedirectStandardOutput = true;
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = Environment.CurrentDirectory + @"\..\..\..\dreadnaut.exe";
+            startInfo.FileName = Environment.CurrentDirectory + @"\dreadnaut.exe";
             Process process = new Process();
             process.StartInfo = startInfo;
-            process.Start();
+            try { process.Start(); }
+            catch (Win32Exception ex)
+            {
+                MessageBox.Show("Ist die dreadnaut.exe im gleichen Ordner?", "dreadnaut-Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             process.StandardInput.WriteLine(dreadnautcmd);
             process.WaitForExit();
             string ergebnis = process.StandardOutput.ReadToEnd();
