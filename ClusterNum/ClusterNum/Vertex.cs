@@ -38,6 +38,7 @@ namespace ClusterNum
                         get { return _Value; }
             set
             {
+                _Value = value;
                 //_Value = Math.Min(Math.Max(-1,value),1);
                 //benachrichtigung damit binding aktualisiert wird
                 if (PropertyChanged != null)
@@ -60,7 +61,7 @@ namespace ClusterNum
             }
         }
 
-        public Vertex(string id, int value, int cluster)
+        public Vertex(string id, double value, int cluster)
         {
             ID = id;
             Value = value;
