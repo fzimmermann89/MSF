@@ -99,7 +99,7 @@ namespace WinFormsGraphSharp
             startInfo.RedirectStandardInput = true;
             startInfo.RedirectStandardOutput = true;
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = Environment.CurrentDirectory + @"\dreadnaut.exe";
+            startInfo.FileName = Environment.CurrentDirectory + @"\..\..\..\dreadnaut.exe";
             Process process = new Process();
             process.StartInfo = startInfo;
             process.Start();
