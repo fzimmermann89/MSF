@@ -247,7 +247,7 @@ namespace ClusterNum
                     int nodenum = cluster[i][j];
                     rms += (mid - xs[nodenum]) * (mid - xs[nodenum]);
                 }
-                rms = Math.Sqrt(rms);
+                rms = Math.Sqrt(rms / cluster[i].Length);
                 gseries[i].Points.AddXY(iterator.xt.Count, rms);
             }
         }
