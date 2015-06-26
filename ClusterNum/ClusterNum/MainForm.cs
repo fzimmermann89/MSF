@@ -12,6 +12,7 @@ using GraphSharp.Controls;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Threading;
 
 
 namespace ClusterNum
@@ -26,6 +27,10 @@ namespace ClusterNum
         public GraphSharpControl GraphControl { get; set; }
 
         public NumIterator iterator;
+        NumVariator variator;
+        Thread variatorThread;
+        delegate void callbackDelegate(NumVariator.result result);
+
 
         double beta = 0.72 * Math.PI;
         double sigma = 0.67 * Math.PI;
@@ -33,6 +38,8 @@ namespace ClusterNum
         double epsilon = 0.01;
 
         Series[] gseries;
+        Series[] betarmsseries;
+        Series[] betaljapseries;
 
         public MainForm()
         {
@@ -276,7 +283,7 @@ namespace ClusterNum
 
         private void betaUpDown_ValueChanged(object sender, EventArgs e)
         {
-            beta = (double)betaUpDown.Value*Math.PI;
+            beta = (double)betaUpDown.Value * Math.PI;
             runButton.Enabled = false;
             iterateButton.Enabled = false;
 
@@ -284,7 +291,7 @@ namespace ClusterNum
 
         private void sigmaUpDown_ValueChanged(object sender, EventArgs e)
         {
-            sigma = (double)sigmaUpDown.Value*Math.PI;
+            sigma = (double)sigmaUpDown.Value * Math.PI;
             runButton.Enabled = false;
             iterateButton.Enabled = false;
         }
@@ -306,6 +313,7 @@ namespace ClusterNum
         private void tabPage1_Enter(object sender, EventArgs e)
         {
             betaUpDown.Enabled = true;
+            beta = (double)betaUpDown.Value;
         }
 
         private void tabPage2_Enter(object sender, EventArgs e)
@@ -313,7 +321,84 @@ namespace ClusterNum
             betaUpDown.Enabled = false;
         }
 
+        private void betaRunButton_Click(object sender, EventArgs e)
+        {
+            if (variatorThread != null && variatorThread.IsAlive)
+            {
+                variatorThread.Abort();
+                betaRunButton.Text = "Run Simulation";
+            }
+            else
+            {
+                Action<NumVariator.result> callback_action = callback;
+                variator = new NumVariator(adjmatrix, (double)betaMinUpDown.Value * Math.PI, (double)betaMaxUpDown.Value * Math.PI, (int)stepsUpDown.Value, sigma, delta, epsilon, (int)preUpDown.Value, (int)recUpDown.Value, cluster, callback_action);
+                variatorThread = new Thread(variator.DoWork);
+                variatorThread.Start();
 
+                betaRmsChart.Series.Clear();
+                betaLjapChart.Series.Clear();
+                betarmsseries = new Series[cluster.Length];
+                betaljapseries = new Series[cluster.Length];
+
+                for (int i = 0; i < cluster.Length; i++)
+                {
+                    System.Windows.Media.Color coltmp = Vertex.cluster_colors[i % Vertex.cluster_colors.Length];
+
+                    betarmsseries[i] = new Series("Cluster " + i.ToString());
+                    betarmsseries[i].ChartArea = "ChartArea1";
+                    betaRmsChart.Series.Add(betarmsseries[i]);
+                    betarmsseries[i].ChartType = SeriesChartType.FastLine;
+                    betarmsseries[i].Color = Color.FromArgb(255, coltmp.R, coltmp.G, coltmp.B);
+
+                    betaljapseries[i] = new Series("Cluster " + i.ToString());
+                    betaljapseries[i].ChartArea = "ChartArea1";
+                    betaLjapChart.Series.Add(betaljapseries[i]);
+                    betaljapseries[i].ChartType = SeriesChartType.FastLine;
+                    betaljapseries[i].Color = Color.FromArgb(255, coltmp.R, coltmp.G, coltmp.B);
+                }
+                betaRunButton.Text = "Stop Simulation";
+            }
+        }
+
+        private void callback(NumVariator.result result)
+        {
+            //wird auf dem anderen thread aufgerufen. damit winforms sachen geändert werden können muss das anscheinend über invoke gehen
+            callbackDelegate callbackD = new callbackDelegate(callback_invoke);
+            this.Invoke(callbackD, result);
+        }
+
+        private void callback_invoke(NumVariator.result result)
+        //ergebnis anzeigen
+        {
+            for (int i = 0; i < result.rms.Length; i++)
+            {
+               
+                betarmsseries[i].Points.AddXY(result.beta/Math.PI, result.rms[i]);
+            }
+            for (int i = 0; i < result.ljapunow.Length; i++)
+            {
+
+                betaljapseries[i].Points.AddXY(result.beta/Math.PI, result.ljapunow[i]);
+            }
+
+            if (result.beta >= (double)betaMaxUpDown.Value)
+            {
+
+                //wir sind fertig
+                betaRunButton.Text = "Run Simulation";
+            }
+
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //beim form schließen thread anhalten, sonst macht invoke einen fehler.
+            if (variatorThread != null && variatorThread.IsAlive)
+            {
+                variatorThread.Abort();
+
+            }
+        }
 
 
 

@@ -32,10 +32,10 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.layoutButton = new System.Windows.Forms.Button();
             this.initGraphButton = new System.Windows.Forms.Button();
@@ -65,6 +65,16 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.recUpDown = new System.Windows.Forms.NumericUpDown();
+            this.preUpDown = new System.Windows.Forms.NumericUpDown();
+            this.betaLjapChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.betaRmsChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.betaRunButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label11 = new System.Windows.Forms.Label();
             this.stepsUpDown = new System.Windows.Forms.NumericUpDown();
@@ -74,9 +84,6 @@
             this.label16 = new System.Windows.Forms.Label();
             this.betaMaxUpDown = new System.Windows.Forms.NumericUpDown();
             this.betaMinUpDown = new System.Windows.Forms.NumericUpDown();
-            this.betaRunButton = new System.Windows.Forms.Button();
-            this.betaRmsChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.betaLupChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rmsChart)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -87,12 +94,15 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.recUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.preUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.betaLjapChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.betaRmsChart)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.stepsUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.betaMaxUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.betaMinUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.betaRmsChart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.betaLupChart)).BeginInit();
             this.SuspendLayout();
             // 
             // elementHost1
@@ -481,7 +491,8 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.betaLupChart);
+            this.tabPage2.Controls.Add(this.groupBox3);
+            this.tabPage2.Controls.Add(this.betaLjapChart);
             this.tabPage2.Controls.Add(this.betaRmsChart);
             this.tabPage2.Controls.Add(this.betaRunButton);
             this.tabPage2.Controls.Add(this.groupBox2);
@@ -493,6 +504,147 @@
             this.tabPage2.Text = "β-Variation";
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Enter += new System.EventHandler(this.tabPage2_Enter);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label17);
+            this.groupBox3.Controls.Add(this.label9);
+            this.groupBox3.Controls.Add(this.label19);
+            this.groupBox3.Controls.Add(this.label20);
+            this.groupBox3.Controls.Add(this.recUpDown);
+            this.groupBox3.Controls.Add(this.preUpDown);
+            this.groupBox3.Location = new System.Drawing.Point(145, 10);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(152, 113);
+            this.groupBox3.TabIndex = 24;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Time Settings";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(102, 27);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(34, 13);
+            this.label17.TabIndex = 24;
+            this.label17.Text = "Steps";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(102, 51);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(34, 13);
+            this.label9.TabIndex = 23;
+            this.label9.Text = "Steps";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(6, 51);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(27, 13);
+            this.label19.TabIndex = 20;
+            this.label19.Text = "Rec";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(6, 25);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(23, 13);
+            this.label20.TabIndex = 11;
+            this.label20.Text = "Pre";
+            // 
+            // recUpDown
+            // 
+            this.recUpDown.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.recUpDown.Location = new System.Drawing.Point(45, 49);
+            this.recUpDown.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.recUpDown.Name = "recUpDown";
+            this.recUpDown.Size = new System.Drawing.Size(51, 20);
+            this.recUpDown.TabIndex = 19;
+            this.recUpDown.Value = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            // 
+            // preUpDown
+            // 
+            this.preUpDown.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.preUpDown.Location = new System.Drawing.Point(45, 23);
+            this.preUpDown.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.preUpDown.Name = "preUpDown";
+            this.preUpDown.Size = new System.Drawing.Size(51, 20);
+            this.preUpDown.TabIndex = 0;
+            // 
+            // betaLjapChart
+            // 
+            this.betaLjapChart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea2.AxisY.ScrollBar.IsPositionedInside = false;
+            chartArea2.CursorY.Interval = 0.01D;
+            chartArea2.CursorY.IsUserEnabled = true;
+            chartArea2.CursorY.IsUserSelectionEnabled = true;
+            chartArea2.Name = "ChartArea1";
+            this.betaLjapChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.betaLjapChart.Legends.Add(legend2);
+            this.betaLjapChart.Location = new System.Drawing.Point(6, 324);
+            this.betaLjapChart.Name = "betaLjapChart";
+            this.betaLjapChart.Size = new System.Drawing.Size(707, 189);
+            this.betaLjapChart.TabIndex = 22;
+            this.betaLjapChart.Text = "chart1";
+            // 
+            // betaRmsChart
+            // 
+            this.betaRmsChart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea3.AxisY.ScrollBar.IsPositionedInside = false;
+            chartArea3.CursorY.Interval = 0.01D;
+            chartArea3.CursorY.IsUserEnabled = true;
+            chartArea3.CursorY.IsUserSelectionEnabled = true;
+            chartArea3.Name = "ChartArea1";
+            this.betaRmsChart.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.betaRmsChart.Legends.Add(legend3);
+            this.betaRmsChart.Location = new System.Drawing.Point(6, 129);
+            this.betaRmsChart.Name = "betaRmsChart";
+            this.betaRmsChart.Size = new System.Drawing.Size(707, 189);
+            this.betaRmsChart.TabIndex = 21;
+            this.betaRmsChart.Text = "chart1";
+            // 
+            // betaRunButton
+            // 
+            this.betaRunButton.Enabled = false;
+            this.betaRunButton.Location = new System.Drawing.Point(303, 19);
+            this.betaRunButton.Name = "betaRunButton";
+            this.betaRunButton.Size = new System.Drawing.Size(113, 23);
+            this.betaRunButton.TabIndex = 20;
+            this.betaRunButton.Text = "Run Simulation";
+            this.betaRunButton.UseVisualStyleBackColor = true;
+            this.betaRunButton.Click += new System.EventHandler(this.betaRunButton_Click);
             // 
             // groupBox2
             // 
@@ -533,10 +685,10 @@
             this.stepsUpDown.Size = new System.Drawing.Size(51, 20);
             this.stepsUpDown.TabIndex = 22;
             this.stepsUpDown.Value = new decimal(new int[] {
-            525,
+            1,
             0,
             0,
-            196608});
+            0});
             // 
             // label13
             // 
@@ -624,52 +776,6 @@
             0,
             65536});
             // 
-            // betaRunButton
-            // 
-            this.betaRunButton.Enabled = false;
-            this.betaRunButton.Location = new System.Drawing.Point(146, 23);
-            this.betaRunButton.Name = "betaRunButton";
-            this.betaRunButton.Size = new System.Drawing.Size(113, 23);
-            this.betaRunButton.TabIndex = 20;
-            this.betaRunButton.Text = "Run Simulation";
-            this.betaRunButton.UseVisualStyleBackColor = true;
-            // 
-            // betaRmsChart
-            // 
-            this.betaRmsChart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea3.AxisY.ScrollBar.IsPositionedInside = false;
-            chartArea3.CursorY.Interval = 0.01D;
-            chartArea3.CursorY.IsUserEnabled = true;
-            chartArea3.CursorY.IsUserSelectionEnabled = true;
-            chartArea3.Name = "ChartArea1";
-            this.betaRmsChart.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.betaRmsChart.Legends.Add(legend3);
-            this.betaRmsChart.Location = new System.Drawing.Point(6, 129);
-            this.betaRmsChart.Name = "betaRmsChart";
-            this.betaRmsChart.Size = new System.Drawing.Size(707, 189);
-            this.betaRmsChart.TabIndex = 21;
-            this.betaRmsChart.Text = "chart1";
-            // 
-            // betaLupChart
-            // 
-            this.betaLupChart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea2.AxisY.ScrollBar.IsPositionedInside = false;
-            chartArea2.CursorY.Interval = 0.01D;
-            chartArea2.CursorY.IsUserEnabled = true;
-            chartArea2.CursorY.IsUserSelectionEnabled = true;
-            chartArea2.Name = "ChartArea1";
-            this.betaLupChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.betaLupChart.Legends.Add(legend2);
-            this.betaLupChart.Location = new System.Drawing.Point(6, 324);
-            this.betaLupChart.Name = "betaLupChart";
-            this.betaLupChart.Size = new System.Drawing.Size(707, 189);
-            this.betaLupChart.TabIndex = 22;
-            this.betaLupChart.Text = "chart1";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -684,6 +790,7 @@
             this.Controls.Add(this.initGraphButton);
             this.Name = "MainForm";
             this.Text = "ClusterNum";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rmsChart)).EndInit();
@@ -697,13 +804,17 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.recUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.preUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.betaLjapChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.betaRmsChart)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.stepsUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.betaMaxUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.betaMinUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.betaRmsChart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.betaLupChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -740,7 +851,7 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.DataVisualization.Charting.Chart betaLupChart;
+        private System.Windows.Forms.DataVisualization.Charting.Chart betaLjapChart;
         private System.Windows.Forms.DataVisualization.Charting.Chart betaRmsChart;
         private System.Windows.Forms.Button betaRunButton;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -752,6 +863,13 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.NumericUpDown betaMaxUpDown;
         private System.Windows.Forms.NumericUpDown betaMinUpDown;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.NumericUpDown recUpDown;
+        private System.Windows.Forms.NumericUpDown preUpDown;
 
        }
 }
