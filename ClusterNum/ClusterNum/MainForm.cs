@@ -276,7 +276,7 @@ namespace ClusterNum
 
         private void betaUpDown_ValueChanged(object sender, EventArgs e)
         {
-            beta = (double)betaUpDown.Value;
+            beta = (double)betaUpDown.Value*Math.PI;
             runButton.Enabled = false;
             iterateButton.Enabled = false;
 
@@ -284,7 +284,7 @@ namespace ClusterNum
 
         private void sigmaUpDown_ValueChanged(object sender, EventArgs e)
         {
-            sigma = (double)sigmaUpDown.Value;
+            sigma = (double)sigmaUpDown.Value*Math.PI;
             runButton.Enabled = false;
             iterateButton.Enabled = false;
         }
