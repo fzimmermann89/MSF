@@ -26,7 +26,7 @@ namespace ClusterNum
         int[][] adjmatrix;
         int[][] cluster;
         Action<result> callback;
-     
+
 
         public NumVariator(int[][] adjMatrix, double betamin, double betamax, int betasteps, double sigma, double delta, double pertubation, int pre, int rec, int[][] cluster, Action<result> callback)
         {
@@ -45,11 +45,18 @@ namespace ClusterNum
 
         public void DoWork()
         {
+
             for (int ibeta = 0; ibeta <= betasteps; ibeta++)
             {
+
+                double[] ljapunow = new double[cluster.Length];
+                double[] rms = new double[cluster.Length];
                 double beta = betamin + ibeta * (betamax - betamin) / betasteps;
+
                 iterator = new NumIterator(adjmatrix, beta, sigma, delta);
                 iterator.pertubation = pertubation;
+               
+
                 for (int itime = 0; itime < pre; itime++)
                 {
                     iterator.iterate();
@@ -58,12 +65,42 @@ namespace ClusterNum
                 for (int itime = 0; itime < rec; itime++)
                 {
                     iterator.iterate();
-                    //speicher rms
+
+                    //rms berechnung
+                    double[] xs = iterator.xt[iterator.xt.Count - 1];
+                    for (int i = 0; i < cluster.Length; i++)
+                    {//über die cluster
+                        //mittelwert
+                        double mid = 0;
+                        for (int j = 0; j < cluster[i].Length; j++)
+                        {
+                            int nodenum = cluster[i][j];
+                            mid += xs[nodenum];
+                        }
+                        mid /= (double)cluster[i].Length;
+                        
+                        double tmprms = 0;
+                        for (int j = 0; j < cluster[i].Length; j++)
+                        {
+                            int nodenum = cluster[i][j];
+                            tmprms += (mid - xs[nodenum]) * (mid - xs[nodenum]);
+                        }
+                        tmprms= tmprms / cluster[i].Length;
+                        rms[i] += tmprms;
+                    }
+
+                    //ljapunow berechnung
                 }
-                //mittle rms
-                //ausgabe
-                double[] ljapunow = new double[cluster.Length];
-                double[] rms = new double[cluster.Length];
+                //rms berechnung
+                for (int i = 0; i < rms.Length; i++)
+                {
+                    rms[i] /= rec;
+                    rms[i] = Math.Sqrt(rms[i]);
+                }
+              
+                //ljapunow berechnung
+
+                //ausgab
                 result ret_result = new result(beta, rms, ljapunow);
                 callback(ret_result);
             }

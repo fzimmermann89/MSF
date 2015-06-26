@@ -330,11 +330,7 @@ namespace ClusterNum
             }
             else
             {
-                Action<NumVariator.result> callback_action = callback;
-                variator = new NumVariator(adjmatrix, (double)betaMinUpDown.Value * Math.PI, (double)betaMaxUpDown.Value * Math.PI, (int)stepsUpDown.Value, sigma, delta, epsilon, (int)preUpDown.Value, (int)recUpDown.Value, cluster, callback_action);
-                variatorThread = new Thread(variator.DoWork);
-                variatorThread.Start();
-
+                betaRunButton.Text = "Stop Simulation"; 
                 betaRmsChart.Series.Clear();
                 betaLjapChart.Series.Clear();
                 betarmsseries = new Series[cluster.Length];
@@ -356,7 +352,13 @@ namespace ClusterNum
                     betaljapseries[i].ChartType = SeriesChartType.FastLine;
                     betaljapseries[i].Color = Color.FromArgb(255, coltmp.R, coltmp.G, coltmp.B);
                 }
-                betaRunButton.Text = "Stop Simulation";
+
+                Action<NumVariator.result> callback_action = callback;
+                variator = new NumVariator(adjmatrix, (double)betaMinUpDown.Value * Math.PI, (double)betaMaxUpDown.Value * Math.PI, (int)stepsUpDown.Value, sigma, delta, epsilon, (int)preUpDown.Value, (int)recUpDown.Value, cluster, callback_action);
+                variatorThread = new Thread(variator.DoWork);
+                variatorThread.Start();
+
+               
             }
         }
 
@@ -370,6 +372,7 @@ namespace ClusterNum
         private void callback_invoke(NumVariator.result result)
         //ergebnis anzeigen
         {
+       
             for (int i = 0; i < result.rms.Length; i++)
             {
                
@@ -387,7 +390,7 @@ namespace ClusterNum
                 //wir sind fertig
                 betaRunButton.Text = "Run Simulation";
             }
-
+            Application.DoEvents();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
