@@ -47,7 +47,7 @@ namespace ClusterNum
 
         private void layoutButton_Click(object sender, EventArgs e)
         {
-            GraphControl.layout.ContinueLayout();
+            GraphControl.layout.Relayout();
         }
 
         private void initGraphButton_Click(object sender, EventArgs e)
