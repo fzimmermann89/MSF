@@ -35,7 +35,12 @@ namespace ClusterNum
             double[] pertIntensity = new double[vertexCount];
             for (int i = 0; i < pertIntensity.Length; i++)
             {
-                double err = (rand.NextDouble() - 0.5) * 2.0 * pertubation;
+                //double err = (rand.NextDouble() - 0.5) * 2.0 * pertubation;
+                double u1 = rand.NextDouble(); 
+                double u2 = rand.NextDouble();
+                double randnormal = Math.Sqrt(-2.0 * Math.Log(u1)) *  Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
+                double err = pertubation * randnormal;
+
                 pertIntensity[i] = intensity(oldxi[i]);
                 pertIntensity[i] += err;
             }
