@@ -330,7 +330,7 @@ namespace ClusterNum
             }
             else
             {
-                betaRunButton.Text = "Stop Simulation"; 
+                betaRunButton.Text = "Stop Simulation";
                 betaRmsChart.Series.Clear();
                 betaLjapChart.Series.Clear();
                 betarmsseries = new Series[cluster.Length];
@@ -358,7 +358,7 @@ namespace ClusterNum
                 variatorThread = new Thread(variator.DoWork);
                 variatorThread.Start();
 
-               
+
             }
         }
 
@@ -372,19 +372,19 @@ namespace ClusterNum
         private void callback_invoke(NumVariator.result result)
         //ergebnis anzeigen
         {
-       
+
             for (int i = 0; i < result.rms.Length; i++)
             {
-               
-                betarmsseries[i].Points.AddXY(result.beta/Math.PI, result.rms[i]);
+
+                betarmsseries[i].Points.AddXY(result.beta / Math.PI, result.rms[i]);
             }
             for (int i = 0; i < result.ljapunow.Length; i++)
             {
 
-                betaljapseries[i].Points.AddXY(result.beta/Math.PI, result.ljapunow[i]);
+                betaljapseries[i].Points.AddXY(result.beta / Math.PI, result.ljapunow[i]);
             }
 
-            if (result.beta >= (double)betaMaxUpDown.Value*Math.PI)
+            if (result.beta >= (double)betaMaxUpDown.Value * Math.PI)
             {
 
                 //wir sind fertig

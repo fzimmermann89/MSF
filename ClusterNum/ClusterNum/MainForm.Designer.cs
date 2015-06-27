@@ -612,7 +612,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.betaLjapChart.BackColor = System.Drawing.Color.Transparent;
+            chartArea3.AxisX.Title = "β/π";
             chartArea3.AxisY.ScrollBar.IsPositionedInside = false;
+            chartArea3.AxisY.Title = "Max. Lyapunov";
             chartArea3.BackColor = System.Drawing.Color.Transparent;
             chartArea3.CursorY.Interval = 0.01D;
             chartArea3.CursorY.IsUserEnabled = true;
@@ -634,7 +636,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.betaRmsChart.BackColor = System.Drawing.Color.Transparent;
+            chartArea2.AxisX.Title = "β/π";
             chartArea2.AxisY.ScrollBar.IsPositionedInside = false;
+            chartArea2.AxisY.Title = "<RMS>";
             chartArea2.BackColor = System.Drawing.Color.Transparent;
             chartArea2.CursorY.Interval = 0.01D;
             chartArea2.CursorY.IsUserEnabled = true;
@@ -700,7 +704,7 @@
             this.stepsUpDown.Size = new System.Drawing.Size(51, 20);
             this.stepsUpDown.TabIndex = 22;
             this.stepsUpDown.Value = new decimal(new int[] {
-            1,
+            100,
             0,
             0,
             0});
