@@ -101,7 +101,7 @@ namespace ClusterNum
                         {
                             int nodenum = cluster[i][j];
                             double dx = xs[nodenum] - xsold[nodenum];
-                            tmpljapunow[nodenum] = Math.Log(Math.Abs(dx));
+                            tmpljapunow[nodenum] += Math.Log(Math.Abs(dx));
                         }
 
                     }
