@@ -91,15 +91,13 @@ namespace ClusterNum
 
                     //ljapunow berechnung
                     double[] fstrich = iterator.fstrich();
-                    for (int i = 0; i < cluster.Length; i++)
+                    
+                    for (int i = 0; i < nodecount; i++)
                     {
-                        for (int j = 0; j < cluster[i].Length; j++)
-                        {
-                            int nodenum = cluster[i][j];
-                            tmpljapunow[nodenum] += Math.Log(Math.Abs(fstrich[j]));
-                        }
-
+                        tmpljapunow[i] += Math.Log(Math.Abs(fstrich[i]));
                     }
+
+
                 }
                 //rms berechnung
                 for (int i = 0; i < rms.Length; i++)
