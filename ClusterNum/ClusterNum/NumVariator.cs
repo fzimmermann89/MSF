@@ -57,12 +57,7 @@ namespace ClusterNum
                 double[] tmpljapunow = new double[nodecount];
                 double[] rms = new double[cluster.Length];
 
-
-
-                for (int itime = 0; itime < pre; itime++)
-                {
-                    iterator.iterate();
-                }
+                iterator.iterate(pre);
 
                 for (int itime = 0; itime < rec; itime++)
                 {
@@ -95,13 +90,13 @@ namespace ClusterNum
                     }
 
                     //ljapunow berechnung
+                    double[] fstrich = iterator.fstrich();
                     for (int i = 0; i < cluster.Length; i++)
                     {
                         for (int j = 0; j < cluster[i].Length; j++)
                         {
                             int nodenum = cluster[i][j];
-                            double dx = xs[nodenum] - xsold[nodenum];
-                            tmpljapunow[nodenum] += Math.Log(Math.Abs(dx));
+                            tmpljapunow[nodenum] += Math.Log(Math.Abs(fstrich[j]));
                         }
 
                     }

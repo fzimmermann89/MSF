@@ -189,8 +189,15 @@ namespace ClusterNum
             GraphControl = new GraphSharpControl();
             GraphControl.layout.LayoutMode = LayoutMode.Simple;
             GraphControl.layout.LayoutAlgorithmType = "CompoundFDP";
+            GraphSharp.Algorithms.Layout.Compound.FDP.CompoundFDPLayoutParameters layoutParam = new GraphSharp.Algorithms.Layout.Compound.FDP.CompoundFDPLayoutParameters();
+            layoutParam.ElasticConstant *= 1.5;
+            GraphControl.layout.LayoutParameters = layoutParam;
             GraphControl.layout.OverlapRemovalConstraint = AlgorithmConstraints.Must;
             GraphControl.layout.OverlapRemovalAlgorithmType = "FSA";
+            GraphSharp.Algorithms.OverlapRemoval.OverlapRemovalParameters overlapParam = new GraphSharp.Algorithms.OverlapRemoval.OverlapRemovalParameters();
+            overlapParam.HorizontalGap = 25;
+            overlapParam.VerticalGap = 25;
+            GraphControl.layout.OverlapRemovalParameters = overlapParam;
             GraphControl.layout.HighlightAlgorithmType = "Simple";
             GraphControl.layout.Graph = graph;
             elementHost1.Child = GraphControl;
