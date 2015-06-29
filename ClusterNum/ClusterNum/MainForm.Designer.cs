@@ -32,10 +32,10 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.layoutButton = new System.Windows.Forms.Button();
             this.initGraphButton = new System.Windows.Forms.Button();
@@ -65,6 +65,9 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.betaRmsChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.betaLjapChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -72,8 +75,6 @@
             this.label20 = new System.Windows.Forms.Label();
             this.recUpDown = new System.Windows.Forms.NumericUpDown();
             this.preUpDown = new System.Windows.Forms.NumericUpDown();
-            this.betaLjapChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.betaRmsChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.betaRunButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -84,7 +85,6 @@
             this.label16 = new System.Windows.Forms.Label();
             this.betaMaxUpDown = new System.Windows.Forms.NumericUpDown();
             this.betaMinUpDown = new System.Windows.Forms.NumericUpDown();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rmsChart)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -95,19 +95,19 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.recUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.preUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.betaLjapChart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.betaRmsChart)).BeginInit();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.stepsUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.betaMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.betaMinUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.betaRmsChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.betaLjapChart)).BeginInit();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.recUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.preUpDown)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.stepsUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.betaMaxUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.betaMinUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // elementHost1
@@ -512,6 +512,75 @@
             this.tabPage2.Text = "β-Variation";
             this.tabPage2.Enter += new System.EventHandler(this.tabPage2_Enter);
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.IsSplitterFixed = true;
+            this.splitContainer1.Location = new System.Drawing.Point(6, 129);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.betaRmsChart);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.betaLjapChart);
+            this.splitContainer1.Size = new System.Drawing.Size(719, 400);
+            this.splitContainer1.SplitterDistance = 200;
+            this.splitContainer1.TabIndex = 25;
+            // 
+            // betaRmsChart
+            // 
+            this.betaRmsChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.betaRmsChart.BackColor = System.Drawing.Color.Transparent;
+            chartArea2.AxisX.Title = "β/π";
+            chartArea2.AxisY.ScrollBar.IsPositionedInside = false;
+            chartArea2.AxisY.Title = "<RMS>";
+            chartArea2.BackColor = System.Drawing.Color.Transparent;
+            chartArea2.CursorY.Interval = 0.01D;
+            chartArea2.CursorY.IsUserEnabled = true;
+            chartArea2.CursorY.IsUserSelectionEnabled = true;
+            chartArea2.Name = "ChartArea1";
+            this.betaRmsChart.ChartAreas.Add(chartArea2);
+            legend2.BackColor = System.Drawing.Color.Transparent;
+            legend2.Name = "Legend1";
+            this.betaRmsChart.Legends.Add(legend2);
+            this.betaRmsChart.Location = new System.Drawing.Point(3, 3);
+            this.betaRmsChart.Name = "betaRmsChart";
+            this.betaRmsChart.Size = new System.Drawing.Size(716, 189);
+            this.betaRmsChart.TabIndex = 21;
+            this.betaRmsChart.Text = "chart1";
+            // 
+            // betaLjapChart
+            // 
+            this.betaLjapChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.betaLjapChart.BackColor = System.Drawing.Color.Transparent;
+            chartArea3.AxisX.Title = "β/π";
+            chartArea3.AxisY.ScrollBar.IsPositionedInside = false;
+            chartArea3.AxisY.Title = "Max. Lyapunov";
+            chartArea3.BackColor = System.Drawing.Color.Transparent;
+            chartArea3.CursorY.Interval = 0.01D;
+            chartArea3.CursorY.IsUserEnabled = true;
+            chartArea3.CursorY.IsUserSelectionEnabled = true;
+            chartArea3.Name = "ChartArea1";
+            this.betaLjapChart.ChartAreas.Add(chartArea3);
+            legend3.BackColor = System.Drawing.Color.Transparent;
+            legend3.Name = "Legend1";
+            this.betaLjapChart.Legends.Add(legend3);
+            this.betaLjapChart.Location = new System.Drawing.Point(3, 3);
+            this.betaLjapChart.Name = "betaLjapChart";
+            this.betaLjapChart.Size = new System.Drawing.Size(716, 189);
+            this.betaLjapChart.TabIndex = 22;
+            this.betaLjapChart.Text = "chart1";
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.label17);
@@ -605,54 +674,6 @@
             this.preUpDown.Name = "preUpDown";
             this.preUpDown.Size = new System.Drawing.Size(51, 20);
             this.preUpDown.TabIndex = 0;
-            // 
-            // betaLjapChart
-            // 
-            this.betaLjapChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.betaLjapChart.BackColor = System.Drawing.Color.Transparent;
-            chartArea3.AxisX.Title = "β/π";
-            chartArea3.AxisY.ScrollBar.IsPositionedInside = false;
-            chartArea3.AxisY.Title = "Max. Lyapunov";
-            chartArea3.BackColor = System.Drawing.Color.Transparent;
-            chartArea3.CursorY.Interval = 0.01D;
-            chartArea3.CursorY.IsUserEnabled = true;
-            chartArea3.CursorY.IsUserSelectionEnabled = true;
-            chartArea3.Name = "ChartArea1";
-            this.betaLjapChart.ChartAreas.Add(chartArea3);
-            legend3.BackColor = System.Drawing.Color.Transparent;
-            legend3.Name = "Legend1";
-            this.betaLjapChart.Legends.Add(legend3);
-            this.betaLjapChart.Location = new System.Drawing.Point(3, 3);
-            this.betaLjapChart.Name = "betaLjapChart";
-            this.betaLjapChart.Size = new System.Drawing.Size(716, 189);
-            this.betaLjapChart.TabIndex = 22;
-            this.betaLjapChart.Text = "chart1";
-            // 
-            // betaRmsChart
-            // 
-            this.betaRmsChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.betaRmsChart.BackColor = System.Drawing.Color.Transparent;
-            chartArea2.AxisX.Title = "β/π";
-            chartArea2.AxisY.ScrollBar.IsPositionedInside = false;
-            chartArea2.AxisY.Title = "<RMS>";
-            chartArea2.BackColor = System.Drawing.Color.Transparent;
-            chartArea2.CursorY.Interval = 0.01D;
-            chartArea2.CursorY.IsUserEnabled = true;
-            chartArea2.CursorY.IsUserSelectionEnabled = true;
-            chartArea2.Name = "ChartArea1";
-            this.betaRmsChart.ChartAreas.Add(chartArea2);
-            legend2.BackColor = System.Drawing.Color.Transparent;
-            legend2.Name = "Legend1";
-            this.betaRmsChart.Legends.Add(legend2);
-            this.betaRmsChart.Location = new System.Drawing.Point(3, 3);
-            this.betaRmsChart.Name = "betaRmsChart";
-            this.betaRmsChart.Size = new System.Drawing.Size(716, 189);
-            this.betaRmsChart.TabIndex = 21;
-            this.betaRmsChart.Text = "chart1";
             // 
             // betaRunButton
             // 
@@ -786,6 +807,11 @@
             0,
             0,
             0});
+            this.betaMinUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
             this.betaMinUpDown.Name = "betaMinUpDown";
             this.betaMinUpDown.Size = new System.Drawing.Size(51, 20);
             this.betaMinUpDown.TabIndex = 0;
@@ -794,27 +820,6 @@
             0,
             0,
             65536});
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.IsSplitterFixed = true;
-            this.splitContainer1.Location = new System.Drawing.Point(6, 129);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.betaRmsChart);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.betaLjapChart);
-            this.splitContainer1.Size = new System.Drawing.Size(719, 400);
-            this.splitContainer1.SplitterDistance = 200;
-            this.splitContainer1.TabIndex = 25;
             // 
             // MainForm
             // 
@@ -844,21 +849,21 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.betaRmsChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.betaLjapChart)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.recUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.preUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.betaLjapChart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.betaRmsChart)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.stepsUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.betaMaxUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.betaMinUpDown)).EndInit();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
