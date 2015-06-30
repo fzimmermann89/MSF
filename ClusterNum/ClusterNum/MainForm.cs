@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
+using Accord.Math;
 
 
 namespace ClusterNum
@@ -21,7 +22,7 @@ namespace ClusterNum
     {
         private NodeGraph graph;
         private Vertex[] vertices;
-        private int[][] adjmatrix;
+        private double[][] adjmatrix;
         private int[][] cluster;
 
         public GraphSharpControl GraphControl { get; set; }
@@ -41,10 +42,17 @@ namespace ClusterNum
         Series[] betarmsseries;
         Series[] betaljapseries;
 
+        
+
         public MainForm()
         {
             InitializeComponent();
             Application.EnableVisualStyles();
+
+
+
+            
+        
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -65,36 +73,11 @@ namespace ClusterNum
             graph = new NodeGraph();
 
 
-            string[] strarr = matrixBox.Text.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
-            int dim = strarr.Length;
+            
 
-            adjmatrix = new int[dim][];
-
-            int i = 0;
-            foreach (string line in strarr)
-            {
-                string[] strsplitarr = line.Split(' ');
-                if (strsplitarr.Length != dim)
-                {
-                    MessageBox.Show("Matrix ist nicht quadratisch", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                int[] intsplitarr;
-                try
-                {
-
-                    intsplitarr = Array.ConvertAll(strsplitarr, int.Parse);
-                }
-                catch (FormatException ex)
-                {
-                    MessageBox.Show("Matrix ungültig", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                adjmatrix[i++] = intsplitarr;
-
-            }
-
+            adjmatrix = Helper.MatrixFromString(matrixBox.Text);
+            int dim = adjmatrix.Length;
+           
             vertices = new Vertex[dim];
             for (int k = 0; k < dim; k++)
             {
@@ -155,7 +138,7 @@ namespace ClusterNum
             //letzte zeile der ausgabe enthält orbits.
             string[] s = ergebnis.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
             MatchCollection matches = Regex.Matches(s[s.Length - 2], @"([0-9 ]+)(\(([^)]*)\))?;");
-
+            int i = 0;
             cluster = new int[matches.Count][];
             clusterBox.Text = "";
             for (int j = 0; j < matches.Count; j++)
@@ -208,7 +191,12 @@ namespace ClusterNum
             initIteratorButton.Enabled = true;
             layoutButton.Enabled = true;
             betaRunButton.Enabled = true;
+
+
+     
         }
+
+    
 
         private void runButton_Click(object sender, EventArgs e)
         {
