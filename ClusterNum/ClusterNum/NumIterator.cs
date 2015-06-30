@@ -10,14 +10,14 @@ namespace ClusterNum
         public static Random rand = new Random();
 
         public int vertexCount;
-        public int[][] adjMatrix;
+        public double[][] adjMatrix;
 
         public double beta, sigma, delta;
 
         public List<double[]> xt = new List<double[]>();
         public double pertubation = 0.01;
 
-        public NumIterator(int[][] adjMatrix, double beta, double sigma, double delta)
+        public NumIterator(double[][] adjMatrix, double beta, double sigma, double delta)
         {
             this.beta = beta;
             this.sigma = sigma;
@@ -61,13 +61,13 @@ namespace ClusterNum
             double ret = (1 - Math.Cos(x)) / 2.0;
             return ret;
         }
-        private double dintensity(double x)
+        public double dintensity(double x)
         {
             double ret = (Math.Sin(x)) / 2.0;
             return ret;
         }
-       
-        public double[] fstrich( )
+
+        public double[] fstrich()
         {
             double[] fstrich = new double[vertexCount];
             double[] xs = xt[xt.Count - 1];
@@ -77,6 +77,34 @@ namespace ClusterNum
                 fstrich[i] = tmp% (2.0 * Math.PI);
             }
             return fstrich;
+
+            /*
+            double[] fstrich = new double[vertexCount];
+
+            double[] xs = xt[xt.Count - 1];
+            for (int i = 0; i < cluster.Length; i++)
+            {
+
+                double sum = 0;
+                for (int j = 0; j < cluster[i].Length; j++)
+                {
+                    int nodenum = cluster[i][j];
+
+                    sum += (double)adjMatrix[i][j] * dintensity(xs[j]);
+                    double tmp = beta * dintensity(xs[nodenum]);
+                 
+                }
+                for (int j = 0; j < cluster[i].Length; j++)
+                {
+                    int nodenum = cluster[i][j];
+                    fstrich[nodenum] = sum;
+
+                }
+          
+            }
+            return fstrich;*/
+
+
         }
 
         private double[] intensities(double[] xi)

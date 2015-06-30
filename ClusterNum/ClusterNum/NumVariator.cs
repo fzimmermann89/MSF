@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Accord.Math;
 
 namespace ClusterNum
 {
@@ -20,15 +21,18 @@ namespace ClusterNum
             }
         }
 
+
+     
+
         public double betamin, betamax, sigma, delta, pertubation;
         public int betasteps, pre, rec, nodecount;
         private NumIterator iterator;
-        int[][] adjmatrix;
+        double[][] adjmatrix;
         int[][] cluster;
         Action<result> callback;
 
 
-        public NumVariator(int[][] adjMatrix, double betamin, double betamax, int betasteps, double sigma, double delta, double pertubation, int pre, int rec, int[][] cluster, Action<result> callback)
+        public NumVariator(double[][] adjMatrix, double betamin, double betamax, int betasteps, double sigma, double delta, double pertubation, int pre, int rec, int[][] cluster, Action<result> callback)
         {
             this.betamax = betamax;
             this.betamin = betamin;
@@ -91,7 +95,13 @@ namespace ClusterNum
 
                     //ljapunow berechnung
                     double[] fstrich = iterator.fstrich();
-                    
+
+                    //double[] clusterfstrich = new double[cluster.Length];
+                    //for (int i = 0; i < cluster.Length; i++)
+                    //{
+                    //    clusterfstrich[i]=beta*iterator.dintensity()
+                    //}
+
                     for (int i = 0; i < nodecount; i++)
                     {
                         tmpljapunow[i] += Math.Log(Math.Abs(fstrich[i]));
@@ -123,6 +133,7 @@ namespace ClusterNum
                 //ausgabe
                 result ret_result = new result(beta, rms, ljapunow);
                 callback(ret_result);
+
             }
         }
 
