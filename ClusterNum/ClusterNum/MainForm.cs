@@ -376,7 +376,7 @@ namespace ClusterNum
             for (int i = 0; i < result.ljapunow.Length; i++)
             {
 
-                betaljapseries[i].Points.AddXY(result.beta / Math.PI, result.ljapunow[i]);
+                betaljapseries[i].Points.AddXY(result.beta / Math.PI, Math.Min(Math.Max(-50,result.ljapunow[i]),50));
             }
 
             if (result.beta >= (double)betaMaxUpDown.Value * Math.PI)

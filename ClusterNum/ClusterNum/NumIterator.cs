@@ -15,7 +15,7 @@ namespace ClusterNum
         public double beta, sigma, delta;
 
         public List<double[]> xt = new List<double[]>();
-        public double pertubation = 0.01;
+        public double pertubation = 0.0;
 
         public NumIterator(double[][] adjMatrix, double beta, double sigma, double delta)
         {
