@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Accord.Math;
+using System.Windows.Forms;
 
 namespace ClusterNum
 {
@@ -25,12 +26,15 @@ namespace ClusterNum
         double[][] BMat;
         double[][][] EMats;
         double[][][] JMats;
+
+        List<double[]> smts;
+
         int[][] cluster;
 
         int dim;
 
 
-        public Ljapunator(double[][] adjMatrix,double[][] TMatrix,int[][] cluster, double beta, double sigma, double delta)
+        public Ljapunator(double[][] adjMatrix, double[][] TMatrix, int[][] cluster, List<double[]> smts, double beta, double sigma, double delta)
         {
             this.beta = beta;
             this.sigma = sigma;
@@ -39,9 +43,11 @@ namespace ClusterNum
             this.vertexCount = adjMatrix.Length;
             etat.Add(new double[vertexCount]);
 
+            this.smts = smts;
+
             this.cluster = cluster;
             this.dim = adjMatrix.Length;
-            TMat = TMatrix; 
+            TMat = TMatrix;
             TMatInverse = TMat.Inverse();
             EMats = new double[cluster.Length][][];
             JMats = new double[cluster.Length][][];
@@ -64,31 +70,65 @@ namespace ClusterNum
             }
 
             BMat = TMat.Multiply(adjMatrix).Multiply(TMatInverse);
-            
-            
-        }
-        public Ljapunator(double[][] adjMatrix, double beta, double sigma, double delta)
-        {
-            this.beta = beta;
-            this.sigma = sigma;
-            this.delta = delta;
-            this.adjMatrix = adjMatrix;
-            this.vertexCount = adjMatrix.Length;
-            etat.Add(new double[vertexCount]);
+
 
         }
+
 
         public void iterate()
         {
-            double[] oldxi = etat[etat.Count - 1];
-            double[] newxi = new double[vertexCount];
 
-            double[][] sumJDF;
-            double[][] sumJDH;
+            int tIndex = etat.Count - 1+1;
 
-            //double[] DF
+            double[] oldetai = etat[etat.Count - 1];
+            double[] newetai = new double[vertexCount];
 
-            etat.Add(newxi);
+            double[][] sumJDF = new double[vertexCount][];
+            double[][] sumJDH = new double[vertexCount][];
+            for (int i = 0; i < vertexCount; i++)
+            {
+                sumJDF[i] = new double[vertexCount];
+                sumJDH[i] = new double[vertexCount];
+            }
+            for (int clusternum = 0; clusternum < cluster.Length; clusternum++)
+            {
+                /*
+                double[][] DFsmt = new double[vertexCount][];
+                double[][] DHsmt = new double[vertexCount][];
+                for (int i = 0; i < vertexCount; i++)
+                {
+                    DFsmt[i] = new double[vertexCount];
+                    DHsmt[i] = new double[vertexCount];
+                    DFsmt[i][i] = (beta * dintensity(smts[tIndex][i])) % (2.0 * Math.PI);
+                    DHsmt[i][i] = (sigma * dintensity(smts[tIndex][i])) % (2.0 * Math.PI);
+
+                }*/
+                double DFsmt = beta * dintensity(smts[tIndex][clusternum]);
+                double DHsmt = sigma * dintensity(smts[tIndex][clusternum]);
+
+                double[,] njmat1=JMats[clusternum].ToMatrix();
+                njmat1=DFsmt.Multiply(njmat1);
+                double[][] addmat1=njmat1.ToArray();
+
+                double[,] njmat2 = JMats[clusternum].ToMatrix();
+                njmat2 = DHsmt.Multiply(njmat2);
+                double[][] addmat2 = njmat2.ToArray();
+
+                sumJDF = sumJDF.Add(addmat1);
+                sumJDH = sumJDH.Add(addmat2);
+
+            }
+            //MessageBox.Show(oldetai.ToString(DefaultMatrixFormatProvider.CurrentCulture),"Current Eta");
+            //MessageBox.Show(sumJDF.ToString(DefaultMatrixFormatProvider.CurrentCulture),"Current Sum J*DF");
+            //MessageBox.Show(sumJDH.ToString(DefaultMatrixFormatProvider.CurrentCulture),"Current Sum J*DH");
+
+            newetai = sumJDF.Multiply(oldetai);
+            newetai = newetai.Add(BMat.Multiply(sumJDH).Multiply(oldetai));
+            newetai.Add(oldetai);
+
+
+
+            etat.Add(newetai);
         }
         public void iterate(int numIteration)
         {
@@ -97,6 +137,8 @@ namespace ClusterNum
                 iterate();
             }
         }
+
+
 
 
         private double intensity(double x)

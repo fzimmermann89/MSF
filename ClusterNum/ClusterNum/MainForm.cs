@@ -42,7 +42,7 @@ namespace ClusterNum
         Series[] betarmsseries;
         Series[] betaljapseries;
 
-        
+
 
         public MainForm()
         {
@@ -51,8 +51,8 @@ namespace ClusterNum
 
 
 
-            
-        
+
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -73,11 +73,11 @@ namespace ClusterNum
             graph = new NodeGraph();
 
 
-            
+
 
             adjmatrix = Helper.MatrixFromString(matrixBox.Text);
             int dim = adjmatrix.Length;
-           
+
             vertices = new Vertex[dim];
             for (int k = 0; k < dim; k++)
             {
@@ -193,10 +193,78 @@ namespace ClusterNum
             betaRunButton.Enabled = true;
 
 
-     
+            double[][] TMat;
+            double x = 1.0;
+            double y = -0.5;
+            double a = Math.Sqrt(2.0) / 2.0;
+            double b = -a;
+            double z = 0.5;
+
+            string tmattext = @"0 0 0 0 b 0 0 0 0 b 0 
+0 0 0 b 0 b 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 x 
+b 0 0 0 0 0 0 b 0 0 0 
+0 y y 0 0 0 y 0 y 0 0 
+0 0 0 b 0 a 0 0 0 0 0 
+0 y z 0 0 0 y 0 z 0 0 
+0 0 0 0 b 0 0 0 0 a 0 
+b 0 0 0 0 0 0 a 0 0 0 
+0 0 a 0 0 0 0 0 b 0 0 
+0 b 0 0 0 0 a 0 0 0 0 ";
+
+            tmattext = tmattext.Replace("x", x.ToString());
+            tmattext = tmattext.Replace("y", y.ToString());
+            tmattext = tmattext.Replace("a", a.ToString());
+            tmattext = tmattext.Replace("b", b.ToString());
+            tmattext = tmattext.Replace("z", z.ToString());
+
+            TMat = Helper.MatrixFromString(tmattext);
+            for (i = 0; i < cluster.Length; i++)
+            {
+                gseries[i].Points.Clear();
+            }
+
+            NumIterator smIterator = new NumIterator(adjmatrix, beta, sigma, delta);
+            smIterator.iterate(500);
+
+            List<double[]> smts = new List<double[]>();
+            for (i = 0; i < smIterator.xt.Count; i++)
+            {
+                double[] add = new double[cluster.Length];
+                for (int j = 0; j < cluster.Length; j++)
+                {
+                    int node0=cluster[j][0];
+                    add[j] = smIterator.xt[i][node0];
+                }
+                smts.Add(add);
+            }
+
+            int ind = 9;
+            double pert = 0.5;
+            Ljapunator punator = new Ljapunator(adjmatrix, TMat, cluster, smts, beta, sigma, delta);
+            punator.etat[0][ind] = pert;
+            for (i = 0; i < smIterator.xt.Count - 1; i++)
+            {
+                // MessageBox.Show(punator.etat[punator.etat.Count - 1].ToString(DefaultMatrixFormatProvider.CurrentCulture));
+                gseries[0].Points.AddXY(i, punator.etat[i][ind]);
+                punator.iterate();
+            }
+
+            ind = 10;
+            punator = new Ljapunator(adjmatrix, TMat, cluster, smts, beta, sigma, delta);
+            punator.etat[0][ind] = pert;
+            for (i = 0; i < smIterator.xt.Count - 1; i++)
+            {
+                // MessageBox.Show(punator.etat[punator.etat.Count - 1].ToString(DefaultMatrixFormatProvider.CurrentCulture));
+                gseries[1].Points.AddXY(i, punator.etat[i][ind]);
+                punator.iterate();
+            }
+
+
+
         }
 
-    
+
 
         private void runButton_Click(object sender, EventArgs e)
         {
