@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 namespace ClusterNum
 {
+    //Ljapunator Klasse integriert eta über t
     public class Ljapunator
     {
 
@@ -14,80 +15,40 @@ namespace ClusterNum
         public static Random rand = new Random();
 
         public double[,] adjMatrix;
-
-
-
         public double beta, sigma, delta;
 
         public List<double[]> etat = new List<double[]>();
         public double pertubation = 0.00;
 
-        double[,] TMat;
-        double[,] TMatInverse;
         double[,] BMat;
-        double[][,] EMats;
         double[][,] JMats;
         List<double[]> smts;
 
         int[][] cluster;
-        int[][] clusterTransform;
+        
 
-        int dim;
+        int nodeCount;
 
         public double[] ljapunowSum;
 
-        public Ljapunator(double[,] adjMatrix, double[,] TMatrix, int[][] cluster, List<double[]> smts, double beta, double sigma, double delta)
+
+        //Konstruktor , berechnung braucht J_m's , B und die Cluster zum summieren
+        public Ljapunator(double[][,] JMats, double[,] BMat, int[][] cluster, List<double[]> smts, double beta, double sigma, double delta)
         {
             this.beta = beta;
             this.sigma = sigma;
             this.delta = delta;
-            this.adjMatrix = adjMatrix;
-            this.dim = adjMatrix.GetLength(0);
-            etat.Add(new double[dim]);
+            this.nodeCount = BMat.GetLength(0);
+            etat.Add(new double[nodeCount]);
 
-            ljapunowSum = new double[dim];
+            ljapunowSum = new double[nodeCount];
 
             this.smts = smts;
+            this.JMats = JMats;
+            this.BMat = BMat;
 
             this.cluster = cluster;
-
-            TMat = TMatrix;
-            TMatInverse = TMat.Inverse();
-            EMats = new double[cluster.Length][,];
-            JMats = new double[cluster.Length][,];
-            for (int ci = 0; ci < cluster.Length; ci++)
-            {
-                EMats[ci] = new double[dim, dim];
-
-            }
-            for (int ci = 0; ci < cluster.Length; ci++)
-            {
-                for (int j = 0; j < cluster[ci].Length; j++)
-                {
-                    int nodenum = cluster[ci][j];
-                    EMats[ci][nodenum, nodenum] = 1.0;
-                }
-
-                JMats[ci] = TMat.Multiply(EMats[ci]).Multiply(TMatInverse);
-            }
-
-            BMat = TMat.Multiply(adjMatrix).Multiply(TMatInverse);
-
-            double[,] komischeMatrix = new double[dim, dim];
-            for (int i = 0; i < dim; i++)
-            {
-                for (int m = 0; m < cluster.Length; m++)
-                {
-                    if (JMats[m][i, i] != 0)
-                    {
-                        komischeMatrix[i, i] = m;
-                    }
-                }
-            }
             
-
-            //MessageBox.Show(komischeMatrix.ToString(DefaultMatrixFormatProvider.CurrentCulture), "komische Mat");
-            //MessageBox.Show(BMat.ToString(DefaultMatrixFormatProvider.CurrentCulture), "BMat");
         }
 
 
@@ -97,10 +58,10 @@ namespace ClusterNum
             int tIndex = etat.Count - 1;
 
             double[] oldetai = etat[etat.Count - 1];
-            double[] newetai = new double[dim];
+            double[] newetai = new double[nodeCount];
 
-            double[,] sumJDF = new double[dim, dim];
-            double[,] sumJDH = new double[dim, dim];
+            double[,] sumJDF = new double[nodeCount, nodeCount];
+            double[,] sumJDH = new double[nodeCount, nodeCount];
 
             for (int clusternum = 0; clusternum < cluster.Length; clusternum++)
             {
@@ -112,13 +73,10 @@ namespace ClusterNum
                 sumJDH = sumJDH.Add(DHsmt.Multiply(JMats[clusternum]));
 
             }
-            //MessageBox.Show(oldetai.ToString(DefaultMatrixFormatProvider.CurrentCulture),"Current Eta");
-            //MessageBox.Show(sumJDF.ToString(DefaultMatrixFormatProvider.CurrentCulture),"Current Sum J*DF");
-            //MessageBox.Show(sumJDH.ToString(DefaultMatrixFormatProvider.CurrentCulture),"Current Sum J*DH");
 
             newetai = sumJDF.Multiply(oldetai);
             newetai = newetai.Add(BMat.Multiply(sumJDH).Multiply(oldetai));
-            // newetai = newetai.Add(oldetai);
+            //newetai = newetai.Add(oldetai);
             double[] tmp = newetai.ElementwiseDivide(oldetai).Abs().Log();
             for (int k = 0; k < ljapunowSum.Length; k++)
             {
@@ -157,7 +115,7 @@ namespace ClusterNum
 
         private double[] intensities(double[] xi)
         {
-            double[] pertIntensity = new double[dim];
+            double[] pertIntensity = new double[nodeCount];
             for (int i = 0; i < pertIntensity.Length; i++)
             {
 
@@ -176,7 +134,7 @@ namespace ClusterNum
         private void tmat(int[][] cluster)
         {
 
-            double[,] tmat = new double[dim, dim];
+            double[,] tmat = new double[nodeCount, nodeCount];
             //TODO: berechnung der Tmat aus den Clustern
         }
     }

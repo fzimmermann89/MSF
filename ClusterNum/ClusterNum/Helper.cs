@@ -14,14 +14,14 @@ namespace ClusterNum
 
 
             string[] strarr = matrixstring.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
-            int dim = strarr.Length;
-            double[,] retmat = new double[dim,dim];
+            int nodeCount = strarr.Length;
+            double[,] retmat = new double[nodeCount,nodeCount];
 
             int i = 0;
             foreach (string line in strarr)
             {
                 string[] strsplitarr = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                if (strsplitarr.Length != dim)
+                if (strsplitarr.Length != nodeCount)
                 {
                     MessageBox.Show("Matrix ist nicht quadratisch", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
@@ -37,7 +37,7 @@ namespace ClusterNum
                     return null;
                 }
 
-                for (int j = 0; j < dim; j++)
+                for (int j = 0; j < nodeCount; j++)
                 {
                     retmat[i, j] = intsplitarr[j];
                 }

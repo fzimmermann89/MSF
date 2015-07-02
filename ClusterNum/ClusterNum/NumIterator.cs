@@ -9,7 +9,7 @@ namespace ClusterNum
     {
         public static Random rand = new Random();
 
-        public int vertexCount;
+        public int nodeCount;
         public double[,] adjMatrix;
 
         public double beta, sigma, delta;
@@ -23,8 +23,8 @@ namespace ClusterNum
             this.sigma = sigma;
             this.delta = delta;
             this.adjMatrix = adjMatrix;
-            this.vertexCount = adjMatrix.GetLength(0);
-            xt.Add(new double[vertexCount]);
+            this.nodeCount = adjMatrix.GetLength(0);
+            xt.Add(new double[nodeCount]);
 
         }
 
@@ -32,12 +32,12 @@ namespace ClusterNum
         {
             double[] oldxi = xt[xt.Count - 1];
             double[] pertIntensity = intensities(oldxi);
-            double[] newxi = new double[vertexCount];
+            double[] newxi = new double[nodeCount];
 
-            for (int i = 0; i < vertexCount; i++)
+            for (int i = 0; i < nodeCount; i++)
             {
                 double sum = 0;
-                for (int j = 0; j < vertexCount; j++)
+                for (int j = 0; j < nodeCount; j++)
                 {
                     sum += (double)adjMatrix[i,j] * pertIntensity[j];
                 }
@@ -69,9 +69,9 @@ namespace ClusterNum
 
         public double[] fstrich()
         {
-            double[] fstrich = new double[vertexCount];
+            double[] fstrich = new double[nodeCount];
             double[] xs = xt[xt.Count - 1];
-            for (int i = 0; i < vertexCount; i++)
+            for (int i = 0; i < nodeCount; i++)
             {
                 double tmp = beta * dintensity(xs[i]);
                 fstrich[i] = tmp% (2.0 * Math.PI);
@@ -79,7 +79,7 @@ namespace ClusterNum
             return fstrich;
 
             /*
-            double[] fstrich = new double[vertexCount];
+            double[] fstrich = new double[nodeCount];
 
             double[] xs = xt[xt.Count - 1];
             for (int i = 0; i < cluster.Length; i++)
@@ -109,7 +109,7 @@ namespace ClusterNum
 
         private double[] intensities(double[] xi)
         {
-            double[] pertIntensity = new double[vertexCount];
+            double[] pertIntensity = new double[nodeCount];
             for (int i = 0; i < pertIntensity.Length; i++)
             {
 

@@ -71,10 +71,10 @@ namespace ClusterNum
             graph = new NodeGraph();
 
             adjmatrix = Helper.MatrixFromString(matrixBox.Text);
-            int dim = adjmatrix.GetLength(0);
+            int nodeCount = adjmatrix.GetLength(0);
 
-            vertices = new Vertex[dim];
-            for (int k = 0; k < dim; k++)
+            vertices = new Vertex[nodeCount];
+            for (int k = 0; k < nodeCount; k++)
             {
                 vertices[k] = new Vertex(k.ToString(), 1.0, 0);
 
@@ -82,10 +82,10 @@ namespace ClusterNum
             }
 
             //dreadnaut für orbits starten
-            string dreadnautcmd = "n=" + dim + " g ";
-            for (int irow = 0; irow < dim; irow++)
+            string dreadnautcmd = "n=" + nodeCount + " g ";
+            for (int irow = 0; irow < nodeCount; irow++)
             {
-                for (int icol = 0; icol < dim; icol++)
+                for (int icol = 0; icol < nodeCount; icol++)
                 {
                     if (adjmatrix[irow,icol] != 0)
                     {
@@ -199,7 +199,7 @@ namespace ClusterNum
         {
             iterator.iterate();
             double[] xs = iterator.xt[iterator.xt.Count - 1];
-            for (int i = 0; i < iterator.vertexCount; i++)
+            for (int i = 0; i < iterator.nodeCount; i++)
             {
                 vertices[i].Value = (xs[i] / (2.0 * Math.PI));
             }
@@ -242,7 +242,7 @@ namespace ClusterNum
             iterator = new NumIterator(adjmatrix, beta, sigma, delta);
             iterator.pertubation = epsilon;
             double[] xs = iterator.xt[iterator.xt.Count - 1];
-            for (int i = 0; i < iterator.vertexCount; i++)
+            for (int i = 0; i < iterator.nodeCount; i++)
             {
                 vertices[i].Value = (xs[i] / (2.0 * Math.PI));
             }
@@ -323,8 +323,8 @@ namespace ClusterNum
                     betaljapseries[i].ChartType = SeriesChartType.FastLine;
                     betaljapseries[i].Color = Color.FromArgb(255, coltmp.R, coltmp.G, coltmp.B);
                     betaljapseries[i].BorderWidth = 2;
-                    betaljapseries[i].BorderDashStyle = ChartDashStyle.Dot;
-                    if ((i % 2)==0) betaljapseries[i].BorderDashStyle = ChartDashStyle.Dash;
+                  //  betaljapseries[i].BorderDashStyle = ChartDashStyle.Dot;
+                  //  if ((i % 2)==0) betaljapseries[i].BorderDashStyle = ChartDashStyle.Dash;
                     
                 }
 
