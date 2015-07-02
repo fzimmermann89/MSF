@@ -42,7 +42,7 @@ namespace ClusterNum
             this.nodeCount = BMat.GetLength(0);
             etat.Add(new double[nodeCount]);
 
-            ljapunowSum = new double[dim];
+            ljapunowSum = new double[nodeCount];
 
             this.smts = smts;
             this.JMats = JMats;
@@ -132,33 +132,7 @@ namespace ClusterNum
             return pertIntensity;
 
         }
-        private void tmat(int[][] cluster)
-        {
-            double[][][] pmat = new double[9][][];
-            pmat[0]=new double[dim][];
-            double[,] tmat = new double[dim, dim];
-
-            //PMat.0 erstellen
-            for (int icluster = 0; icluster < cluster.Length; icluster++)
-            {
-                double[] row = new double[dim];
-                double number = 1.0 / cluster[icluster].Length;
-                for (int inode = 0; inode < cluster[icluster].Length; inode++)
-                {
-                    int nodenum = cluster[icluster][inode];
-                    row[nodenum] = number;
-                }
-                for (int inode = 0; inode < cluster[icluster].Length; inode++)
-                {
-                    int nodenum = cluster[icluster][inode];
-                    pmat[0][nodenum] = row;
-                }
-            }
-         //  
-
-            double[,] tmat = new double[dim, dim];
-            //TODO: berechnung der Tmat aus den Clustern
-        }
+        
     }
 
-
+}
