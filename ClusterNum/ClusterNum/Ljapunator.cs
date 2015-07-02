@@ -33,6 +33,7 @@ namespace ClusterNum
 
         int dim;
 
+        public  List<double[]> etaratio=new   List<double[]>();
 
         public Ljapunator(double[][] adjMatrix, double[][] TMatrix, int[][] cluster, List<double[]> smts, double beta, double sigma, double delta)
         {
@@ -125,8 +126,8 @@ namespace ClusterNum
             newetai = sumJDF.Multiply(oldetai);
             newetai = newetai.Add(BMat.Multiply(sumJDH).Multiply(oldetai));
             newetai.Add(oldetai);
-
-
+           double[] tmp= newetai.ElementwiseDivide(oldetai);
+           etaratio.Add(tmp);
 
             etat.Add(newetai);
         }
@@ -170,5 +171,12 @@ namespace ClusterNum
             return pertIntensity;
 
         }
+        private void tmat(int[][] cluster)
+        {
+            
+            double[,] tmat=new double[dim,dim];
+            //TODO: berechnung der Tmat aus den Clustern
+        }
     }
+ 
 }
