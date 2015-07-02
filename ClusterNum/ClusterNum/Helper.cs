@@ -15,7 +15,7 @@ namespace ClusterNum
 
             string[] strarr = matrixstring.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
             int nodeCount = strarr.Length;
-            double[,] retmat = new double[nodeCount,nodeCount];
+            double[,] retmat = new double[nodeCount, nodeCount];
 
             int i = 0;
             foreach (string line in strarr)
@@ -23,8 +23,8 @@ namespace ClusterNum
                 string[] strsplitarr = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
                 if (strsplitarr.Length != nodeCount)
                 {
-                    MessageBox.Show("Matrix ist nicht quadratisch", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return null;
+                    throw new FormatException("Matrix ist nicht quadratisch");
+                
                 }
                 double[] intsplitarr;
                 try
@@ -33,8 +33,7 @@ namespace ClusterNum
                 }
                 catch (FormatException ex)
                 {
-                    MessageBox.Show("Matrix ungültig:\n" + ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return null;
+                   throw new FormatException("Matrix ungültig:\n" + ex.Message);
                 }
 
                 for (int j = 0; j < nodeCount; j++)
@@ -54,22 +53,20 @@ namespace ClusterNum
 
             for (int j = 0; j < matches.Count; j++)
             {
-
-                string[] parts = matches[j].Groups[1].Value.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                for (int iparts = 0; iparts < parts.Length; iparts++)
+                string match = matches[j].Groups[1].Value;
+                MatchCollection repmatches = Regex.Matches(match, "([0-9]+):([0-9]+)");
+                foreach (Match repmatch in repmatches)
                 {
-                    string[] subparts = parts[iparts].Split(':');
-                    if (subparts.Length > 1)
+                    for (int irangepos = int.Parse(repmatch.Groups[1].Value) + 1; irangepos < int.Parse(repmatch.Groups[2].Value); irangepos++)
                     {
-                        parts[iparts] = "";
-                        for (int irangepos = int.Parse(subparts[0]); irangepos < int.Parse(subparts[1]); irangepos++)
-                        {
-                            parts[iparts] += irangepos.ToString() + " ";
-                        }
-                        parts[iparts] += int.Parse(subparts[1]);
+                        match += " " + irangepos.ToString();
                     }
                 }
+
+                string[] parts = match.Split(new string[] { " ", ":" }, StringSplitOptions.RemoveEmptyEntries);
+                
                 cluster[j] = Array.ConvertAll(parts, int.Parse);
+                Array.Sort(cluster[j]);
             }
             return cluster;
         }
