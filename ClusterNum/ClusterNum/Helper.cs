@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace ClusterNum
@@ -32,15 +33,42 @@ namespace ClusterNum
                 }
                 catch (FormatException ex)
                 {
-                    MessageBox.Show("Matrix ungültig:\n" +ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Matrix ungültig:\n" + ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
                 }
 
-               
+
                 retmat[i++] = intsplitarr;
 
             }
             return retmat;
+        }
+        public static int[][] dreadnaut2cluster(string ergebnis)
+        {
+            string[] s = ergebnis.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+            MatchCollection matches = Regex.Matches(s[s.Length - 2], @"([0-9: ]+)(\(([^)]*)\))?;");
+            int[][] cluster = new int[matches.Count][];
+
+            for (int j = 0; j < matches.Count; j++)
+            {
+
+                string[] parts = matches[j].Groups[1].Value.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                for (int iparts = 0; iparts < parts.Length; iparts++)
+                {
+                    string[] subparts = parts[iparts].Split(':');
+                    if (subparts.Length > 1)
+                    {
+                        parts[iparts] = "";
+                        for (int irangepos = int.Parse(subparts[0]); irangepos < int.Parse(subparts[1]); irangepos++)
+                        {
+                            parts[iparts] += irangepos.ToString() + " ";
+                        }
+                        parts[iparts] += int.Parse(subparts[1]);
+                    }
+                }
+                cluster[j] = Array.ConvertAll(parts, int.Parse);
+            }
+            return cluster;
         }
     }
 }
