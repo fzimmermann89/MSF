@@ -69,8 +69,15 @@ namespace ClusterNum
         {
 
             graph = new NodeGraph();
-
-            adjmatrix = Helper.MatrixFromString(matrixBox.Text);
+            try
+            {
+                adjmatrix = Helper.MatrixFromString(matrixBox.Text);
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             int nodeCount = adjmatrix.GetLength(0);
 
             vertices = new Vertex[nodeCount];
@@ -87,7 +94,7 @@ namespace ClusterNum
             {
                 for (int icol = 0; icol < nodeCount; icol++)
                 {
-                    if (adjmatrix[irow,icol] != 0)
+                    if (adjmatrix[irow, icol] != 0)
                     {
                         graph.AddEdge(new Edge<Vertex>(vertices[irow], vertices[icol]));
                         dreadnautcmd += icol + " ";
@@ -168,7 +175,7 @@ namespace ClusterNum
             layoutButton.Enabled = true;
             betaRunButton.Enabled = true;
 
-        
+
 
         }
 
@@ -323,9 +330,9 @@ namespace ClusterNum
                     betaljapseries[i].ChartType = SeriesChartType.FastLine;
                     betaljapseries[i].Color = Color.FromArgb(255, coltmp.R, coltmp.G, coltmp.B);
                     betaljapseries[i].BorderWidth = 2;
-                  //  betaljapseries[i].BorderDashStyle = ChartDashStyle.Dot;
-                  //  if ((i % 2)==0) betaljapseries[i].BorderDashStyle = ChartDashStyle.Dash;
-                    
+                    //  betaljapseries[i].BorderDashStyle = ChartDashStyle.Dot;
+                    //  if ((i % 2)==0) betaljapseries[i].BorderDashStyle = ChartDashStyle.Dash;
+
                 }
 
                 Action<NumVariator.result> callback_action = callback;
@@ -355,8 +362,7 @@ namespace ClusterNum
             }
             for (int i = 0; i < result.ljapunow.Length; i++)
             {
-
-                betaljapseries[i].Points.AddXY(result.beta / Math.PI, Math.Min(Math.Max(-50, result.ljapunow[i]), 50));
+                if (result.ljapunow[i] > -50 && result.ljapunow[i] < 50) betaljapseries[i].Points.AddXY(result.beta / Math.PI, result.ljapunow[i]);
             }
 
             if (result.beta >= (double)betaMaxUpDown.Value * Math.PI)
