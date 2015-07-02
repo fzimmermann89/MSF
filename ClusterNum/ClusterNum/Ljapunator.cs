@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Accord.Math;
+using Accord.Math.Decompositions;
 using System.Windows.Forms;
 
 namespace ClusterNum
@@ -25,7 +26,7 @@ namespace ClusterNum
         List<double[]> smts;
 
         int[][] cluster;
-        
+
 
         int nodeCount;
 
@@ -41,14 +42,14 @@ namespace ClusterNum
             this.nodeCount = BMat.GetLength(0);
             etat.Add(new double[nodeCount]);
 
-            ljapunowSum = new double[nodeCount];
+            ljapunowSum = new double[dim];
 
             this.smts = smts;
             this.JMats = JMats;
             this.BMat = BMat;
 
             this.cluster = cluster;
-            
+
         }
 
 
@@ -133,10 +134,31 @@ namespace ClusterNum
         }
         private void tmat(int[][] cluster)
         {
+            double[][][] pmat = new double[9][][];
+            pmat[0]=new double[dim][];
+            double[,] tmat = new double[dim, dim];
 
-            double[,] tmat = new double[nodeCount, nodeCount];
+            //PMat.0 erstellen
+            for (int icluster = 0; icluster < cluster.Length; icluster++)
+            {
+                double[] row = new double[dim];
+                double number = 1.0 / cluster[icluster].Length;
+                for (int inode = 0; inode < cluster[icluster].Length; inode++)
+                {
+                    int nodenum = cluster[icluster][inode];
+                    row[nodenum] = number;
+                }
+                for (int inode = 0; inode < cluster[icluster].Length; inode++)
+                {
+                    int nodenum = cluster[icluster][inode];
+                    pmat[0][nodenum] = row;
+                }
+            }
+         //  
+
+            double[,] tmat = new double[dim, dim];
             //TODO: berechnung der Tmat aus den Clustern
         }
     }
 
-}
+
