@@ -28,12 +28,12 @@ namespace ClusterNum
         public int betasteps, pre, rec, nodecount;
         private NumIterator iterator;
         private NumIterator pertiterator;
-        double[][] adjmatrix;
+        double[,] adjmatrix;
         int[][] cluster;
         Action<result> callback;
 
 
-        public NumVariator(double[][] adjMatrix, double betamin, double betamax, int betasteps, double sigma, double delta, double pertubation, int pre, int rec, int[][] cluster, Action<result> callback)
+        public NumVariator(double[,] adjMatrix, double betamin, double betamax, int betasteps, double sigma, double delta, double pertubation, int pre, int rec, int[][] cluster, Action<result> callback)
         {
             this.betamax = betamax;
             this.betamin = betamin;
@@ -44,11 +44,11 @@ namespace ClusterNum
             this.delta = delta;
             this.pertubation = pertubation;
             this.adjmatrix = adjMatrix;
-            this.nodecount = adjMatrix.Length;
+            this.nodecount = adjMatrix.GetLength(0);
             this.callback = callback;
             this.cluster = cluster;
         }
-
+        Random rand = new Random();
         public void DoWork()
         {
             for (int ibeta = 0; ibeta <= betasteps; ibeta++)
@@ -79,7 +79,7 @@ namespace ClusterNum
 
                 //ljapunator test
 
-                double[][] TMat;
+                double[,] TMat;
                 double x = 1.0;
                 double y = -0.5;
                 double a = Math.Sqrt(2.0) / 2.0;
@@ -107,34 +107,47 @@ b 0 0 0 0 0 0 a 0 0 0
                 TMat = Helper.MatrixFromString(tmattext);
 
                 NumIterator smIterator = new NumIterator(adjmatrix, beta, sigma, delta);
-                smIterator.iterate(500);
+
+                
+
+                smIterator.iterate(pre + rec);
+
+                List<double[]> blabla = smIterator.xt.GetRange(pre, rec);
 
                 List<double[]> smts = new List<double[]>();
-                for (int i = 0; i < smIterator.xt.Count; i++)
+                for (int i = 0; i < blabla.Count; i++)
                 {
                     double[] add = new double[cluster.Length];
                     for (int j = 0; j < cluster.Length; j++)
                     {
                         int node0 = cluster[j][0];
-                        add[j] = smIterator.xt[i][node0];
+                        add[j] = blabla[i][node0];
                     }
                     smts.Add(add);
                 }
 
-              
-                for (int inum = 0; inum < nodecount; inum++)
+
+                //int inum = 10;
+                //double pert = 0.5;
+                //Ljapunator punator = new Ljapunator(adjmatrix, TMat, cluster, smts, beta, sigma, delta);
+
+                //punator.etat[0][inum] = pert;
+                //punator.iterate(rec);
+                //ljapunow[0] = punator.ljapunowSum[inum] / (double)rec; ;
+
+                int[] indices = new int[] { };
+
+                int k = 0;
+                for (int inum = 6; inum <= 10; inum++)
                 {
-                    double pert = 0.5;
+                 
+   
                     Ljapunator punator = new Ljapunator(adjmatrix, TMat, cluster, smts, beta, sigma, delta);
 
-                    punator.etat[0][inum] = pert;
-
-                    for (int i = 0; i < smIterator.xt.Count - 2; i++)
-                    {
-                        punator.iterate();
-                    }
+                    punator.etat[0][inum] = pertubation;
+                    punator.iterate(rec);
+                    ljapunow[k++] = punator.ljapunowSum[inum] / (double)rec;
                 }
-
 
 
                 //ausgabe

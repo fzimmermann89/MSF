@@ -13,110 +13,103 @@ namespace ClusterNum
 
         public static Random rand = new Random();
 
-        public int vertexCount;
-        public double[][] adjMatrix;
+        public double[,] adjMatrix;
+
+
 
         public double beta, sigma, delta;
 
         public List<double[]> etat = new List<double[]>();
         public double pertubation = 0.00;
 
-        double[][] TMat;
-        double[][] TMatInverse;
-        double[][] BMat;
-        double[][][] EMats;
-        double[][][] JMats;
-
+        double[,] TMat;
+        double[,] TMatInverse;
+        double[,] BMat;
+        double[][,] EMats;
+        double[][,] JMats;
         List<double[]> smts;
 
         int[][] cluster;
+        int[][] clusterTransform;
 
         int dim;
 
-        public  List<double[]> etaratio=new   List<double[]>();
+        public double[] ljapunowSum;
 
-        public Ljapunator(double[][] adjMatrix, double[][] TMatrix, int[][] cluster, List<double[]> smts, double beta, double sigma, double delta)
+        public Ljapunator(double[,] adjMatrix, double[,] TMatrix, int[][] cluster, List<double[]> smts, double beta, double sigma, double delta)
         {
             this.beta = beta;
             this.sigma = sigma;
             this.delta = delta;
             this.adjMatrix = adjMatrix;
-            this.vertexCount = adjMatrix.Length;
-            etat.Add(new double[vertexCount]);
+            this.dim = adjMatrix.GetLength(0);
+            etat.Add(new double[dim]);
+
+            ljapunowSum = new double[dim];
 
             this.smts = smts;
 
             this.cluster = cluster;
-            this.dim = adjMatrix.Length;
+
             TMat = TMatrix;
             TMatInverse = TMat.Inverse();
-            EMats = new double[cluster.Length][][];
-            JMats = new double[cluster.Length][][];
+            EMats = new double[cluster.Length][,];
+            JMats = new double[cluster.Length][,];
             for (int ci = 0; ci < cluster.Length; ci++)
             {
-                EMats[ci] = new double[dim][];
-                for (int i = 0; i < EMats[ci].Length; i++)
-                {
-                    EMats[ci][i] = new double[dim];
-                }
+                EMats[ci] = new double[dim, dim];
+
             }
             for (int ci = 0; ci < cluster.Length; ci++)
             {
                 for (int j = 0; j < cluster[ci].Length; j++)
                 {
                     int nodenum = cluster[ci][j];
-                    EMats[ci][nodenum][nodenum] = 1.0;
+                    EMats[ci][nodenum, nodenum] = 1.0;
                 }
+
                 JMats[ci] = TMat.Multiply(EMats[ci]).Multiply(TMatInverse);
             }
 
             BMat = TMat.Multiply(adjMatrix).Multiply(TMatInverse);
 
+            double[,] komischeMatrix = new double[dim, dim];
+            for (int i = 0; i < dim; i++)
+            {
+                for (int m = 0; m < cluster.Length; m++)
+                {
+                    if (JMats[m][i, i] != 0)
+                    {
+                        komischeMatrix[i, i] = m;
+                    }
+                }
+            }
+            
 
+            //MessageBox.Show(komischeMatrix.ToString(DefaultMatrixFormatProvider.CurrentCulture), "komische Mat");
+            //MessageBox.Show(BMat.ToString(DefaultMatrixFormatProvider.CurrentCulture), "BMat");
         }
 
 
         public void iterate()
         {
 
-            int tIndex = etat.Count - 1+1;
+            int tIndex = etat.Count - 1;
 
             double[] oldetai = etat[etat.Count - 1];
-            double[] newetai = new double[vertexCount];
+            double[] newetai = new double[dim];
 
-            double[][] sumJDF = new double[vertexCount][];
-            double[][] sumJDH = new double[vertexCount][];
-            for (int i = 0; i < vertexCount; i++)
-            {
-                sumJDF[i] = new double[vertexCount];
-                sumJDH[i] = new double[vertexCount];
-            }
+            double[,] sumJDF = new double[dim, dim];
+            double[,] sumJDH = new double[dim, dim];
+
             for (int clusternum = 0; clusternum < cluster.Length; clusternum++)
             {
-                /*
-                double[][] DFsmt = new double[vertexCount][];
-                double[][] DHsmt = new double[vertexCount][];
-                for (int i = 0; i < vertexCount; i++)
-                {
-                    DFsmt[i] = new double[vertexCount];
-                    DHsmt[i] = new double[vertexCount];
-                    DFsmt[i][i] = (beta * dintensity(smts[tIndex][i])) % (2.0 * Math.PI);
-                    DHsmt[i][i] = (sigma * dintensity(smts[tIndex][i])) % (2.0 * Math.PI);
 
-                }*/
                 double DFsmt = beta * dintensity(smts[tIndex][clusternum]);
                 double DHsmt = sigma * dintensity(smts[tIndex][clusternum]);
 
-                double[,] njmat1=JMats[clusternum].ToMatrix();
-                njmat1=DFsmt.Multiply(njmat1);
-                double[][] addmat1=njmat1.ToArray();
-
-                double[,] njmat2 = JMats[clusternum].ToMatrix();
-                njmat2 = DHsmt.Multiply(njmat2);
-                double[][] addmat2 = njmat2.ToArray();
-
-                sumJDF = sumJDF.Add(addmat1);
-                sumJDH = sumJDH.Add(addmat2);
+                sumJDF = sumJDF.Add(DFsmt.Multiply(JMats[clusternum]));
+                sumJDH = sumJDH.Add(DHsmt.Multiply(JMats[clusternum]));
 
             }
             //MessageBox.Show(oldetai.ToString(DefaultMatrixFormatProvider.CurrentCulture),"Current Eta");
@@ -125,10 +118,19 @@ namespace ClusterNum
 
             newetai = sumJDF.Multiply(oldetai);
             newetai = newetai.Add(BMat.Multiply(sumJDH).Multiply(oldetai));
-            newetai.Add(oldetai);
-           double[] tmp= newetai.ElementwiseDivide(oldetai);
-           etaratio.Add(tmp);
+            // newetai = newetai.Add(oldetai);
+            double[] tmp = newetai.ElementwiseDivide(oldetai).Abs().Log();
+            for (int k = 0; k < ljapunowSum.Length; k++)
+            {
+                ljapunowSum[k] += tmp[k];
+            }
+            double oldetalength = oldetai.Euclidean();
+            double newetalength = newetai.Euclidean();
+            double scale = oldetalength / newetalength;
+            newetai = scale.Multiply(newetai);
 
+
+            // etaratio.
             etat.Add(newetai);
         }
         public void iterate(int numIteration)
@@ -155,7 +157,7 @@ namespace ClusterNum
 
         private double[] intensities(double[] xi)
         {
-            double[] pertIntensity = new double[vertexCount];
+            double[] pertIntensity = new double[dim];
             for (int i = 0; i < pertIntensity.Length; i++)
             {
 
@@ -173,10 +175,10 @@ namespace ClusterNum
         }
         private void tmat(int[][] cluster)
         {
-            
-            double[,] tmat=new double[dim,dim];
+
+            double[,] tmat = new double[dim, dim];
             //TODO: berechnung der Tmat aus den Clustern
         }
     }
- 
+
 }

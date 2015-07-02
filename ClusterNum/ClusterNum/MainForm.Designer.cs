@@ -564,6 +564,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.betaLjapChart.BackColor = System.Drawing.Color.Transparent;
             chartArea3.AxisX.Title = "β/π";
+            chartArea3.AxisY.Maximum = 0.8D;
+            chartArea3.AxisY.Minimum = -0.8D;
             chartArea3.AxisY.ScrollBar.IsPositionedInside = false;
             chartArea3.AxisY.Title = "Max. Lyapunov";
             chartArea3.BackColor = System.Drawing.Color.Transparent;
@@ -674,6 +676,11 @@
             this.preUpDown.Name = "preUpDown";
             this.preUpDown.Size = new System.Drawing.Size(51, 20);
             this.preUpDown.TabIndex = 0;
+            this.preUpDown.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             // 
             // betaRunButton
             // 

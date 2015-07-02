@@ -10,20 +10,20 @@ namespace ClusterNum
         public static Random rand = new Random();
 
         public int vertexCount;
-        public double[][] adjMatrix;
+        public double[,] adjMatrix;
 
         public double beta, sigma, delta;
 
         public List<double[]> xt = new List<double[]>();
         public double pertubation = 0.0;
 
-        public NumIterator(double[][] adjMatrix, double beta, double sigma, double delta)
+        public NumIterator(double[,] adjMatrix, double beta, double sigma, double delta)
         {
             this.beta = beta;
             this.sigma = sigma;
             this.delta = delta;
             this.adjMatrix = adjMatrix;
-            this.vertexCount = adjMatrix.Length;
+            this.vertexCount = adjMatrix.GetLength(0);
             xt.Add(new double[vertexCount]);
 
         }
@@ -39,7 +39,7 @@ namespace ClusterNum
                 double sum = 0;
                 for (int j = 0; j < vertexCount; j++)
                 {
-                    sum += (double)adjMatrix[i][j] * pertIntensity[j];
+                    sum += (double)adjMatrix[i,j] * pertIntensity[j];
                 }
                 double tmp = beta * pertIntensity[i] + sigma * sum + delta;
                 newxi[i] = tmp % (2.0 * Math.PI);

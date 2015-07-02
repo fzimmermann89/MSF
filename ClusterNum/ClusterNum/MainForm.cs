@@ -22,7 +22,7 @@ namespace ClusterNum
     {
         private NodeGraph graph;
         private Vertex[] vertices;
-        private double[][] adjmatrix;
+        private double[,] adjmatrix;
         private int[][] cluster;
 
         public GraphSharpControl GraphControl { get; set; }
@@ -71,7 +71,7 @@ namespace ClusterNum
             graph = new NodeGraph();
 
             adjmatrix = Helper.MatrixFromString(matrixBox.Text);
-            int dim = adjmatrix.Length;
+            int dim = adjmatrix.GetLength(0);
 
             vertices = new Vertex[dim];
             for (int k = 0; k < dim; k++)
@@ -87,7 +87,7 @@ namespace ClusterNum
             {
                 for (int icol = 0; icol < dim; icol++)
                 {
-                    if (adjmatrix[irow][icol] != 0)
+                    if (adjmatrix[irow,icol] != 0)
                     {
                         graph.AddEdge(new Edge<Vertex>(vertices[irow], vertices[icol]));
                         dreadnautcmd += icol + " ";
@@ -322,6 +322,10 @@ namespace ClusterNum
                     betaLjapChart.Series.Add(betaljapseries[i]);
                     betaljapseries[i].ChartType = SeriesChartType.FastLine;
                     betaljapseries[i].Color = Color.FromArgb(255, coltmp.R, coltmp.G, coltmp.B);
+                    betaljapseries[i].BorderWidth = 2;
+                    betaljapseries[i].BorderDashStyle = ChartDashStyle.Dot;
+                    if ((i % 2)==0) betaljapseries[i].BorderDashStyle = ChartDashStyle.Dash;
+                    
                 }
 
                 Action<NumVariator.result> callback_action = callback;

@@ -9,13 +9,13 @@ namespace ClusterNum
 {
     public class Helper
     {
-        public static double[][] MatrixFromString(string matrixstring)
+        public static double[,] MatrixFromString(string matrixstring)
         {
 
 
             string[] strarr = matrixstring.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
             int dim = strarr.Length;
-            double[][] retmat = new double[dim][];
+            double[,] retmat = new double[dim,dim];
 
             int i = 0;
             foreach (string line in strarr)
@@ -37,8 +37,11 @@ namespace ClusterNum
                     return null;
                 }
 
-
-                retmat[i++] = intsplitarr;
+                for (int j = 0; j < dim; j++)
+                {
+                    retmat[i, j] = intsplitarr[j];
+                }
+                i++;
 
             }
             return retmat;
