@@ -67,13 +67,8 @@ namespace ClusterNum
 
         private void initGraphButton_Click(object sender, EventArgs e)
         {
-            //TODO: einfärben. code aufräumen
-            //einlesen der matrix, darstellung, orbitsuche, einfärben der cluster
 
             graph = new NodeGraph();
-
-
-
 
             adjmatrix = Helper.MatrixFromString(matrixBox.Text);
             int dim = adjmatrix.Length;
@@ -86,7 +81,7 @@ namespace ClusterNum
                 graph.AddVertex(vertices[k]);
             }
 
-
+            //dreadnaut für orbits starten
             string dreadnautcmd = "n=" + dim + " g ";
             for (int irow = 0; irow < dim; irow++)
             {
@@ -97,19 +92,10 @@ namespace ClusterNum
                         graph.AddEdge(new Edge<Vertex>(vertices[irow], vertices[icol]));
                         dreadnautcmd += icol + " ";
                     }
-
-
-
                 }
                 dreadnautcmd += ";";
-
             }
-
-
             dreadnautcmd += "x o q";
-
-            //dreadnaut starten
-
             string path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "dreadnaut.exe");
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.UseShellExecute = false;
@@ -135,36 +121,26 @@ namespace ClusterNum
             System.IO.File.Delete(path);
             string ergebnis = process.StandardOutput.ReadToEnd();
 
-            //letzte zeile der ausgabe enthält orbits.
-            string[] s = ergebnis.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
-            MatchCollection matches = Regex.Matches(s[s.Length - 2], @"([0-9 ]+)(\(([^)]*)\))?;");
-            int i = 0;
-            cluster = new int[matches.Count][];
-            clusterBox.Text = "";
-            for (int j = 0; j < matches.Count; j++)
-            {
-                clusterBox.Text += "cluster " + j + " mit Knoten: ";
-                cluster[j] = Array.ConvertAll(matches[j].Groups[1].Value.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries), int.Parse);
-                foreach (int k in cluster[j])
-                {
-                    clusterBox.Text += k + " ";
-                    vertices[k].Cluster = j;
-                }
-                clusterBox.Text += "\r\n";
-            }
+            //cluster auslesen
+            cluster = Helper.dreadnaut2cluster(ergebnis);
 
             rmsChart.Series.Clear();
             gseries = new Series[cluster.Length];
-            for (i = 0; i < cluster.Length; i++)
+            clusterBox.Text = "";
+            for (int i = 0; i < cluster.Length; i++)
             {
+                clusterBox.Text += "Cluster " + i + " mit Knoten: ";
+                foreach (int k in cluster[i])
+                {
+                    clusterBox.Text += +k + " ";
+                    vertices[k].Cluster = i;
+                }
+                clusterBox.Text += "\r\n";
                 gseries[i] = new Series("Cluster " + i.ToString());
                 gseries[i].ChartArea = "ChartArea1";
                 rmsChart.Series.Add(gseries[i]);
-
                 gseries[i].ChartType = SeriesChartType.FastLine;
-
                 System.Windows.Media.Color coltmp = Vertex.cluster_colors[i % Vertex.cluster_colors.Length];
-
                 gseries[i].Color = Color.FromArgb(255, coltmp.R, coltmp.G, coltmp.B);
             }
 
@@ -192,75 +168,7 @@ namespace ClusterNum
             layoutButton.Enabled = true;
             betaRunButton.Enabled = true;
 
-
-            double[][] TMat;
-            double x = 1.0;
-            double y = -0.5;
-            double a = Math.Sqrt(2.0) / 2.0;
-            double b = -a;
-            double z = 0.5;
-
-            string tmattext = @"0 0 0 0 b 0 0 0 0 b 0 
-0 0 0 b 0 b 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 x 
-b 0 0 0 0 0 0 b 0 0 0 
-0 y y 0 0 0 y 0 y 0 0 
-0 0 0 b 0 a 0 0 0 0 0 
-0 y z 0 0 0 y 0 z 0 0 
-0 0 0 0 b 0 0 0 0 a 0 
-b 0 0 0 0 0 0 a 0 0 0 
-0 0 a 0 0 0 0 0 b 0 0 
-0 b 0 0 0 0 a 0 0 0 0 ";
-
-            tmattext = tmattext.Replace("x", x.ToString());
-            tmattext = tmattext.Replace("y", y.ToString());
-            tmattext = tmattext.Replace("a", a.ToString());
-            tmattext = tmattext.Replace("b", b.ToString());
-            tmattext = tmattext.Replace("z", z.ToString());
-
-            TMat = Helper.MatrixFromString(tmattext);
-            for (i = 0; i < cluster.Length; i++)
-            {
-                gseries[i].Points.Clear();
-            }
-
-            NumIterator smIterator = new NumIterator(adjmatrix, beta, sigma, delta);
-            smIterator.iterate(500);
-
-            List<double[]> smts = new List<double[]>();
-            for (i = 0; i < smIterator.xt.Count; i++)
-            {
-                double[] add = new double[cluster.Length];
-                for (int j = 0; j < cluster.Length; j++)
-                {
-                    int node0=cluster[j][0];
-                    add[j] = smIterator.xt[i][node0];
-                }
-                smts.Add(add);
-            }
-
-            int ind = 9;
-            double pert = 0.5;
-            Ljapunator punator = new Ljapunator(adjmatrix, TMat, cluster, smts, beta, sigma, delta);
-            punator.etat[0][ind] = pert;
-            for (i = 0; i < smIterator.xt.Count - 1; i++)
-            {
-                // MessageBox.Show(punator.etat[punator.etat.Count - 1].ToString(DefaultMatrixFormatProvider.CurrentCulture));
-                gseries[0].Points.AddXY(i, punator.etat[i][ind]);
-                punator.iterate();
-            }
-
-            ind = 10;
-            punator = new Ljapunator(adjmatrix, TMat, cluster, smts, beta, sigma, delta);
-            punator.etat[0][ind] = pert;
-            for (i = 0; i < smIterator.xt.Count - 1; i++)
-            {
-                // MessageBox.Show(punator.etat[punator.etat.Count - 1].ToString(DefaultMatrixFormatProvider.CurrentCulture));
-                gseries[1].Points.AddXY(i, punator.etat[i][ind]);
-                punator.iterate();
-            }
-
-
+        
 
         }
 
@@ -444,7 +352,7 @@ b 0 0 0 0 0 0 a 0 0 0
             for (int i = 0; i < result.ljapunow.Length; i++)
             {
 
-                betaljapseries[i].Points.AddXY(result.beta / Math.PI, Math.Min(Math.Max(-50,result.ljapunow[i]),50));
+                betaljapseries[i].Points.AddXY(result.beta / Math.PI, Math.Min(Math.Max(-50, result.ljapunow[i]), 50));
             }
 
             if (result.beta >= (double)betaMaxUpDown.Value * Math.PI)
