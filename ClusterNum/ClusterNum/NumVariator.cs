@@ -51,84 +51,91 @@ namespace ClusterNum
 
         public void DoWork()
         {
-
             for (int ibeta = 0; ibeta <= betasteps; ibeta++)
             {
                 double beta = betamin + ibeta * (betamax - betamin) / betasteps;
+
+                //RMS
                 pertiterator = new NumIterator(adjmatrix, beta, sigma, delta);
                 pertiterator.pertubation = pertubation;
-                NumIterator tmpiterator = new NumIterator(adjmatrix, beta, sigma, delta);
-
-                double[] ljapunow = new double[cluster.Length];
                 double[] rms = new double[cluster.Length];
-
                 pertiterator.iterate(pre);
-
                 for (int itime = 0; itime < rec; itime++)
                 {
                     pertiterator.iterate();
-
-                    //RMS
                     for (int icluster = 0; icluster < cluster.Length; icluster++)
                     {
                         rms[icluster] += MS(pertiterator.xt.Last())[icluster];
-
                     }
-
                 }
-
-                //rms berechnung
                 for (int i = 0; i < rms.Length; i++)
                 {
                     rms[i] /= rec;
                     rms[i] = Math.Sqrt(rms[i]);
                 }
 
+                //Ljapunow
+                double[] ljapunow = new double[cluster.Length];
 
-                for (int icluster = 0; icluster < cluster.Length; icluster++)
+                //ljapunator test
+
+                double[][] TMat;
+                double x = 1.0;
+                double y = -0.5;
+                double a = Math.Sqrt(2.0) / 2.0;
+                double b = -a;
+                double z = 0.5;
+
+                string tmattext = @"0 0 0 0 b 0 0 0 0 b 0 
+0 0 0 b 0 b 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 x 
+b 0 0 0 0 0 0 b 0 0 0 
+0 y y 0 0 0 y 0 y 0 0 
+0 0 0 b 0 a 0 0 0 0 0 
+0 y z 0 0 0 y 0 z 0 0 
+0 0 0 0 b 0 0 0 0 a 0 
+b 0 0 0 0 0 0 a 0 0 0 
+0 0 a 0 0 0 0 0 b 0 0 
+0 b 0 0 0 0 a 0 0 0 0 ";
+
+                tmattext = tmattext.Replace("x", x.ToString());
+                tmattext = tmattext.Replace("y", y.ToString());
+                tmattext = tmattext.Replace("a", a.ToString());
+                tmattext = tmattext.Replace("b", b.ToString());
+                tmattext = tmattext.Replace("z", z.ToString());
+
+                TMat = Helper.MatrixFromString(tmattext);
+
+                NumIterator smIterator = new NumIterator(adjmatrix, beta, sigma, delta);
+                smIterator.iterate(500);
+
+                List<double[]> smts = new List<double[]>();
+                for (int i = 0; i < smIterator.xt.Count; i++)
                 {
-                    if (cluster[icluster].Length > 1)
+                    double[] add = new double[cluster.Length];
+                    for (int j = 0; j < cluster.Length; j++)
                     {
-                        int maxrepeat = 1;
-
-                        for (int irepeat = 0; irepeat < maxrepeat; irepeat++)
-                        {
-                            NumIterator ljapiterator = new NumIterator(adjmatrix, beta, sigma, delta);
-                            NumIterator refiterator = new NumIterator(adjmatrix, beta, sigma, delta);
-                            ljapiterator.iterate(pre);
-                            refiterator.iterate(pre);
-
-                            ljapiterator.xt[ljapiterator.xt.Count - 1] = pertubate(ljapiterator.xt.Last(), pertubation, icluster);
-                            double referror = Math.Sqrt(varsqrsum(ljapiterator.xt.Last(), refiterator.xt.Last()));
-                            double[] tmpljapunow = new double[cluster.Length];
-                            for (int itime = 0; itime < rec; itime++)
-                            {
-                                double olderror = Math.Sqrt(varsqrsum(ljapiterator.xt.Last(), refiterator.xt.Last()));
-                                //olderror ist immer referror
-                                ljapiterator.iterate();
-                                refiterator.iterate();
-                                double newerror = Math.Sqrt(varsqrsum(ljapiterator.xt.Last(), refiterator.xt.Last()));
-                                double summand = Math.Log(newerror / olderror);
-                                tmpljapunow[icluster] += summand;
-                                //normalisieren
-                                double scale = newerror / referror;
-                                for (int inode = 0; inode < nodecount; inode++)
-                                {
-                                    ljapiterator.xt.Last()[inode] = refiterator.xt.Last()[inode] + (ljapiterator.xt.Last()[inode] - refiterator.xt.Last()[inode]) / scale;
-                                }
-
-                            }
-                            ljapunow[icluster] += tmpljapunow[icluster] / rec;
-                        }
-                        ljapunow[icluster] /= maxrepeat;
+                        int node0 = cluster[j][0];
+                        add[j] = smIterator.xt[i][node0];
                     }
-
+                    smts.Add(add);
                 }
-                //ljap berechnung
-                for (int i = 0; i < ljapunow.Length; i++)
+
+              
+                for (int inum = 0; inum < nodecount; inum++)
                 {
+                    double pert = 0.5;
+                    Ljapunator punator = new Ljapunator(adjmatrix, TMat, cluster, smts, beta, sigma, delta);
 
+                    punator.etat[0][inum] = pert;
+
+                    for (int i = 0; i < smIterator.xt.Count - 2; i++)
+                    {
+                        punator.iterate();
+                    }
                 }
+
+
 
                 //ausgabe
                 result ret_result = new result(beta, rms, ljapunow);
