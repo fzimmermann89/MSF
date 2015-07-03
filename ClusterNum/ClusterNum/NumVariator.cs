@@ -59,9 +59,6 @@ namespace ClusterNum
             this.cluster = cluster;
             this.nodeCount = adjmatrix.GetLength(0);
 
-            tmat();
-
-
 
             // Zeugs für BMat, JMats und clusterTransform berechnung, wird übergeben an Ljapunator
             double x = 1.0;
@@ -288,74 +285,74 @@ b 0 0 0 0 0 0 a 0 0 0
             }
             return pertxi;
         }
-        private void tmat()
-        {
+        //private void tmat()
+        //{
 
-            int numreal = 0;
-            for (int i = 0; i < cluster.Length; i++)
-            {
-                if (cluster[i].Length > 1) numreal++;
-            }
-            int[][] realcluster = new int[numreal][];
-            int k = 0;
-            for (int i = 0; i < cluster.Length; i++)
-            {
-                if (cluster[i].Length > 1)
-                {
-                    realcluster[k++] = cluster[i];
-                }
+        //    int numreal = 0;
+        //    for (int i = 0; i < cluster.Length; i++)
+        //    {
+        //        if (cluster[i].Length > 1) numreal++;
+        //    }
+        //    int[][] realcluster = new int[numreal][];
+        //    int k = 0;
+        //    for (int i = 0; i < cluster.Length; i++)
+        //    {
+        //        if (cluster[i].Length > 1)
+        //        {
+        //            realcluster[k++] = cluster[i];
+        //        }
 
-            }
+        //    }
 
-            double[][][] pmat = new double[realcluster.Length + 1][][];
-            pmat[0] = new double[nodeCount][];
-            double[,] tmat = new double[nodeCount, nodeCount];
+        //    double[][][] pmat = new double[realcluster.Length + 1][][];
+        //    pmat[0] = new double[nodeCount][];
+        //    double[,] tmat = new double[nodeCount, nodeCount];
 
-            //PMat.0 erstellen
-            for (int icluster = 0; icluster < cluster.Length; icluster++)
-            {
-                double[] row = new double[nodeCount];
-                double number = 1.0 / cluster[icluster].Length;
-                for (int inode = 0; inode < cluster[icluster].Length; inode++)
-                {
-                    int nodenum = cluster[icluster][inode];
-                    row[nodenum] = number;
-                }
-                for (int inode = 0; inode < cluster[icluster].Length; inode++)
-                {
-                    int nodenum = cluster[icluster][inode];
-                    pmat[0][nodenum] = row;
-                }
-            }
-            //restliche Pmats für die einzelnen Cluster
-            for (int ipmat = 1; ipmat < pmat.Length; ipmat++)
-            {
-                pmat[ipmat] = new double[nodeCount][];
-                for (int j = 0; j < nodeCount; j++)
-                {
-                    pmat[ipmat][j] = new double[nodeCount];
-                }
+        //    //PMat.0 erstellen
+        //    for (int icluster = 0; icluster < cluster.Length; icluster++)
+        //    {
+        //        double[] row = new double[nodeCount];
+        //        double number = 1.0 / cluster[icluster].Length;
+        //        for (int inode = 0; inode < cluster[icluster].Length; inode++)
+        //        {
+        //            int nodenum = cluster[icluster][inode];
+        //            row[nodenum] = number;
+        //        }
+        //        for (int inode = 0; inode < cluster[icluster].Length; inode++)
+        //        {
+        //            int nodenum = cluster[icluster][inode];
+        //            pmat[0][nodenum] = row;
+        //        }
+        //    }
+        //    //restliche Pmats für die einzelnen Cluster
+        //    for (int ipmat = 1; ipmat < pmat.Length; ipmat++)
+        //    {
+        //        pmat[ipmat] = new double[nodeCount][];
+        //        for (int j = 0; j < nodeCount; j++)
+        //        {
+        //            pmat[ipmat][j] = new double[nodeCount];
+        //        }
 
-                int[] currentClust = realcluster[ipmat - 1];
-                double number = 1.0 / (double)currentClust.Length;
-                double vorzeichen = 1;
-                for (int inoderow = 0; inoderow < currentClust.Length; inoderow++)
-                {
-                    int row=currentClust[inoderow];
-                    for (int inodecol = 0; inodecol < currentClust.Length; inodecol++)
-                    {
-                        int col=currentClust[inodecol];
-                        pmat[ipmat][row][col] = 1;
-                    }
-                }
+        //        int[] currentClust = realcluster[ipmat - 1];
+        //        double number = 1.0 / (double)currentClust.Length;
+        //        double vorzeichen = 1;
+        //        for (int inoderow = 0; inoderow < currentClust.Length; inoderow++)
+        //        {
+        //            int row=currentClust[inoderow];
+        //            for (int inodecol = 0; inodecol < currentClust.Length; inodecol++)
+        //            {
+        //                int col=currentClust[inodecol];
+        //                pmat[ipmat][row][col] = 1;
+        //            }
+        //        }
 
-                MessageBox.Show(pmat[ipmat].ToString(DefaultMatrixFormatProvider.CurrentCulture));
-            }
+        //        MessageBox.Show(pmat[ipmat].ToString(DefaultMatrixFormatProvider.CurrentCulture));
+        //    }
 
-            //  
+        //    //  
 
 
-        }
+        //}
     }
 
 }
