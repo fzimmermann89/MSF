@@ -1,0 +1,241 @@
+\documentclass[xcolor=dvipsnames]{beamer} 
+\useoutertheme{infolines} 
+\usetheme{CambridgeUS} 
+\setbeamertemplate{items}[ball] 
+\setbeamertemplate{blocks}[rounded][shadow=true] 
+\setbeamertemplate{navigation symbols}{} 
+
+\usepackage[ngerman]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{wrapfig}
+\usepackage{caption}
+\usepackage{subcaption}
+\addtobeamertemplate{block begin}{\setlength{\textwidth}{0.9\textwidth}}{}
+
+\usepackage[style=numeric, sorting=none]{biblatex} 
+\usepackage[justification=raggedright,singlelinecheck=false,labelfont=bf]{caption}
+\addbibresource{citations.bib}%the bibliography database 
+\DeclareFieldFormat{journaltitle}{#1}         
+%\DeclareFieldFormat{month}{}           
+\DeclareFieldFormat[article]{title}{}
+\DeclareFieldFormat[article]{volume}{\mkbibbold{#1}\addcomma\space} 
+\DeclareFieldFormat[article]{number}{\space #1}
+\DeclareFieldFormat{url}{} 
+\DeclareFieldFormat{doi}{}
+\DeclareFieldFormat{pages}{}
+\renewcommand*{\multinamedelim}{\addcomma\space}
+\renewcommand*{\finalnamedelim}{\addcomma\space} 
+\renewcommand*{\labelnamepunct}{\addcomma\space}
+\renewcommand*{\bibpagespunct}{\adddot\space}
+\renewbibmacro{in:}{}
+
+\title[Synchronisation in Netzwerken\hspace{12mm} \insertframenumber/
+\inserttotalframenumber]{Synchronisation in Netzwerken:\\Master Stability Function und
+Permutationssymmetrien}
+\institute[]{Institut fur Theoretische Physik, Technische Universitat Berlin, Germany}
+
+
+
+\author[F. Zimmermann, H. Taher, P. Affeld]{
+	\underline{Felix Zimmermann, Halgurd Taher, Paul-Rainer Affeld}
+}
+
+\date[\today]{\today}
+
+\renewcommand{\familydefault}{times}
+\renewcommand{\rmdefault}{times}
+
+
+
+\begin{document}
+
+\frame{
+	\titlepage
+	
+	
+	\begin{figure}
+		\includegraphics[width=0.12\textwidth]{tulogo.pdf}
+	\end{figure}
+}
+
+
+\frame{
+	\frametitle{Inhalt}
+	\tableofcontents
+}
+
+\section{Einleitung}
+\frame{
+	\frametitle{Table of Contents}
+	\tableofcontents[currentsection]
+
+}
+
+\frame{
+	\frametitle{Dynamik auf Netzwerken}
+		\begin{itemize}
+		\item $N$ miteinander gekoppelte Knoten
+		\item Jeder Knoten wird durch dynamische Gleichung beschrieben
+		\end{itemize}
+	\begin{align}\label{eq:dyneqcommon}
+					\overset{\cdot}{\boldsymbol{x}}_i(t)&=\boldsymbol{f}(\boldsymbol{x}_i(t))+\sigma\sum_j A_{ij}\boldsymbol{h}(\boldsymbol{x}_j)
+					\\\notag & i=1,...,N
+					\\\notag & A_{ij}\text{ Kopplungsmatrix}
+					\\\notag & \boldsymbol{f},\boldsymbol{h}:\mathbb{R}^n\rightarrow\mathbb{R}^n
+	\end{align}
+	Definiere
+	\begin{align}
+	\boldsymbol{X}=\left(\boldsymbol{x}_1,...,\boldsymbol{x}_N\right)^{\text{T}},
+	\boldsymbol{F}=\left(\boldsymbol{f}(\boldsymbol{x}_1),...,\boldsymbol{f}(\boldsymbol{x}_N)\right)^{\text{T}},
+	\boldsymbol{H}=\left(\boldsymbol{h}(\boldsymbol{x}_1),...,\boldsymbol{h}(\boldsymbol{x}_N)\right)^{\text{T}}
+	\end{align}
+	$\Rightarrow$
+	\begin{align}
+	\overset{\cdot}{\boldsymbol{X}}=
+	\end{align}
+
+
+%	\begin{equation}\label{eq:dyneqcommonall}
+%				\overset{\cdot}{\boldsymbol{ x}}(t)=
+%				\left[\sum_m^M\boldsymbol{E}^{(m)}\otimes D\boldsymbol{F}(\boldsymbol{s}_m(t))+
+%				\sigma\boldsymbol{A}\sum_m^M\boldsymbol{E}^{(m)}\otimes D\boldsymbol{H}(\boldsymbol{s}_m(t))\right]
+%				\boldsymbol{\delta x}(t)
+%	\end{equation}
+%	\begin{equation}\label{eq:delx}
+%				\overset{\cdot}{\boldsymbol{\delta x}}(t)=
+%				\left[\sum_m^M\boldsymbol{E}^{(m)}\otimes D\boldsymbol{F}(\boldsymbol{s}_m(t))+
+%				\sigma\boldsymbol{A}\sum_m^M\boldsymbol{E}^{(m)}\otimes D\boldsymbol{H}(\boldsymbol{s}_m(t))\right]
+%				\boldsymbol{\delta x}(t)
+%	\end{equation}
+	
+
+	
+
+}
+
+\frame{
+	\frametitle{Beispiel}
+	Diskretes System mit $N=11$ Knoten
+	(TODO Gleichung für xt+1)
+	(beta, sigma Parameter)
+
+}
+
+\frame{
+	\frametitle{Synchronität}
+	Synchronität : $x1(t)=x2(t)...s(t)$
+	\begin{itemize}
+	\item tmp
+	\end{itemize}
+	Stabilität der Synchronität :\\
+	Wie entwickelt sich kleine Abweichung von s(t) zeitlich weiter?\\
+	Master Stability Equation:
+	Formel deltaX (ohne Cluster).... mit Einheitsmatrix Kronecker...
+	Master Stability Function (größter Ljapunow Exponent groß lambda)  
+    groß lambda=limes t$->$inf summe $ln abs(deltax_i(t+1))/deltax_i(t))$
+    lambda>0 instabil, fehler wächst, bahnkurven xi entfernen sich von s(t)
+    lambda<0 stabil, fehler schrumpft, bahnkurven xi nähern sich wieder s(t)
+}
+\frame{
+	\frametitle{Synchronität}
+   	Voraussetzung :\\
+   	Bei Synchronität jeder Knoten gleicher Input $->$ u.a Konstante Zeilensumme von A \\
+}
+
+\frame{
+	\frametitle{Synchronität}
+   	Voraussetzung :\\
+   	Bei Synchronität jeder Knoten gleicher Input $->$ u.a Konstante Zeilensumme von A \\
+   	(AIJ aus mittlerer simulation)
+   	Zeilensumme NICHT konstant
+   
+}
+
+\frame{
+	\frametitle{Synchronität}
+	Simulation des Beispiels mit 
+   	(AIJ aus mittlerer simulation)
+   
+}
+\frame{
+	\frametitle{Synchronität}
+	- Keine globale synchronisation
+	- 5 gruppen von knoten die sich synchron verhalten
+	$->$ Cluster
+   (evtl screenshot)
+}
+
+\frame{
+	\frametitle{Cluster}
+	Knoten eines Clusters können bei Synchronität gleichen Input haben.
+   (da Gleiche Zeilensumme innerhalb eines Clusters)
+   Knoten können vertauscht werden, dynamik bleibt gleich
+   Netzwerk besitzt offensichtlich symmetrien
+   Suche nach permutationssymmetrien 
+   mathematisch beschrieben durch permutationsmatrizen $P_i$
+   mit $A=PAP^-1 -> A$ bleibt unverändert bei tauschen der knoten
+   
+   
+}
+\frame{
+	\frametitle{Cluster}
+    zwei Arten von Permutationen:
+    1. tausche Knoten A und B $->$ A und B gleiches Cluster
+    2. tausche Knoten A und B sowie C und D $->$ Cluster (AB) und (CD) "verschränkt"
+}
+
+\frame{
+	\frametitle{Cluster}
+	Clustersuche in der Regel numerisch
+	Bibliothek nauty  $[1]$
+}
+
+\frame{
+	\frametitle{Formen von Synchronität}
+-globale Synchronität
+-isolierte Synchronität innerhalb eines Clusters
+-gemeinsame Synchronität zweier verschränkter Cluster
+	(AB)synchron und (CD)synchron
+}
+\frame{
+	\frametitle{Isolierte Synchronität}
+Warum kann ein Cluster Syncrhon sein während andere nicht synchron sind?
+(pecora argumentation mit permutationsmatrizen vorbeiziehen und gleichen input für das cluster)
+}
+\frame{
+	\frametitle{Stabiltät der Clustersynchronität}
+Stabilitätsanalyse
+	für einzelne Cluster schwierig: in welche richtung sollte deltax betrachtet werden?
+	->Basistransformation mit Transformationsmatrix T
+	T blockdiagonalisiert A, sodass linker oberer MxM  Block die Bewegung innerhalb der Synchronisationsmannigfaltigkeit beschreibt
+	 an gleichung xxx von links  TxIn dranmultiplizieren
+	(gleichungen für eta) Ströung in neuer basis)
+	
+	aus dieser MSE kann größter Ljapunow-Exponent für  jedes Cluster berechnet werden
+}
+\frame{
+	\frametitle{Simulation}
+Stabilitätsanalyse
+}
+
+\frame{
+	\frametitle{Fazit}
+In Netzwerken mit  Symmetrien existieren Cluster
+Cluster können Synchron laufen
+Stabiltiätsanalyse durch Basistransformation möglich}
+\section{asd}
+\frame{
+	\frametitle{Inhalt}
+	\tableofcontents[currentsection]
+}
+
+
+\frame{
+	\vfill
+	\begin{center}
+		Thank you for your attention.
+	\end{center}
+	\vfill
+}
+
+\end{document}
