@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Accord.Math;
 
 namespace ClusterNum
 {
@@ -15,9 +16,9 @@ namespace ClusterNum
         public double beta, sigma, delta;
 
         public List<double[]> xt = new List<double[]>();
-        public double pertubation = 0.0;
+        public double noise = 0.0;
 
-        public NumIterator(double[,] adjMatrix, double beta, double sigma, double delta)
+        public NumIterator(double[,] adjMatrix, double beta, double sigma, double delta,double pertubation)
         {
             this.beta = beta;
             this.sigma = sigma;
@@ -25,6 +26,7 @@ namespace ClusterNum
             this.adjMatrix = adjMatrix;
             this.nodeCount = adjMatrix.GetLength(0);
             xt.Add(new double[nodeCount]);
+            xt[0] = pertubate(xt[0], pertubation).Add(Math.PI);
 
         }
 
@@ -78,31 +80,7 @@ namespace ClusterNum
             }
             return fstrich;
 
-            /*
-            double[] fstrich = new double[nodeCount];
-
-            double[] xs = xt[xt.Count - 1];
-            for (int i = 0; i < cluster.Length; i++)
-            {
-
-                double sum = 0;
-                for (int j = 0; j < cluster[i].Length; j++)
-                {
-                    int nodenum = cluster[i][j];
-
-                    sum += (double)adjMatrix[i][j] * dintensity(xs[j]);
-                    double tmp = beta * dintensity(xs[nodenum]);
-                 
-                }
-                for (int j = 0; j < cluster[i].Length; j++)
-                {
-                    int nodenum = cluster[i][j];
-                    fstrich[nodenum] = sum;
-
-                }
-          
-            }
-            return fstrich;*/
+         
 
 
         }
@@ -117,13 +95,28 @@ namespace ClusterNum
                 double u1 = rand.NextDouble();
                 double u2 = rand.NextDouble();
                 double randnormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
-                double err = pertubation * randnormal;
+                double err = noise * randnormal;
 
                 pertIntensity[i] = intensity(xi[i]);
                 pertIntensity[i] += err;
             }
             return pertIntensity;
 
+        }
+
+        private double[] pertubate(double[] x, double stdabw)
+        {
+            double[] pertxi = new double[x.Length];
+            Random rand = new Random();
+            for (int i = 0; i < x.Length; i++)
+            {
+                double u1 = rand.NextDouble();
+                double u2 = rand.NextDouble();
+                double randnormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
+                double err = stdabw * randnormal;
+                pertxi[i] = x[i] + err;
+            }
+            return pertxi;
         }
     }
 }
