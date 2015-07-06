@@ -58,6 +58,7 @@
             this.noiseUpDown = new System.Windows.Forms.NumericUpDown();
             this.label10 = new System.Windows.Forms.Label();
             this.deltaUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label21 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -87,7 +88,6 @@
             this.label16 = new System.Windows.Forms.Label();
             this.betaMaxUpDown = new System.Windows.Forms.NumericUpDown();
             this.betaMinUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label21 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rmsChart)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -409,6 +409,16 @@
             0,
             196608});
             this.deltaUpDown.ValueChanged += new System.EventHandler(this.deltaUpDown_ValueChanged);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(102, 127);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(17, 19);
+            this.label21.TabIndex = 21;
+            this.label21.Text = "π";
             // 
             // label7
             // 
@@ -863,17 +873,7 @@
             5,
             0,
             0,
-            65536});
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(102, 127);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(17, 19);
-            this.label21.TabIndex = 21;
-            this.label21.Text = "π";
+            -2147418112});
             // 
             // MainForm
             // 
