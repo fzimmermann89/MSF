@@ -163,6 +163,7 @@ namespace ClusterNum
                         gseries[nodenum].LegendText = "Cluster " + i.ToString();
                         gseries[nodenum].IsVisibleInLegend = true;
                     }
+                    gseries[nodenum].BorderWidth = 2;
                     gseries[nodenum].ChartType = SeriesChartType.FastLine;
                     gseries[nodenum].Color = Color.FromArgb(255, coltmp.R, coltmp.G, coltmp.B);
                 }
@@ -338,6 +339,7 @@ namespace ClusterNum
                     betaRmsChart.Series.Add(betarmsseries[i]);
                     betarmsseries[i].ChartType = SeriesChartType.FastLine;
                     betarmsseries[i].Color = Color.FromArgb(255, coltmp.R, coltmp.G, coltmp.B);
+                    betarmsseries[i].BorderWidth = 2;
 
                     betaljapseries[i] = new Series("Cluster " + i.ToString());
                     betaljapseries[i].ChartArea = "ChartArea1";
@@ -345,7 +347,10 @@ namespace ClusterNum
                     betaljapseries[i].ChartType = SeriesChartType.FastLine;
                     betaljapseries[i].Color = Color.FromArgb(255, coltmp.R, coltmp.G, coltmp.B);
                     betaljapseries[i].BorderWidth = 2;
-
+                    if (i % 2 != 0)
+                    {
+                        betaljapseries[i].BorderDashStyle = ChartDashStyle.Dash;
+                    }
 
 
                 }

@@ -49,6 +49,7 @@ Permutationssymmetrien}
 
 \begin{document}
 
+
 \frame{
 	\titlepage
 	\begin{figure}
@@ -65,7 +66,7 @@ Permutationssymmetrien}
 \section{Einleitung}
 \frame{
 
-	\frametitle{Table of Contents}
+	\frametitle{Einleitung}
 	\tableofcontents[currentsection]
 
 }
@@ -83,50 +84,50 @@ Permutationssymmetrien}
 					\\\notag & \boldsymbol{f},\boldsymbol{h}:\mathbb{R}^n\rightarrow\mathbb{R}^n
 	\end{align}
 	Definiere
-	\begin{align}
+	\begin{align*}
 	\boldsymbol{X}=\left(\boldsymbol{x}_1,...,\boldsymbol{x}_N\right)^{\text{T}},
 	\boldsymbol{F}=\left(\boldsymbol{f}(\boldsymbol{x}_1),...,\boldsymbol{f}(\boldsymbol{x}_N)\right)^{\text{T}},
 	\boldsymbol{H}=\left(\boldsymbol{h}(\boldsymbol{x}_1),...,\boldsymbol{h}(\boldsymbol{x}_N)\right)^{\text{T}}
-	\end{align}
+	\end{align*}
 	$\Rightarrow$ äquivalente Gleichung zu (1) 
-	\begin{align}
+	\begin{align*}
 	\overset{\cdot}{\boldsymbol{X}}(t)=\boldsymbol{F}(\boldsymbol{X}(t))+\sigma\boldsymbol{A}\otimes\boldsymbol{H}(\boldsymbol{X}(t))
-	\end{align}
+	\end{align*}
 }
 
-\section{Master Stability Function}
+\section{Synchronisation I}
 \frame{
-	\frametitle{Table of Contents}
+	\frametitle{Synchronisation I}
 	\tableofcontents[currentsection]
 
 }
 
 \frame{
-	\frametitle{Synchronisation}
+	\frametitle{Synchronisation I}
 	Globale Synchronisation liegt vor wenn 
-	\begin{align}
+	\begin{align*}
 		\boldsymbol{x}_1(t)=\boldsymbol{x}_2(t)=...=\boldsymbol{x}_N(t)=:\boldsymbol{s}(t)
-	\end{align}
+	\end{align*}
 	erfüllt ist.\\
 	Stabilität der Synchronisation :\\
 	\begin{itemize}
 	\item Wie entwickelt sich kleine Abweichung von $\boldsymbol{s}(t)$ zeitlich weiter?
 	\end{itemize}
 	Linearisierung um $\boldsymbol{s}(t)$ $\Rightarrow$	Master Stability Equation (MSE) :
-	\begin{align}
+	\begin{align*}
 			\delta\overset{\cdot}{\boldsymbol{X}}(t)=
 			\left[D\boldsymbol{F}(\boldsymbol{s}(t))+\sigma\boldsymbol{A}\otimes D\boldsymbol{H}(\boldsymbol{s}(t))\right]\delta\boldsymbol{X}(t)
-	\end{align}
+	\end{align*}
 
 }
 
 \frame{
-	\frametitle{Ljapunov Exponenten}
-	Ljapunov Exponenten $\lambda_i$
-		\begin{align}
+	\frametitle{Master Stability Function}
+	Ljapunow-Exponenten $\lambda_i$
+		\begin{align*}
 		\lambda_i=\lim_{t\rightarrow\infty}\frac{1}{t} ln\left(\frac{|\delta \boldsymbol{x}_i(t)|}{|\delta \boldsymbol{x}_i(0)|}\right)
-		\end{align}
-	Master Stability Function (MSF) $\Lambda$ ist größter Ljapunov Exponent
+		\end{align*}
+	Master Stability Function (MSF) $\Lambda$ ist größter Ljapunow Exponent
 	\begin{itemize}
 	\item $\Lambda>0$, Synchronisation instabil, Fehler wächst, Bahnkurven $\boldsymbol{x}_i$(t) entfernen sich von $\boldsymbol{s}$(t)
 	\item $\Lambda<0$, Synchronisation stabil, Fehler schrumpft, Bahnkurven $\boldsymbol{x}_i$(t) nähern sich wieder $\boldsymbol{s}$(t)
@@ -134,21 +135,21 @@ Permutationssymmetrien}
 }
 
 \frame[t]{
-	\frametitle{Synchronisation}
+	\frametitle{Voraussetzungen für Synchronisation}
    	\begin{itemize}
    	\item jeder Knoten benötigt gleichen Input
    	\item setzt u.a. konstante Zeilensumme von $\boldsymbol{A}$ voraus
    	\end{itemize}
 }
 
-\section{Simulationsbeispiel}
 \frame{
-	\frametitle{Synchronisation}
+	\frametitle{Voraussetzungen für Synchronisation}
    	\begin{itemize}
    	\item jeder Knoten benötigt gleichen Input
    	\item setzt u.a. konstante Zeilensumme von $\boldsymbol{A}$ voraus
    	\end{itemize}
-    \begin{align}
+   	Im Allgemeinen nicht erfüllt, z.B. :
+    \begin{align*}
     \boldsymbol{A}_1=
         \begin{pmatrix}
                    0 & 1 & 1 & 1 & 0 & 1 & 1 & 1 & 1 & 1 & 1 \\
@@ -163,10 +164,15 @@ Permutationssymmetrien}
                    1 & 1 & 1 & 1 & 1 & 1 & 1 & 0 & 1 & 0 & 0 \\
                    1 & 1 & 1 & 1 & 0 & 1 & 1 & 1 & 1 & 0 & 0 
         \end{pmatrix}
-    \end{align}
-    
+    \end{align*}
    	Zeilensumme NICHT konstant
    
+}
+\section{Simulationsbeispiel}
+\frame{
+	\frametitle{Simulationsbeispiel}
+	\tableofcontents[currentsection]
+
 }
 \frame{
 	\frametitle{Beispiel}
@@ -174,11 +180,11 @@ Permutationssymmetrien}
 	\item Diskretes System mit $N=11$ Knoten
 	\item Kopplungsmatrix $\boldsymbol{A}_1$
 	\item Diskrete dynamische Gleichung gegeben durch
-	\begin{align}
+	\begin{align*}
 	x_i^{t+1}&=\left[\beta\mathcal{I}(x_i^t)+\sigma \sum_j^N A_{ij}\mathcal{I}(x_j^t)\right] \text{mod}\quad 2\pi
 	\\\notag & \beta,\sigma \text{ Kopplungsparameter}
 	\\\notag &\mathcal{I}(x)=\frac{1-Cos(x)}{2}
-	\end{align}
+	\end{align*}
 	\end{itemize}
 
 	(aus Pecora et. al 2014)
@@ -193,35 +199,41 @@ Permutationssymmetrien}
    
 }
 \frame{
-	\frametitle{Beispiel}
+	\frametitle{Beobachtungen}
 	\begin{itemize}
 		\item Keine globale Synchronisation
 		\item  5 Gruppen von Knoten die sich synchron verhalten
 		\item $\Rightarrow$ Cluster
 	\end{itemize}
-		\begin{figure}
-			\includegraphics[width=0.33\textwidth]{cluster.png}
-		\end{figure}
+	\begin{figure}
+		\includegraphics[width=0.75\textwidth]{cluster.png}
+	\end{figure}
 }
 
 \section{Cluster und Permutationssymmetrien}
 \frame{
+	\frametitle{Cluster und Permutationssymmetrien}
+	\tableofcontents[currentsection]
+
+}
+\frame{
 	\frametitle{Cluster}
+	$\boldsymbol{A}_1$ hat zwar global keine konstante Zeilensumme aber:
 	\begin{itemize}
-	\item Forderung nach gleichem Input für jeden Knoten kann innerhalb eines Cluster erfüllt werden\\
+	\item Forderung nach gleichem Input für jeden Knoten kann \underline{innerhalb} eines Cluster erfüllt werden\\
 	   (da gleiche Zeilensumme innerhalb eines Clusters für z.b. $\boldsymbol{A}_1$)
 	\item Knoten können vertauscht werden ohne Dynamik zu ändern
 	\end{itemize}
 	$\Rightarrow$ Netzwerk besitzt offensichtlich Symmetrien\\
 	Suche nach Permutationssymmetrien sinnvoll:
 	\begin{itemize}
-	\item mathematisch beschrieben durch Permutationsmatrizen $P_i$
+	\item mathematisch beschrieben durch Permutationsmatrizen $\boldsymbol{P}_i$
 	\item $\boldsymbol{A}=\boldsymbol{P}\boldsymbol{A}\boldsymbol{P}^{-1} \Rightarrow \boldsymbol{A}$ bleibt unverändert bei Tauschen der Knoten
 	\end{itemize}
    
 }
 \frame{
-	\frametitle{Cluster}
+	\frametitle{Permutationssymmetrien}
 	Beispiele für Permutationssymmetrien:
 	\begin{itemize}
 	\item Knoten 1 und 2 vertauschbar \\$\Rightarrow$ 
@@ -237,34 +249,80 @@ Permutationssymmetrien}
 	\item Bibliothek nauty liefert $M$ Cluster 	\begin{tiny}\href{http://pallini.di.uniroma1.it/}{http://pallini.di.uniroma1.it/}	\end{tiny}
 	\item Nach Finden der Cluster kann Störung umgeschrieben werden:
 	\end{itemize}
-	\begin{align}
+	\begin{align*}
 		\delta\overset{\cdot}{\boldsymbol{X}}(t)&=	
 		\left[D\boldsymbol{F}(\boldsymbol{s}(t))+\sigma\boldsymbol{A}\otimes D\boldsymbol{H}(\boldsymbol{s}(t))\right]\delta\boldsymbol{X}(t)\\&=
 				\left[\sum_{m=1}^{M} \boldsymbol{E}^{(m)} \otimes D\boldsymbol{F}(\boldsymbol{s}_m(t))+\sigma\boldsymbol{A}\otimes \boldsymbol{I}_n\sum_{m=1}^{M} \boldsymbol{E}^{(m)}\otimes D\boldsymbol{H}(\boldsymbol{s}_m(t))\right]\boldsymbol{X}(t)
 		\\\notag & \boldsymbol{s}_m(t) \text{ ist synchroner Orbit des Clusters }m
 		\\\notag & \boldsymbol{E}^{(m)}_{ii} =1\text{ wenn Knoten }i\text{ zum Cluster }m\text{ gehört}
-	\end{align}
+	\end{align*}
 	\hspace{10pt}
 
 }
+\section{Synchronisation II}
+\frame{
+	\frametitle{Synchronisation II}
+	\tableofcontents[currentsection]
 
+}
 \frame{
 	\frametitle{Formen von Synchronisation}
 	\begin{itemize}
-	\item globale Synchronisation
-	\item isolierte Synchronisation innerhalb eines Clusters
+	\item globale Synchronisation\\
+	alle Knoten des Netzwerks synchron
+	\item isolierte Synchronisation innerhalb eines Clusters\\
+	alle Knoten eines Clusters synchron
 	\item gemeinsame Synchronisation zweier Cluster\\
-		  (1,2) synchron und (3,4) synchron
+		 zwei Cluster zeigen gleichzeitig isolierte Synchronisation
 	\end{itemize}
 
 }
 \frame{
 	\frametitle{Isolierte Synchronisation}
 	Warum kann ein Cluster synchron sein während andere nicht synchron sind?
-	(Pecora Argumentation mit Permutationsmatrizen vorbeiziehen und gleichen Input für das Cluster)
+	\begin{itemize}
+	\item
+		Betrachte Dynamik des Knoten $i$ aus Cluster $n$.
+		 $\boldsymbol{P}_m$ sei Permutationsmatrix zu Symmetriepermutation $\pi$ des Clusters $m$.
+		\begin{align*}
+		\left[\boldsymbol{P}_m	\overset{\cdot}{\boldsymbol{X}}\right]_i&=
+		\overset{\cdot}{\boldsymbol{x}}_i\\
+		\left[\boldsymbol{P}_m \boldsymbol{F}(\boldsymbol{X})\right]_i+
+			\left[\boldsymbol{P}_m\boldsymbol{A}\boldsymbol{H}(\boldsymbol{X})\right]_i&=
+					\boldsymbol{f}(\boldsymbol{x}_i)+
+						\sigma\sum_j
+					A_{ij}\boldsymbol{h}(\boldsymbol{x}_j)\\
+		\boldsymbol{f}(\boldsymbol{x}_i)+
+			\sigma\sum_j A_{ij}\boldsymbol{h}(\boldsymbol{x}_{\pi\left(i\right)})&=
+		\boldsymbol{f}(\boldsymbol{x}_i)+
+			\sigma\sum_j
+		A_{ij}\boldsymbol{h}(\boldsymbol{x}_j)		
+	\end{align*}
+	\item 
+		Ein Knoten aus $n$ ist gleich an jeden Knoten aus $m$ gekoppelt.
+\end{itemize}
 }
 
+\frame{
+	\frametitle{Isolierte Synchronisation}
+	Warum kann ein Cluster synchron sein während andere nicht synchron sind?
+	\begin{itemize}
+	\item 
+		Ein Knoten aus $n$ ist gleich an jeden Knoten aus $m$ gekoppelt.
+	\item
+		Analog führt Anwendung von  $\boldsymbol{P}_n$ auf "Jeder Knoten aus n ist gleich an einen Knoten aus m gekoppelt"
+	\item
+		Jeder Knoten in n bekommt in der Summe den gleichen Input vom Cluster $m$, egal ob dieser synchron oder nicht ist.
+			\\$\Rightarrow$ Wenn Permutationsmatrizen existieren die die Cluster getrennt permutieren, existiert isolierte Synchronisation
+			\\$\Rightarrow$ Isolierte Synchronisation \underline{nicht} bei "verschränkten" Clustern
+\end{itemize}
+}
 \section{Lokale Stabilitätsanalyse}
+\frame{
+	\frametitle{Lokale Stabilitätsanalyse}
+	\tableofcontents[currentsection]
+
+}
 \frame{
 	\frametitle{Stabiltät der Clustersynchronität}
 	Stabilitätsanalyse:
@@ -279,13 +337,13 @@ Permutationssymmetrien}
 
 \frame{
 	\frametitle{MSF für Cluster}
-		\begin{align}
+		\begin{align*}
 		\overset{\cdot}{\boldsymbol{\eta}}(t)&=
 				\left[\sum_{m=1}^{M} \boldsymbol{J}^{(m)} \otimes D\boldsymbol{F}(\boldsymbol{s}_m(t))+\sigma\boldsymbol{B}\otimes \boldsymbol{I}_n\sum_{m=1}^{M} \boldsymbol{J}^{(m)}\otimes D\boldsymbol{H}(\boldsymbol{s}_m(t))\right]\boldsymbol{\eta}(t)
 		\\\notag &\boldsymbol{\eta}(t)=\boldsymbol{T}\otimes\boldsymbol{I}_n\delta\boldsymbol{X}(t)
 		\\\notag & \boldsymbol{B}=\boldsymbol{T}\boldsymbol{A}\boldsymbol{T}^{-1}
 		\\\notag & \boldsymbol{J}^{(m)}=\boldsymbol{T}\boldsymbol{E}^{(m)}\boldsymbol{T}^{-1}
-		\end{align}
+		\end{align*}
 		aus dieser MSE kann MSF für jedes Cluster (lokal) berechnet werden
 }
 
@@ -295,6 +353,11 @@ Permutationssymmetrien}
 	Stabilitätsanalyse
 }
 \section{Fazit}
+\frame{
+	\frametitle{Fazit}
+	\tableofcontents[currentsection]
+
+}
 \frame{
 	\frametitle{Fazit}
 	\begin{itemize}
