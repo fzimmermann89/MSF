@@ -239,7 +239,7 @@ Permutationssymmetrien}
 	\item Knoten 1 und 2 vertauschbar \\$\Rightarrow$ 
 			1 und 2 im Cluster
 	\item Knoten 1 und 2 vertauschbar falls 3 und 4 vertauschbar \\$\Rightarrow$ 
-			Cluster (1,2) und (3,4) "verschränkt"
+			Cluster (1,2) und (3,4) "verschränkt" (Pecora et al.: interwinded)
 	\end{itemize}
 }
 \frame{
@@ -332,11 +332,15 @@ Permutationssymmetrien}
 	\item $\boldsymbol{T}$ blockdiagonalisiert $\boldsymbol{A}$
 	\item oberer $M$x$M$ Block beschreibt die Bewegung innerhalb der Synchronisationsmannigfaltigkeit 
 	\end{itemize}
-	Nach Transformation durch $\boldsymbol{T}$ ergibt sich linearisierte Störung $\boldsymbol{\eta}$ in neuer Basis
+	\begin{figure}
+			\includegraphics[width=0.6\textwidth]{ABMat.png}
+	\end{figure}
+	(Pecora et al. 2014)
 }
 
 \frame{
 	\frametitle{MSF für Cluster}
+	Nach Transformation durch $\boldsymbol{T}$ ergibt sich linearisierte Störung $\boldsymbol{\eta}$ in neuer Basis
 		\begin{align*}
 		\overset{\cdot}{\boldsymbol{\eta}}(t)&=
 				\left[\sum_{m=1}^{M} \boldsymbol{J}^{(m)} \otimes D\boldsymbol{F}(\boldsymbol{s}_m(t))+\sigma\boldsymbol{B}\otimes \boldsymbol{I}_n\sum_{m=1}^{M} \boldsymbol{J}^{(m)}\otimes D\boldsymbol{H}(\boldsymbol{s}_m(t))\right]\boldsymbol{\eta}(t)
@@ -352,6 +356,13 @@ Permutationssymmetrien}
 	\centering
 	Stabilitätsanalyse
 }
+\frame{
+	\frametitle{Simulation lokale MSF}
+	\centering
+		\begin{figure}
+			\includegraphics[width=1\textwidth]{ljapunow.png}
+		\end{figure}
+}
 \section{Fazit}
 \frame{
 	\frametitle{Fazit}
@@ -363,8 +374,10 @@ Permutationssymmetrien}
 	\begin{itemize}
 	\item globale Stabilitätsanalyse über MSF setzt konstante Zeilensumme voraus
 	\item In Netzwerken mit Symmetrien existieren Cluster
-	\item Cluster können Synchron laufen
+	\item Knoten eines Cluster können synchron laufen
+
 	\item lokale Stabilitätsanalyse der Synchronisation durch Basistransformation möglich
+	\item Isolierte Desynchronisation bei nicht verschränkten(non intertwined) Clustern möglich
 	\end{itemize}
 }
 
