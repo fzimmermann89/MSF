@@ -76,13 +76,14 @@ Permutationssymmetrien}
 		\begin{itemize}
 		\item $N$ miteinander gekoppelte Knoten
 		\item Jeder Knoten wird durch dynamische Gleichung beschrieben
-		\end{itemize}
+	
 	\begin{align}\label{eq:dyneqcommon}
 					\overset{\cdot}{\boldsymbol{x}}_i(t)&=\boldsymbol{f}(\boldsymbol{x}_i(t))+\sigma\sum_j A_{ij}\boldsymbol{h}(\boldsymbol{x}_j)
 					\\\notag & i=1,...,N
 					\\\notag & A_{ij}\text{ Kopplungsmatrix}
 					\\\notag & \boldsymbol{f},\boldsymbol{h}:\mathbb{R}^n\rightarrow\mathbb{R}^n
 	\end{align}
+	\item
 	Definiere
 	\begin{align*}
 	\boldsymbol{X}=\left(\boldsymbol{x}_1,...,\boldsymbol{x}_N\right)^{\text{T}},
@@ -93,6 +94,7 @@ Permutationssymmetrien}
 	\begin{align*}
 	\overset{\cdot}{\boldsymbol{X}}(t)=\boldsymbol{F}(\boldsymbol{X}(t))+\sigma\boldsymbol{A}\otimes\boldsymbol{H}(\boldsymbol{X}(t))
 	\end{align*}
+		\end{itemize}
 }
 
 \section{Synchronisation I}
@@ -109,16 +111,17 @@ Permutationssymmetrien}
 		\boldsymbol{x}_1(t)=\boldsymbol{x}_2(t)=...=\boldsymbol{x}_N(t)=:\boldsymbol{s}(t)
 	\end{align*}
 	erfüllt ist.\\
+	$ $\\
 	Stabilität der Synchronisation :\\
+	Wie entwickelt sich kleine Abweichung von $\boldsymbol{s}(t)$ zeitlich weiter?
 	\begin{itemize}
-	\item Wie entwickelt sich kleine Abweichung von $\boldsymbol{s}(t)$ zeitlich weiter?
-	\end{itemize}
+\item
 	Linearisierung um $\boldsymbol{s}(t)$ $\Rightarrow$	Master Stability Equation (MSE) :
 	\begin{align*}
 			\delta\overset{\cdot}{\boldsymbol{X}}(t)=
 			\left[D\boldsymbol{F}(\boldsymbol{s}(t))+\sigma\boldsymbol{A}\otimes D\boldsymbol{H}(\boldsymbol{s}(t))\right]\delta\boldsymbol{X}(t)
 	\end{align*}
-
+	\end{itemize}
 }
 
 \frame{
@@ -238,7 +241,8 @@ Permutationssymmetrien}
 	\begin{itemize}
 	\item Knoten 1 und 2 vertauschbar \\$\Rightarrow$ 
 			1 und 2 im Cluster
-	\item Knoten 1 und 2 vertauschbar bei gleichzeitiger Vertauschung von 3 und 4\\$\Rightarrow$ 
+	\item Knoten 1 und 2 nur vertauschbar\\ 
+	bei gleichzeitiger Vertauschung von 3 und 4\\$\Rightarrow$ 
 			Cluster (1,2) und (3,4) "verschränkt" (Pecora et al.: interwinded)
 	\end{itemize}
 }
@@ -380,7 +384,7 @@ Permutationssymmetrien}
 	\item Knoten eines Cluster können synchron laufen
 
 	\item lokale Stabilitätsanalyse der Synchronisation durch Basistransformation möglich
-	\item Isolierte Desynchronisation bei nicht verschränkten(non intertwined) Clustern möglich
+	\item Isolierte Desynchronisation bei nicht verschränkten (non intertwined) Clustern möglich
 	\end{itemize}
 }
 
