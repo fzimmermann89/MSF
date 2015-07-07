@@ -1,19 +1,19 @@
 \documentclass[xcolor=dvipsnames]{beamer} 
 \useoutertheme{infolines} 
 \usetheme{CambridgeUS} 
-\setbeamertemplate{items}[ball] 
+%\setbeamertemplate{items}[ball] 
 \setbeamertemplate{blocks}[rounded][shadow=true] 
 \setbeamertemplate{navigation symbols}{} 
-
+\setbeamercolor{block title}{fg=darkred}
+\setbeamercolor{local structure}{fg=darkred}
 \usepackage[ngerman]{babel}
 \usepackage[latin1]{inputenc}
 \usepackage{wrapfig}
-\usepackage[compatibility=false]{caption}
 \usepackage{subcaption}
 \addtobeamertemplate{block begin}{\setlength{\textwidth}{0.9\textwidth}}{}
 
 \usepackage[style=numeric, sorting=none]{biblatex} 
-\usepackage[justification=raggedright,singlelinecheck=false,labelfont=bf]{caption}
+\usepackage[justification=raggedright,compatibility=false,singlelinecheck=false,labelfont=bf]{caption}
 \addbibresource{citations.bib}%the bibliography database 
 \DeclareFieldFormat{journaltitle}{#1}         
 %\DeclareFieldFormat{month}{}           
@@ -291,7 +291,7 @@ Permutationssymmetrien}
 		\includegraphics[width=0.75\textwidth]{perm_b.png}
 	\end{figure}
 	\item 
-		Da sich bei Permutationssymmetrie die Dynamik nicht ändert ist ein Knoten aus B ist gleich an jeden Knoten aus A gekoppelt.
+		Da sich bei Permutationssymmetrie die Dynamik nicht ändert, muss jeder Knoten aus B gleich starken Input an einen Knoten aus A geben.
 \end{itemize}
 }
 
@@ -307,7 +307,7 @@ Permutationssymmetrien}
 	\item
 		Auch hier: Dynamik bleibt gleich. 
 	\item 
-		Jeder Knoten aus B gibt folglich gleich starken Input an einen Knoten aus A.
+		Folglich ist ein Knoten aus B ist gleich an jeden Knoten aus A gekoppelt.
 \end{itemize}
 }
 
