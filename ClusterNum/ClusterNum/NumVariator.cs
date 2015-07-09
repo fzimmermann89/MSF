@@ -64,23 +64,33 @@ namespace ClusterNum
             double a = Math.Sqrt(2.0) / 2.0;
             double b = -a;
             double z = 0.5;
-
-            string tmattext = @"0 0 0 0 b 0 0 0 0 b 0 
-0 0 0 b 0 b 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 x 
-b 0 0 0 0 0 0 b 0 0 0 
-0 y y 0 0 0 y 0 y 0 0 
-0 0 0 b 0 a 0 0 0 0 0 
-0 y z 0 0 0 y 0 z 0 0 
-0 0 0 0 b 0 0 0 0 a 0 
-b 0 0 0 0 0 0 a 0 0 0 
-0 0 a 0 0 0 0 0 b 0 0 
-0 b 0 0 0 0 a 0 0 0 0 ";
-            tmattext = tmattext.Replace("x", x.ToString());
-            tmattext = tmattext.Replace("y", y.ToString());
-            tmattext = tmattext.Replace("a", a.ToString());
-            tmattext = tmattext.Replace("b", b.ToString());
-            tmattext = tmattext.Replace("z", z.ToString());
+            string tmattext = @"0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1
+0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0
+0.5 0.0 0.0 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0
+0.0 0.0 0.0 0.5 0.0 0.5 0.0 0.0 0.0 0.0 0.0
+0.0 0.25 0.25 0.0 0.0 0.0 0.25 0.0 0.25 0.0 0.0
+0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0 0.0 -0.5 0.0
+0.5 0.0 0.0 0.0 0.0 0.0 0.0 -0.5 0.0 0.0 0.0
+0.0 0.0 0.0 0.5 0.0 -0.5 0.0 0.0 0.0 0.0 0.0
+0.0 0.75 -0.25 0.0 0.0 0.0 -0.25 0.0 -0.25 0.0 0.0
+0.0 -0.25 0.75 0.0 0.0 0.0 -0.25 0.0 -0.25 0.0 0.0
+0.0 -0.25 -0.25 0.0 0.0 0.0 0.75 0.0 -0.25 0.0 0.0";
+//            string tmattext = @"0 0 0 0 b 0 0 0 0 b 0 
+//0 0 0 b 0 b 0 0 0 0 0 
+//0 0 0 0 0 0 0 0 0 0 x 
+//b 0 0 0 0 0 0 b 0 0 0 
+//0 y y 0 0 0 y 0 y 0 0 
+//0 0 0 b 0 a 0 0 0 0 0 
+//0 y z 0 0 0 y 0 z 0 0 
+//0 0 0 0 b 0 0 0 0 a 0 
+//b 0 0 0 0 0 0 a 0 0 0 
+//0 0 a 0 0 0 0 0 b 0 0 
+//0 b 0 0 0 0 a 0 0 0 0 ";
+//            tmattext = tmattext.Replace("x", x.ToString());
+//            tmattext = tmattext.Replace("y", y.ToString());
+//            tmattext = tmattext.Replace("a", a.ToString());
+//            tmattext = tmattext.Replace("b", b.ToString());
+//            tmattext = tmattext.Replace("z", z.ToString());
 
             TMat = Helper.MatrixFromString(tmattext);
 
@@ -186,21 +196,19 @@ b 0 0 0 0 0 0 a 0 0 0
 
                 for (int m = 0; m < clusterTransform.Length; m++)
                 {
-                    for (int i = 0; i < clusterTransform[m].Length; i++)
-                    {
-                        int etanodenum = clusterTransform[m][i];
-                        if (etanodenum >= clusterTransform.Length) // unterer Block
-                        {
+                   if (clusterTransform[m].Length>1){
+                        int etanodenum = clusterTransform[m][1];
+                      
                             Ljapunator punator = new Ljapunator(JMats, BMat, cluster, smts, beta, sigma, delta);
 
                             punator.etat[0][etanodenum] = ljapunowPertubation;
                             punator.iterate(rec);
-                            if (!double.IsNaN(punator.ljapunowSum[etanodenum]))
+                            if (!double.IsNaN(punator.ljapunowSum))
                             {
-                                ljapunow[m] = Math.Max(punator.ljapunowSum[etanodenum], ljapunow[m]);
+                                ljapunow[m] = Math.Max(punator.ljapunowSum, ljapunow[m]);
                             }
                         }
-                    }
+                    
                 }
                 for (int m = 0; m < clusterTransform.Length; m++)
                 {
