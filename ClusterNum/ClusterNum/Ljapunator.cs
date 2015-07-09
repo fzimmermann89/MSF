@@ -77,19 +77,23 @@ namespace ClusterNum
 
             newetai = sumJDF.Multiply(oldetai);
             newetai = newetai.Add(BMat.Multiply(sumJDH).Multiply(oldetai));
-            //newetai = newetai.Add(oldetai);
-            double oldetalength = oldetai.Euclidean();
-            double newetalength = newetai.Euclidean();
-            for (int icluster=0;icluster<cluster.Length;icluster++)
+           
+            //orthogonalisieren - nur instabile richtungen beibehalten
+            for (int icluster = 0; icluster < cluster.Length; icluster++)
             {
                 newetai[icluster] = 0;
             }
+           
+
+            double oldetalength = oldetai.Euclidean();
+            double newetalength = newetai.Euclidean();
+            
             double scale = oldetalength / newetalength;
             double tmp = Math.Log(Math.Abs(1 / scale));
             //double[] tmp = newetai.ElementwiseDivide(oldetai).Abs().Log();
            
                 ljapunowSum += tmp;
-           
+           //normalisieren
            newetai = scale.Multiply(newetai);
 
 
