@@ -12,13 +12,50 @@ Da Knoten eines Clusters ohne Veränderung der Dynamik vertauschbar sind, erhalt
 x_i(t)=s_m(t) \text{mit Knoten} i\in C_m
 \end{equation}.
 
+\paragraph{isolierte Desynchronisation}
+In einem symmetrischen Netzwerk können einzelne Cluster synchron sein, während andere nicht synchron sind. Die Desynchronisation scheint also die Synchronisation eines anderen Clusters nicht zwangsläufig zu stören.
+
+Die Dynamik eines Knotens aus Cluster A ändert sich unter einer Permutation $\pi$ von Cluster A mit Permutationsmatrix $P_A$ nicht, es gilt
+
+
+
+\begin{align*}
+		\left[\boldsymbol{P}_A	\overset{\cdot}{\boldsymbol{X}}\right]_i&=
+		\overset{\cdot}{\boldsymbol{x}}_i\\
+		\left[\boldsymbol{P}_A \boldsymbol{F}(\boldsymbol{X})\right]_i+
+			\left[\boldsymbol{P}_A\boldsymbol{A}\boldsymbol{H}(\boldsymbol{X})\right]_i&=
+					\boldsymbol{f}(\boldsymbol{x}_i)+
+						\sigma\sum_j
+					A_{ij}\boldsymbol{h}(\boldsymbol{x}_j)\\
+		\boldsymbol{f}(\boldsymbol{x}_i)+
+			\sigma\sum_j A_{ij}\boldsymbol{h}(\boldsymbol{x}_{\pi\left(j\right)})&=
+		\boldsymbol{f}(\boldsymbol{x}_i)+
+			\sigma\sum_j
+		A_{ij}\boldsymbol{h}(\boldsymbol{x}_j)		
+\end{align*}
+	\begin{figure}
+		\includegraphics[width=0.75\textwidth]{abb/misc/perm_a.png}
+	\end{figure}
+
+
+	\begin{figure}
+		\includegraphics[width=0.75\textwidth]{abb/misc/perm_b.png}
+	\end{figure}
+	
+		Folglich muss jeder Knoten des Netzwerkes gleich starken Input an einen Knoten aus A geben.
+
+		Eine analoge Betrachtung  unter Permutation eines zweiten Clusters B(A wird nicht verändert) führt auf die Beobachtung,dass ein Knoten aus B ist gleich an jeden Knoten aus A gekoppelt.
+Zusammen ergibt sich aus diesen Aussagen: Jeder Knoten in B bekommt in der Summe den gleichen Input vom Cluster A, egal ob dieser synchron oder asynchron ist, sofern Permutationsmatrizen existieren, die die Cluster getrennt permutieren. Isolierte Desynchronisation kann nicht bei "verschränkten" Clustern auftreten, da die Permutation beide Cluster verändert.
+
+
+\paragraph{Stabilität}
 Zur Betrachtung der Stabilität der isolierten Synchronisation lässt sich die MSE (\ref{eq_mse}) umschreiben
 \begin{align*}
-\label{eq_clusterfehler}
-		\delta\overset{\cdot}{\boldsymbol{X}}(t)&=	
-		\left[D\boldsymbol{F}(\boldsymbol{s}(t))+\sigma\boldsymbol{A}\otimes D\boldsymbol{H}(\boldsymbol{s}(t))\right]\delta\boldsymbol{X}(t)\\&=
-				\left[\sum_{m=1}^{M} \boldsymbol{E}^{(m)} \otimes D\boldsymbol{F}(\boldsymbol{s}_m(t))+\sigma\boldsymbol{A}\otimes \boldsymbol{I}_n\sum_{m=1}^{M} \boldsymbol{E}^{(m)}\otimes D\boldsymbol{H}(\boldsymbol{s}_m(t))\right]\boldsymbol{X}(t)
-		\\\notag & \boldsymbol{E}^{(m)}_{ii} =1\text{ wenn Knoten }i \in C_m
+	\label{eq_clusterfehler}
+	\delta\overset{\cdot}{\boldsymbol{X}}(t)&=	
+	\left[D\boldsymbol{F}(\boldsymbol{s}(t))+\sigma\boldsymbol{A}\otimes D\boldsymbol{H}(\boldsymbol{s}(t))\right]\delta\boldsymbol{X}(t)\\&=
+	\left[\sum_{m=1}^{M} \boldsymbol{E}^{(m)} \otimes D\boldsymbol{F}(\boldsymbol{s}_m(t))+\sigma\boldsymbol{A}\otimes \boldsymbol{I}_n\sum_{m=1}^{M} 			\boldsymbol{E}^{(m)}\otimes D\boldsymbol{H}(\boldsymbol{s}_m(t))\right]\boldsymbol{X}(t)
+	\\\notag & \boldsymbol{E}^{(m)}_{ii} =1\text{ wenn Knoten }i \in C_m
 	\end{align*}.
 	
 Gleichung \ref{eq_clusterfehler} lässt sich unter Verwendung der Gruppentheorie in eine neue Basis transformieren. Hierbei wird die Basis der  irreduziblen Darstellungen der den Permutationssymmetrien  zugrunde liegenden Gruppe gewählt. In dieser Basis nimmt die Kopplungsmatrix Blockdiagonalform an.
