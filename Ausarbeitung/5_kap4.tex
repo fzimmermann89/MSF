@@ -7,9 +7,20 @@ PAP^{-1}=A
 Zur Untersuchung eines Netzwerkes auf Symmetrien eignen sich Algorithmen zur Suche von Automorphismen des dem Netzwerk zugrunde liegenden Graphen mit Hilfe der Bibliothek \textit{nauty} \cite{nauty}. Mit dieser lassen sich neben den Generatoren der Permutationssymmetrien auch die Orbits der Knoten bestimmen. Als Orbit werden hierbei die Positionen bezeichnet, an die ein Knoten durch Anwendung aller Permutationen gelangen kann. Alle Knoten eines Orbits lassen sich folglich durch eine Hintereinaderreihung der Permutationen vertauschen, ohne dass sich die Dynamik des Netzwerkes verändert. Eine solche Gruppe von Knoten wird als Cluster bezeichnet. Sollte bei der für die Vertauschung nötigen Hintereinanderreihung von Permutationen ebenfalls Knoten eines weiteren Clusters miteinander vertauscht werden, so liegt eine Verschränkung der Cluster vor (Pecora: \"interwinded Clusters\").
 
 \section{Synchronisation in symmetrischen Netzwerken}
-Da Knoten eines Clusters ohne Veränderung der Dynamik vertauschbar sind, erhalten diese den gleichen Input der anderen Knoten und können synchron laufen. In einem aus M Clustern bestehenden Netzwerk existieren somit M Gruppen von Knoten die isolierte Synchronisation aufweisen können 
+Da Knoten eines Clusters ohne Veränderung der Dynamik vertauschbar sind, erhalten diese den gleichen Input der anderen Knoten und können synchron laufen. In einem aus M Clustern $C_m$ bestehenden Netzwerk existieren somit M Gruppen von Knoten, die isolierte Synchronisation aufweisen können mit synchronen Orbits $s_m$
 \begin{equation}
-x_i(t)=s_m(t)\text{mit} i\in C_m
-\end{equation}
+x_i(t)=s_m(t) \text{mit Knoten} i\in C_m
+\end{equation}.
+
+Zur Betrachtung der Stabilität der isolierten Synchronisation lässt sich die MSE (\ref{eq_mse}) umschreiben
+\begin{align*}
+\label{eq_clusterfehler}
+		\delta\overset{\cdot}{\boldsymbol{X}}(t)&=	
+		\left[D\boldsymbol{F}(\boldsymbol{s}(t))+\sigma\boldsymbol{A}\otimes D\boldsymbol{H}(\boldsymbol{s}(t))\right]\delta\boldsymbol{X}(t)\\&=
+				\left[\sum_{m=1}^{M} \boldsymbol{E}^{(m)} \otimes D\boldsymbol{F}(\boldsymbol{s}_m(t))+\sigma\boldsymbol{A}\otimes \boldsymbol{I}_n\sum_{m=1}^{M} \boldsymbol{E}^{(m)}\otimes D\boldsymbol{H}(\boldsymbol{s}_m(t))\right]\boldsymbol{X}(t)
+		\\\notag & \boldsymbol{E}^{(m)}_{ii} =1\text{ wenn Knoten }i \in C_m
+	\end{align*}.
+	
+Gleichung \ref{eq_clusterfehler} lässt sich unter Verwendung der Gruppentheorie in eine neue Basis transformieren. Hierbei wird die Basis der  irreduziblen Darstellungen der den Permutationssymmetrien  zugrunde liegenden Gruppe gewählt. In dieser Basis nimmt die Kopplungsmatrix Blockdiagonalform an.
 
 
