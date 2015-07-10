@@ -1,1 +1,15 @@
 \section{Symmetrien}
+Können in einem Graphen zwei Knoten miteinander vertauscht werden, ohne dass sich der Graph verändert, liegt eine Permutationssymmetrie vor. Für die betrachteten Netzwerke bedeutet dies, dass sich bei Vorliegen einer Permutationssymmetrie zwei Knoten tauschen lassen, indem sowohl die zugehörigen Spalten als auch Zeilen der Kopplungsmatrix getauscht werden, ohne dass sich die Dynamik des Systems verändert. Die Vertauschung der Knoten lässt sich durch eine Permutationsmatrix $P$ darstellen. Vorraussetzung für eine Permutationssymmetrie ist somit
+\begin{equation}
+PAP^{-1}=A
+\end{equation}.
+
+Zur Untersuchung eines Netzwerkes auf Symmetrien eignen sich Algorithmen zur Suche von Automorphismen des dem Netzwerk zugrunde liegenden Graphen mit Hilfe der Bibliothek \textit{nauty} \cite{nauty}. Mit dieser lassen sich neben den Generatoren der Permutationssymmetrien auch die Orbits der Knoten bestimmen. Als Orbit werden hierbei die Positionen bezeichnet, an die ein Knoten durch Anwendung aller Permutationen gelangen kann. Alle Knoten eines Orbits lassen sich folglich durch eine Hintereinaderreihung der Permutationen vertauschen, ohne dass sich die Dynamik des Netzwerkes verändert. Eine solche Gruppe von Knoten wird als Cluster bezeichnet. Sollte bei der für die Vertauschung nötigen Hintereinanderreihung von Permutationen ebenfalls Knoten eines weiteren Clusters miteinander vertauscht werden, so liegt eine Verschränkung der Cluster vor (Pecora: \"interwinded Clusters\").
+
+\section{Synchronisation in symmetrischen Netzwerken}
+Da Knoten eines Clusters ohne Veränderung der Dynamik vertauschbar sind, erhalten diese den gleichen Input der anderen Knoten und können synchron laufen. In einem aus M Clustern bestehenden Netzwerk existieren somit M Gruppen von Knoten die isolierte Synchronisation aufweisen können 
+\begin{equation}
+x_i(t)=s_m(t)\text{mit} i\in C_m
+\end{equation}
+
+
