@@ -3,6 +3,11 @@
 \input{latex_einstellungen/variablen}
 
 % weitere Pakete
+
+% Runde Klammern für Zitate
+\usepackage[square,numbers,super]{natbib}
+\bibliographystyle{plainnat}
+
 % Grafiken aus PNG Dateien einbinden
 \usepackage{graphicx}
 
@@ -74,10 +79,6 @@
 
 % für Tabellen
 \usepackage{array}
-
-% Runde Klammern für Zitate
-\usepackage[square,numbers,super]{natbib}
-\bibliographystyle{plainnat}
 
 % Schaltet den zusätzlichen Zwischenraum ab, den LaTeX normalerweise nach einem Satzzeichen einfügt.
 \frenchspacing
@@ -168,6 +169,7 @@
 \addcontentsline{toc}{section}{Literaturverzeichnis}
 % Literaturverzeichnis anzeigen
 \renewcommand\refname{Literaturverzeichnis}
+
 \bibliography{Hauptdatei}
 
 %% Index soll Stichwortverzeichnis heissen
