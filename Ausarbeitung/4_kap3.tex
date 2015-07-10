@@ -1,2 +1,30 @@
+\section{Stabilität der Synchronisation}
+Ein synchroner Zustand eines Netzwerks lässt sich hinsichtlicht seiner Stabilität untersuchen. Dabei wird eine kleine Abweichung der Anfangsbedingungen des synchronen Zustandes angenommen und berechnet, wie sich diese Störung zeitlich weiterentwickelt.
+\begin{align}\label{eq:deltaxi}
+\delta \boldsymbol{x}_i(t) &= \boldsymbol{x}_i - \boldsymbol{s}(t)\\
+\delta \overset{\cdot}{\boldsymbol{x}}_i(t) &= \boldsymbol{f}(\boldsymbol{x}_i(t))+\sigma\sum_j A_{ij}\boldsymbol{h}\left(\boldsymbol{x}_j(t)\right) - \overset{\cdot}{\boldsymbol{s}}(t)
+\end{align}
+Eine Linearisierung dieser Gleichung um die Bahnkurve $\boldsymbol{s}(t)$ liefert in der Kronecker-Produkt Schreibweise die Master Stability Equation (MSE) in Gleichung (\ref*{eq:mse}).
+\begin{align}\label{eq:mse}
+\delta\overset{\cdot}{\boldsymbol{X}}(t)=
+\left[D\boldsymbol{F}(\boldsymbol{s}(t))+\sigma\boldsymbol{A}\otimes D\boldsymbol{H}(\boldsymbol{s}(t))\right]\delta\boldsymbol{X}(t)
+\end{align}
 
-\section{Stabilität}
+\subsection{Ljapunow-Exponenten}
+Die Ljapunow-Exponenten beschreiben, wie weit sich Bahnkurven für große Zeiten von einander entfernen, verglichen mit der Abweichung zum Zeitpunkt $t=0$. Eine mögliche Definition ist in Gleichung (\ref{eq:ljapunow}) gegeben.
+\begin{align}\label{eq:ljapunow}
+\lambda_i=\lim_{t\rightarrow\infty}\frac{1}{t} ln\left(\frac{|\delta \boldsymbol{x}_i(t)|}{|\delta \boldsymbol{x}_i(0)|}\right)
+\end{align}
+Wird die Abweichung zu $\delta\boldsymbol{x}_i(0)$ größer, so ist der Quotient größer als 1, sonst kleiner. Es gilt also folgende Unterscheidung für die Werte der Ljapunow-Exponenten.
+\begin{equation}
+\begin{cases}
+\lambda_i < 0, \text{ Abweichung vom synchronen Zustand verschwindet}\\
+\lambda_i > 0, \text{ Abweichung vom synchronen Zustand wächst}
+\end{cases}
+\end{equation}
+Positive Ljapunow-Exponenten weisen eine instabile Synchronisation nach und negative eine stabile. Der Stabilitätsbegriff bezieht sich hierbei auf Invarianz der Bahnkurven gegenüber Änderungen der Anfangsbedingungen (für lange Zeiten). 
+\subsection{Master Stability Function}
+Da es für Instabilität genügt, wenn einer der Exponenten größer als 0 ist, ist es sinnvoll nur den größten zu betrachten. Dieser wird Master Stability Function (MSF) gennant. Die MSF hat dabei als Parameter die Eigenschaften des Systems, z.b. die Kopplungsstärke $\sigma$.
+
+
+
