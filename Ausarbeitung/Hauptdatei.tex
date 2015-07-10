@@ -74,10 +74,8 @@
 \usepackage{array}
 
 % Runde Klammern für Zitate
-%\usepackage[numbers,round]{natbib}
-
-% Festlegung Art der Zitierung - Havardmethode: Abkuerzung Autor + Jahr
-\bibliographystyle{alphadin}
+\usepackage[square,numbers,super]{natbib}
+\bibliographystyle{plainnat}
 
 % Schaltet den zusätzlichen Zwischenraum ab, den LaTeX normalerweise nach einem Satzzeichen einfügt.
 \frenchspacing
@@ -122,9 +120,6 @@
 \onehalfspacing
 
 
-% Einleitung / Abstract
-\include{abstract}
-
 % einfacher Zeilenabstand
 \singlespacing
 
@@ -133,13 +128,6 @@
 \thispagestyle{empty}
 \tableofcontents
 
-
-\addcontentsline{toc}{section}{Abbildungsverzeichnis}
-\listoffigures
-
-
-\addcontentsline{toc}{section}{Tabellenverzeichnis}
-\listoftables
 
 
 % Definiert Stegbreite bei zweispaltigem Layout
@@ -160,11 +148,11 @@
 
 \input{3_kap2}
 
-%....
+\input{4_kap3}
 
-\input{7_ausblick}
+\input{5_kap4}
 
-\input{8_fazit}
+\input{6_fazit}
 
 %\input{beispiel}
 
