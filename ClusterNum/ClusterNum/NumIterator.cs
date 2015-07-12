@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Accord.Math;
+using System.Threading;
 
 namespace ClusterNum
 {
     public class NumIterator
     {
-        public static Random rand = new Random();
+       // ThreadLocal<Random> rand = new ThreadLocal<Random>(() => new Random());
+
+        [ThreadStatic]
+        private static Random rand;
 
         public int nodeCount;
         public double[,] adjMatrix;
@@ -20,6 +24,7 @@ namespace ClusterNum
 
         public NumIterator(double[,] adjMatrix, double beta, double sigma, double delta,double pertubation)
         {
+            rand = new Random();
             this.beta = beta;
             this.sigma = sigma;
             this.delta = delta;
@@ -27,6 +32,7 @@ namespace ClusterNum
             this.nodeCount = adjMatrix.GetLength(0);
             xt.Add(new double[nodeCount]);
             xt[0] = pertubate(xt[0], pertubation).Add(Math.PI);
+           
 
         }
 
@@ -107,7 +113,6 @@ namespace ClusterNum
         private double[] pertubate(double[] x, double stdabw)
         {
             double[] pertxi = new double[x.Length];
-            Random rand = new Random();
             for (int i = 0; i < x.Length; i++)
             {
                 double u1 = rand.NextDouble();
