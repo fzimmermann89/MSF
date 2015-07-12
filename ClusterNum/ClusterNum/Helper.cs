@@ -70,5 +70,43 @@ namespace ClusterNum
             }
             return cluster;
         }
+        public static double[,] tmat(int[][] cluster)
+        //berechnet transformation nach schwerpunkt/relativ-koordinaten
+        {
+            int nodecount = 0;
+            foreach (int[] curcluster in cluster) nodecount += curcluster.Length;
+            double[,] tmat = new double[nodecount, nodecount];
+
+            //oberer block-schwerpunkt->synchrone bewegung
+            for (int i = 0; i < cluster.Length; i++)
+            {
+                double value = 1.0 / (cluster[i].Length);
+                for (int j = 0; j < cluster[i].Length; j++)
+                {
+                    int node = cluster[i][j];
+                    tmat[i, node] = value;
+                }
+            }
+
+            //unterer block->abweichungen der knoten vom mittelwert
+            int row = cluster.Length;
+            for (int i = 0; i < cluster.Length; i++)
+            {
+                for (int j = 0; j < cluster[i].Length - 1; j++)
+                {
+                    for (int k = 0; k < cluster[i].Length; k++)
+                    {
+                        int negnode = cluster[i][k];
+                        tmat[row, negnode] = -1.0 / (cluster[i].Length - 1);
+                    }
+                    int posnode = cluster[i][j];
+                    tmat[row, posnode] = 1;
+                    row++;
+                }
+            }
+
+            return tmat;
+        }
+
     }
 }

@@ -83,8 +83,10 @@ b 0 0 0 0 0 0 a 0 0 0
             tmattext = tmattext.Replace("z", z.ToString());
 
             TMat = Helper.MatrixFromString(tmattext);
+            //TMat = Helper.tmat(cluster); //nutze relativkoordinaten
 
-            TMatInverse = TMat.Inverse();
+
+            TMatInverse = TMat.Inverse().Round(5);
             EMats = new double[cluster.Length][,];
             JMats = new double[cluster.Length][,];
             for (int ci = 0; ci < cluster.Length; ci++)
@@ -103,8 +105,8 @@ b 0 0 0 0 0 0 a 0 0 0
                 JMats[ci] = TMat.Multiply(EMats[ci]).Multiply(TMatInverse);
             }
 
-            BMat = TMat.Multiply(adjmatrix).Multiply(TMatInverse);
-
+            BMat = TMat.Multiply(adjmatrix).Multiply(TMatInverse).Round(5);
+            MessageBox.Show(BMat.ToString(DefaultMatrixFormatProvider.CurrentCulture));
             double[,] clusterTransformMatrix = new double[nodeCount, nodeCount];
             for (int i = 0; i < nodeCount; i++)
             {
