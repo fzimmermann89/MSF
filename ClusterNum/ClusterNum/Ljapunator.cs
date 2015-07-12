@@ -30,7 +30,7 @@ namespace ClusterNum
 
         int nodeCount;
 
-        public double[] ljapunowSum;
+        public double ljapunowSum;
 
 
         //Konstruktor , berechnung braucht J_m's , B und die Cluster zum summieren
@@ -42,7 +42,7 @@ namespace ClusterNum
             this.nodeCount = BMat.GetLength(0);
             etat.Add(new double[nodeCount]);
 
-            ljapunowSum = new double[nodeCount];
+            ljapunowSum = 0;
 
             this.smts = smts;
             this.JMats = JMats;
@@ -77,16 +77,24 @@ namespace ClusterNum
 
             newetai = sumJDF.Multiply(oldetai);
             newetai = newetai.Add(BMat.Multiply(sumJDH).Multiply(oldetai));
-            //newetai = newetai.Add(oldetai);
-            double[] tmp = newetai.ElementwiseDivide(oldetai).Abs().Log();
-            for (int k = 0; k < ljapunowSum.Length; k++)
+           
+            //orthogonalisieren - nur instabile richtungen beibehalten
+            for (int icluster = 0; icluster < cluster.Length; icluster++)
             {
-                ljapunowSum[k] += tmp[k];
+                newetai[icluster] = 0;
             }
+           
+
             double oldetalength = oldetai.Euclidean();
             double newetalength = newetai.Euclidean();
+            
             double scale = oldetalength / newetalength;
-            newetai = scale.Multiply(newetai);
+            double tmp = Math.Log(Math.Abs(1 / scale));
+            //double[] tmp = newetai.ElementwiseDivide(oldetai).Abs().Log();
+           
+                ljapunowSum += tmp;
+           //normalisieren
+           newetai = scale.Multiply(newetai);
 
 
             // etaratio.
