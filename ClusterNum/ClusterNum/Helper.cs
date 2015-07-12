@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Accord.Math;
 
 namespace ClusterNum
 {
@@ -24,7 +25,7 @@ namespace ClusterNum
                 if (strsplitarr.Length != nodeCount)
                 {
                     throw new FormatException("Matrix ist nicht quadratisch");
-                
+
                 }
                 double[] intsplitarr;
                 try
@@ -33,7 +34,7 @@ namespace ClusterNum
                 }
                 catch (FormatException ex)
                 {
-                   throw new FormatException("Matrix ungültig:\n" + ex.Message);
+                    throw new FormatException("Matrix ungültig:\n" + ex.Message);
                 }
 
                 for (int j = 0; j < nodeCount; j++)
@@ -64,14 +65,14 @@ namespace ClusterNum
                 }
 
                 string[] parts = match.Split(new string[] { " ", ":" }, StringSplitOptions.RemoveEmptyEntries);
-                
+
                 cluster[j] = Array.ConvertAll(parts, int.Parse);
                 Array.Sort(cluster[j]);
             }
             return cluster;
         }
         public static double[,] tmat(int[][] cluster)
-        //berechnet transformation nach schwerpunkt/relativ-koordinaten
+            //berechnet transformation nach schwerpunkt/relativ-koordinaten
         {
             int nodecount = 0;
             foreach (int[] curcluster in cluster) nodecount += curcluster.Length;
