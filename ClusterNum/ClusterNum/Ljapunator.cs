@@ -25,12 +25,12 @@ namespace ClusterNum
         double[][,] JMats;
         List<double[]> smts;
 
-        int[][] cluster;
-
+       // int[][] cluster;
+        int clusterCount;
 
         int nodeCount;
 
-        public double[] ljapunowSum;
+        public double ljapunowSum;
 
 
         //Konstruktor , berechnung braucht J_m's , B und die Cluster zum summieren
@@ -42,14 +42,14 @@ namespace ClusterNum
             this.nodeCount = BMat.GetLength(0);
             etat.Add(new double[nodeCount]);
 
-            ljapunowSum = new double[nodeCount];
+            ljapunowSum = 0;
 
             this.smts = smts;
             this.JMats = JMats;
             this.BMat = BMat;
 
-            this.cluster = cluster;
-
+           // this.cluster = cluster;
+            this.clusterCount = cluster.Length;
         }
 
 
@@ -64,7 +64,7 @@ namespace ClusterNum
             double[,] sumJDF = new double[nodeCount, nodeCount];
             double[,] sumJDH = new double[nodeCount, nodeCount];
 
-            for (int clusternum = 0; clusternum < cluster.Length; clusternum++)
+            for (int clusternum = 0; clusternum < clusterCount; clusternum++)
             {
 
                 double DFsmt = beta * dintensity(smts[tIndex][clusternum]);
@@ -77,19 +77,15 @@ namespace ClusterNum
 
             newetai = sumJDF.Multiply(oldetai);
             newetai = newetai.Add(BMat.Multiply(sumJDH).Multiply(oldetai));
-            //newetai = newetai.Add(oldetai);
-            double[] tmp = newetai.ElementwiseDivide(oldetai).Abs().Log();
-            for (int k = 0; k < ljapunowSum.Length; k++)
-            {
-                ljapunowSum[k] += tmp[k];
-            }
+      
             double oldetalength = oldetai.Euclidean();
             double newetalength = newetai.Euclidean();
             double scale = oldetalength / newetalength;
+
+            ljapunowSum += Math.Log(1.0 / scale);
+
             newetai = scale.Multiply(newetai);
 
-
-            // etaratio.
             etat.Add(newetai);
         }
         public void iterate(int numIteration)
@@ -132,7 +128,7 @@ namespace ClusterNum
             return pertIntensity;
 
         }
-        
+
     }
 
 }

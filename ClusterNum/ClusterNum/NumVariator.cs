@@ -22,7 +22,7 @@ namespace ClusterNum
             }
         }
 
-        private const double ljapunowPertubation = 0.01;
+       // private const double ljapunowPertubation = 0.01;
         public double betamin, betamax, sigma, delta, noise, pertubation;
         public int betasteps, pre, rec;
 
@@ -142,7 +142,7 @@ b 0 0 0 0 0 0 a 0 0 0
                 double beta = betamin + ibeta * (betamax - betamin) / betasteps;
 
                 //RMS
-                NumIterator rmsIterator = new NumIterator(adjmatrix, beta, sigma, delta,pertubation);
+                NumIterator rmsIterator = new NumIterator(adjmatrix, beta, sigma, delta, pertubation);
                 rmsIterator.noise = noise;
                 double[] rms = new double[cluster.Length];
                 rmsIterator.iterate(pre);
@@ -165,7 +165,7 @@ b 0 0 0 0 0 0 a 0 0 0
                 //synchrone orbits berechnen
 
 
-                NumIterator smIterator = new NumIterator(adjmatrix, beta, sigma, delta,pertubation);
+                NumIterator smIterator = new NumIterator(adjmatrix, beta, sigma, delta, pertubation);
                 smIterator.iterate(pre + rec);
 
                 List<double[]> transDoneSynchManifolds = smIterator.xt.GetRange(pre, rec);
@@ -192,23 +192,14 @@ b 0 0 0 0 0 0 a 0 0 0
                         if (etanodenum >= clusterTransform.Length) // unterer Block
                         {
                             Ljapunator punator = new Ljapunator(JMats, BMat, cluster, smts, beta, sigma, delta);
-
-                            punator.etat[0][etanodenum] = ljapunowPertubation;
+                            punator.etat[0][etanodenum] = pertubation;
                             punator.iterate(rec);
-                            if (!double.IsNaN(punator.ljapunowSum[etanodenum]))
-                            {
-                                ljapunow[m] = Math.Max(punator.ljapunowSum[etanodenum], ljapunow[m]);
-                            }
+                            ljapunow[m] = Math.Max(punator.ljapunowSum / (double)rec, ljapunow[m]);
+
                         }
                     }
                 }
-                for (int m = 0; m < clusterTransform.Length; m++)
-                {
-                    ljapunow[m] /= (double)rec;
-                }
 
-
-                //ausgabe
                 result ret_result = new result(beta, rms, ljapunow);
                 callback(ret_result);
 
