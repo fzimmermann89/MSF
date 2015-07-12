@@ -17,9 +17,9 @@ Permutationssymmetrien
 
 Dieses Projekt basiert auf:
 
-Pecora et al: Cluster synchronization and isolated desynchronization in complex networks with symmetries, Nature Communications 5/2014
+-Pecora et al: Cluster synchronization and isolated desynchronization in complex networks with symmetries, Nature Communications 5/2014
 
-A. Hagerstorm: Network Symmetries and Synchronization (https://sourceforge.net/projects/networksym/)
+-A. Hagerstorm: Network Symmetries and Synchronization (https://sourceforge.net/projects/networksym/)
 
-Nauty (http://pallini.di.uniroma1.it/)
+-Nauty (http://pallini.di.uniroma1.it/)
 
