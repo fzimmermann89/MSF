@@ -19,7 +19,7 @@ Die Dynamik eines Knotens aus Cluster A ändert sich unter einer Permutation $\p
 
 
 
-\begin{align*}
+\begin{align}
 		\left[\boldsymbol{P}_A	\overset{\cdot}{\boldsymbol{X}}\right]_i&=
 		\overset{\cdot}{\boldsymbol{x}}_i\\
 		\left[\boldsymbol{P}_A \boldsymbol{F}(\boldsymbol{X})\right]_i+
@@ -32,32 +32,49 @@ Die Dynamik eines Knotens aus Cluster A ändert sich unter einer Permutation $\p
 		\boldsymbol{f}(\boldsymbol{x}_i)+
 			\sigma\sum_j
 		A_{ij}\boldsymbol{h}(\boldsymbol{x}_j)		
-\end{align*}
-	\begin{figure}
+\end{align}
+Folglich muss jeder Knoten in A gleich an die anderen Knoten des Netzwerken gekoppelt sein und somit gleichstarken Input von diesen erhalten (siehe Abb. \ref{fig:perma})
+
+\begin{figure}
+\label{fig:perma}
 		\includegraphics[width=0.75\textwidth]{abb/misc/perm_a.png}
-	\end{figure}
+		\caption{Es werden zwei Cluster A und B betrachtet. Eine Symmetriepermutation des Clusters A ändert die Dynamik der Knoten aus A nicht. Folglich muss jeder dieser Knoten gleichstarken Input von einem Knoten aus B erhalten.}
+\end{figure}
 
+
+Eine analoge Betrachtung  unter Permutation eines zweiten Clusters B (A wird nicht verändert) führt auf die Beobachtung, dass jeder Knoten aus B gleich an die Knoten aus A gekoppelt ist (siehe Abb. \ref{fig:permb}). 
+
+Zusammen ergibt sich aus diesen Aussagen: Jeder Knoten in A bekommt in der Summe den gleichen Input vom Cluster B, egal ob dieser synchron oder asynchron ist, sofern Permutationsmatrizen existieren, die die Cluster getrennt permutieren. Isolierte Desynchronisation kann nicht bei "verschränkten" Clustern auftreten, da die Permutation beide Cluster verändert.
 
 	\begin{figure}
+	\label{fig:permb}
 		\includegraphics[width=0.75\textwidth]{abb/misc/perm_b.png}
+		\caption{Bei Symmetriepermutation des Clusters B ändert sich die Dynamik eines Knotens aus A nicht. Muss ein Knoten aus A gleichstarken Input von allen Knoten aus B erhalten.}
 	\end{figure}
 	
-		Folglich muss jeder Knoten des Netzwerkes gleich starken Input an einen Knoten aus A geben.
-
-		Eine analoge Betrachtung  unter Permutation eines zweiten Clusters B(A wird nicht verändert) führt auf die Beobachtung,dass ein Knoten aus B ist gleich an jeden Knoten aus A gekoppelt.
-Zusammen ergibt sich aus diesen Aussagen: Jeder Knoten in B bekommt in der Summe den gleichen Input vom Cluster A, egal ob dieser synchron oder asynchron ist, sofern Permutationsmatrizen existieren, die die Cluster getrennt permutieren. Isolierte Desynchronisation kann nicht bei "verschränkten" Clustern auftreten, da die Permutation beide Cluster verändert.
-
 
 \paragraph{Stabilität}
-Zur Betrachtung der Stabilität der isolierten Synchronisation lässt sich die MSE (\ref{eq_mse}) umschreiben
+Zur Betrachtung der Stabilität der isolierten Synchronisation lässt sich die MSE (\ref{eq:mse}) umschreiben
 \begin{align*}
-	\label{eq_clusterfehler}
+	\label{eq:clustermse}
 	\delta\overset{\cdot}{\boldsymbol{X}}(t)&=	
 	\left[D\boldsymbol{F}(\boldsymbol{s}(t))+\sigma\boldsymbol{A}\otimes D\boldsymbol{H}(\boldsymbol{s}(t))\right]\delta\boldsymbol{X}(t)\\&=
 	\left[\sum_{m=1}^{M} \boldsymbol{E}^{(m)} \otimes D\boldsymbol{F}(\boldsymbol{s}_m(t))+\sigma\boldsymbol{A}\otimes \boldsymbol{I}_n\sum_{m=1}^{M} 			\boldsymbol{E}^{(m)}\otimes D\boldsymbol{H}(\boldsymbol{s}_m(t))\right]\boldsymbol{X}(t)
 	\\\notag & \boldsymbol{E}^{(m)}_{ii} =1\text{ wenn Knoten }i \in C_m
 	\end{align*}.
 	
-Gleichung \ref{eq_clusterfehler} lässt sich unter Verwendung der Gruppentheorie in eine neue Basis transformieren. Hierbei wird die Basis der  irreduziblen Darstellungen der den Permutationssymmetrien  zugrunde liegenden Gruppe gewählt. In dieser Basis nimmt die Kopplungsmatrix Blockdiagonalform an.
+Gleichung \ref{eq:clustermse} lässt sich unter Verwendung der Gruppentheorie in eine neue Basis transformieren. Hierbei wird die Basis der  irreduziblen Darstellungen (IRRs) der den Permutationssymmetrien  zugrunde liegenden Gruppe gewählt. In dieser Basis nimmt die Kopplungsmatrix Blockdiagonalform an. Die oberen M Koordinaten $\eta(t)$ in der neuen Darstellung entsprechen einer Bewegung longitudinal innerhalb der Synchronisationsmannigfaltigkeit, die weiteren einer Bewegung transversal zur ihr. 
+\begin{align}
+		\overset{\cdot}{\boldsymbol{\eta}}(t)&=
+				\left[\sum_{m=1}^{M} \boldsymbol{J}^{(m)} \otimes D\boldsymbol{F}(\boldsymbol{s}_m(t))+\sigma\boldsymbol{B}\otimes \boldsymbol{I}_n\sum_{m=1}^{M} \boldsymbol{J}^{(m)}\otimes D\boldsymbol{H}(\boldsymbol{s}_m(t))\right]\boldsymbol{\eta}(t)
+		\\\notag &\boldsymbol{\eta}(t)=\boldsymbol{T}\otimes\boldsymbol{I}_n\delta\boldsymbol{X}(t)
+		\\\notag & \boldsymbol{B}=\boldsymbol{T}\boldsymbol{A}\boldsymbol{T}^{-1}
+		\\\notag & \boldsymbol{J}^{(m)}=\boldsymbol{T}\boldsymbol{E}^{(m)}\boldsymbol{T}^{-1}
+		\end{align}
+		
+
+Gegenüber einer naiven Transformation ein M Schwerpunktkoordinaten und (N-M) Relativkoordinaten, die die Abweichung der Knoten eines Clusters zueinander beschreiben, ermöglicht diese IRR-Basis....
+
+
 
 
