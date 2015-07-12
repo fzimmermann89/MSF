@@ -13,10 +13,11 @@ namespace ClusterNum
     {
 
 
-        public static Random rand = new Random();
+        [ThreadStatic]
+        static Random rand;
 
-        public double[,] adjMatrix;
-        public double beta, sigma, delta;
+
+        double beta, sigma, delta;
 
         public List<double[]> etat = new List<double[]>();
         public double pertubation = 0.00;
@@ -32,8 +33,9 @@ namespace ClusterNum
 
 
         //Konstruktor , berechnung braucht J_m's , B und die Cluster zum summieren
-        public Ljapunator(double[][,] JMats, double[,] BMat, int[][] cluster, List<double[]> smts, double beta, double sigma, double delta)
+        public Ljapunator(double[][,] JMats, double[,] BMat, int clustercount, List<double[]> smts, double beta, double sigma, double delta)
         {
+            rand = new Random();
             this.beta = beta;
             this.sigma = sigma;
             this.delta = delta;
@@ -46,8 +48,8 @@ namespace ClusterNum
             this.JMats = JMats;
             this.BMat = BMat;
 
-           // this.cluster = cluster;
-            this.clusterCount = cluster.Length;
+            // this.cluster = cluster;
+            this.clusterCount = clustercount;
         }
 
 
@@ -75,23 +77,23 @@ namespace ClusterNum
 
             newetai = sumJDF.Multiply(oldetai);
             newetai = newetai.Add(BMat.Multiply(sumJDH).Multiply(oldetai));
-           
+
             //orthogonalisieren - nur instabile richtungen beibehalten
             for (int icluster = 0; icluster < clusterCount; icluster++)
             {
                 newetai[icluster] = 0;
             }
-           
+
 
             double oldetalength = oldetai.Euclidean();
             double newetalength = newetai.Euclidean();
-            
+
             double scale = oldetalength / newetalength;
             double tmp = Math.Log(Math.Abs(1 / scale));
             //double[] tmp = newetai.ElementwiseDivide(oldetai).Abs().Log();
-           
-                ljapunowSum += tmp;
-           //normalisieren
+
+            ljapunowSum += tmp;
+            //normalisieren
             newetai = scale.Multiply(newetai);
 
             etat.Add(newetai);
@@ -136,7 +138,7 @@ namespace ClusterNum
             return pertIntensity;
 
         }
-        
+
     }
 
 }
