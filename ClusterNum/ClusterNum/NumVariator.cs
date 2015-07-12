@@ -83,7 +83,7 @@ b 0 0 0 0 0 0 a 0 0 0
             tmattext = tmattext.Replace("z", z.ToString());
 
             TMat = Helper.MatrixFromString(tmattext);
-            //TMat = Helper.tmat(cluster); //nutze relativkoordinaten
+           //TMat = Helper.tmat(cluster); //nutze relativkoordinaten
 
 
             TMatInverse = TMat.Inverse().Round(5);
@@ -106,7 +106,7 @@ b 0 0 0 0 0 0 a 0 0 0
             }
 
             BMat = TMat.Multiply(adjmatrix).Multiply(TMatInverse).Round(5);
-            MessageBox.Show(BMat.ToString(DefaultMatrixFormatProvider.CurrentCulture));
+           // MessageBox.Show(BMat.ToString(DefaultMatrixFormatProvider.CurrentCulture)); //bmat anzeigen. hilfreich für debug
             double[,] clusterTransformMatrix = new double[nodeCount, nodeCount];
             for (int i = 0; i < nodeCount; i++)
             {
