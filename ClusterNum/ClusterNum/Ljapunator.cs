@@ -24,9 +24,7 @@ namespace ClusterNum
         double[,] BMat;
         double[][,] JMats;
         List<double[]> smts;
-
-        int[][] cluster;
-
+        int clusterCount;
 
         int nodeCount;
 
@@ -48,8 +46,8 @@ namespace ClusterNum
             this.JMats = JMats;
             this.BMat = BMat;
 
-            this.cluster = cluster;
-
+           // this.cluster = cluster;
+            this.clusterCount = cluster.Length;
         }
 
 
@@ -64,7 +62,7 @@ namespace ClusterNum
             double[,] sumJDF = new double[nodeCount, nodeCount];
             double[,] sumJDH = new double[nodeCount, nodeCount];
 
-            for (int clusternum = 0; clusternum < cluster.Length; clusternum++)
+            for (int clusternum = 0; clusternum < clusterCount; clusternum++)
             {
 
                 double DFsmt = beta * dintensity(smts[tIndex][clusternum]);
@@ -79,7 +77,7 @@ namespace ClusterNum
             newetai = newetai.Add(BMat.Multiply(sumJDH).Multiply(oldetai));
            
             //orthogonalisieren - nur instabile richtungen beibehalten
-            for (int icluster = 0; icluster < cluster.Length; icluster++)
+            for (int icluster = 0; icluster < clusterCount; icluster++)
             {
                 newetai[icluster] = 0;
             }
@@ -94,10 +92,8 @@ namespace ClusterNum
            
                 ljapunowSum += tmp;
            //normalisieren
-           newetai = scale.Multiply(newetai);
+            newetai = scale.Multiply(newetai);
 
-
-            // etaratio.
             etat.Add(newetai);
         }
         public void iterate(int numIteration)
