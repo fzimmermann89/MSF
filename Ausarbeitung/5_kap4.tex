@@ -4,7 +4,7 @@ Können in einem Graphen zwei Knoten miteinander vertauscht werden, ohne dass si
 PAP^{-1}=A
 \end{equation}.
 
-Zur Untersuchung eines Netzwerkes auf Symmetrien eignen sich Algorithmen zur Suche von Automorphismen des dem Netzwerk zugrunde liegenden Graphen mit Hilfe der Bibliothek \textit{nauty} \cite{nauty}. Mit dieser lassen sich neben den Generatoren der Permutationssymmetrien auch die Orbits der Knoten bestimmen. Als Orbit werden hierbei die Positionen bezeichnet, an die ein Knoten durch Anwendung aller Permutationen gelangen kann. Alle Knoten eines Orbits lassen sich folglich durch eine Hintereinaderreihung der Permutationen vertauschen, ohne dass sich die Dynamik des Netzwerkes verändert. Eine solche Gruppe von Knoten wird als Cluster bezeichnet. Sollte bei der für die Vertauschung nötigen Hintereinanderreihung von Permutationen ebenfalls Knoten eines weiteren Clusters miteinander vertauscht werden, so liegt eine Verschränkung der Cluster vor (Pecora: \"interwinded Clusters\").
+Zur Untersuchung eines Netzwerkes auf Symmetrien eignen sich Algorithmen zur Suche von Automorphismen des dem Netzwerk zugrunde liegenden Graphen mit Hilfe der Bibliothek \textit{nauty} \cite{nauty}. Mit dieser lassen sich neben den Generatoren der Permutationssymmetrien auch die Orbits der Knoten bestimmen. Als Orbit werden hierbei die Positionen bezeichnet, an die ein Knoten durch Anwendung aller Permutationen gelangen kann. Alle Knoten eines Orbits lassen sich folglich durch eine Hintereinaderreihung der Permutationen vertauschen, ohne dass sich die Dynamik des Netzwerkes verändert. Eine solche Gruppe von Knoten wird als Cluster bezeichnet. Sollte bei der für die Vertauschung nötigen Hintereinanderreihung von Permutationen ebenfalls Knoten eines weiteren Clusters miteinander vertauscht werden, so liegt eine Verschränkung der Cluster vor (Pecora: "interwinded Clusters").
 
 \section{Synchronisation in symmetrischen Netzwerken}
 Da Knoten eines Clusters ohne Veränderung der Dynamik vertauschbar sind, erhalten diese den gleichen Input der anderen Knoten und können synchron laufen. In einem aus M Clustern $C_m$ bestehenden Netzwerk existieren somit M Gruppen von Knoten, die isolierte Synchronisation aufweisen können mit synchronen Orbits $s_m$
@@ -20,25 +20,22 @@ Die Dynamik eines Knotens aus Cluster A ändert sich unter einer Permutation $\p
 
 
 \begin{align}
-		\left[\boldsymbol{P}_A	\overset{\cdot}{\boldsymbol{X}}\right]_i&=
-		\overset{\cdot}{\boldsymbol{x}}_i\\
-		\left[\boldsymbol{P}_A \boldsymbol{F}(\boldsymbol{X})\right]_i+
+		\notag \left[\boldsymbol{P}_A	\overset{\cdot}{\boldsymbol{X}}\right]_i&= \overset{\cdot}{\boldsymbol{x}}_i\\
+		\notag\left[\boldsymbol{P}_A \boldsymbol{F}(\boldsymbol{X})\right]_i+
 			\left[\boldsymbol{P}_A\boldsymbol{A}\boldsymbol{H}(\boldsymbol{X})\right]_i&=
-					\boldsymbol{f}(\boldsymbol{x}_i)+
-						\sigma\sum_j
-					A_{ij}\boldsymbol{h}(\boldsymbol{x}_j)\\
+			\boldsymbol{f}(\boldsymbol{x}_i)+
+			\sigma\sum_j A_{ij}\boldsymbol{h}(\boldsymbol{x}_j)\\
 		\boldsymbol{f}(\boldsymbol{x}_i)+
 			\sigma\sum_j A_{ij}\boldsymbol{h}(\boldsymbol{x}_{\pi\left(j\right)})&=
 		\boldsymbol{f}(\boldsymbol{x}_i)+
-			\sigma\sum_j
-		A_{ij}\boldsymbol{h}(\boldsymbol{x}_j)		
+			\sigma\sum_j A_{ij}\boldsymbol{h}(\boldsymbol{x}_j)		
 \end{align}
 Folglich muss jeder Knoten in A gleich an die anderen Knoten des Netzwerken gekoppelt sein und somit gleichstarken Input von diesen erhalten (siehe Abb. \ref{fig:perma})
 
 \begin{figure}
-\label{fig:perma}
 		\includegraphics[width=0.75\textwidth]{abb/misc/perm_a.png}
 		\caption{Es werden zwei Cluster A und B betrachtet. Eine Symmetriepermutation des Clusters A ändert die Dynamik der Knoten aus A nicht. Folglich muss jeder dieser Knoten gleichstarken Input von einem Knoten aus B erhalten.}
+		\label{fig:perma}
 \end{figure}
 
 
@@ -47,9 +44,9 @@ Eine analoge Betrachtung  unter Permutation eines zweiten Clusters B (A wird nic
 Zusammen ergibt sich aus diesen Aussagen: Jeder Knoten in A bekommt in der Summe den gleichen Input vom Cluster B, egal ob dieser synchron oder asynchron ist, sofern Permutationsmatrizen existieren, die die Cluster getrennt permutieren. Isolierte Desynchronisation kann nicht bei "verschränkten" Clustern auftreten, da die Permutation beide Cluster verändert.
 
 	\begin{figure}
-	\label{fig:permb}
 		\includegraphics[width=0.75\textwidth]{abb/misc/perm_b.png}
 		\caption{Bei Symmetriepermutation des Clusters B ändert sich die Dynamik eines Knotens aus A nicht. Muss ein Knoten aus A gleichstarken Input von allen Knoten aus B erhalten.}
+		\label{fig:permb}
 	\end{figure}
 	
 
