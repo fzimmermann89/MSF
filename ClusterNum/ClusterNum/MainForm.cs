@@ -173,16 +173,12 @@ namespace ClusterNum
 
             //Tmat erstellen
             if (networkDropdown.SelectedIndex == 3)
-            {//custom
-                TMat = Helper.TMat(cluster); //nutze relativkoordinaten
-            }
-            else if (networkDropdown.SelectedIndex == 1) //das if sollte raus wenn alle tmat implementiert sind
-            {
-                TMat = Helper.TMat(networkDropdown.SelectedIndex);
-            }
-            else //..ebenso dieser ganze block
-            {
+            { //nutze relativkoordinaten wenn custom ausgewählt
                 TMat = Helper.TMat(cluster);
+            }
+            else
+            {//nutze eingespeicherte
+                TMat = Helper.TMat(networkDropdown.SelectedIndex);
             }
 
 
@@ -373,7 +369,7 @@ namespace ClusterNum
                 }
                 stepsDone = 0;
                 Action<NumVariator.result> callback_action = callback;
-                variator = new NumVariator(adjmatrix, TMat,(double)betaMinUpDown.Value * Math.PI, (double)betaMaxUpDown.Value * Math.PI, (int)stepsUpDown.Value, sigma, delta, noise, pertubation, (int)preUpDown.Value, (int)recUpDown.Value, cluster, callback_action);
+                variator = new NumVariator(adjmatrix, TMat, (double)betaMinUpDown.Value * Math.PI, (double)betaMaxUpDown.Value * Math.PI, (int)stepsUpDown.Value, sigma, delta, noise, pertubation, (int)preUpDown.Value, (int)recUpDown.Value, cluster, callback_action);
                 variatorThread = new Thread(variator.DoWork);
                 variatorThread.Start();
 

@@ -64,7 +64,7 @@ namespace ClusterNum
                 double[] intsplitarr;
                 try
                 {
-                    intsplitarr = Array.ConvertAll(strsplitarr, Double.Parse);
+                    intsplitarr = Array.ConvertAll(strsplitarr, s=>Double.Parse(s,System.Globalization.CultureInfo.InvariantCulture));
                 }
                 catch (FormatException ex)
                 {
@@ -106,7 +106,7 @@ namespace ClusterNum
             return cluster;
         }
         public static double[,] TMat(int[][] cluster)
-        //berechnet transformation nach schwerpunkt/relativ-koordinaten wenn calculate==true, ansosnten gib matrix für graph2 zurück
+        //berechnet transformation nach schwerpunkt/relativ-koordinaten
         {
             int nodecount = 0;
             foreach (int[] curcluster in cluster) nodecount += curcluster.Length;
@@ -146,39 +146,56 @@ namespace ClusterNum
         }
         public static double[,] TMat(int network)
         {
-            double[,] tmat = new double[11, 11];
+            //gibt eingespeicherte tmat zurück
+            string tmattext;
             switch (network)
             {
-
+                case 0:
+                    tmattext = 
+@"1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+0.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 
+0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 
+0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 
+0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 
+0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 
+0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 
+0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0";
+                    break;
                 case 1:
-                    double x = 1.0;
-                    double y = -0.5;
-                    double a = Math.Sqrt(2.0) / 2.0;
-                    double b = -a;
-                    double z = 0.5;
-                    string tmattext = @"0 0 0 0 b 0 0 0 0 b 0 
-0 0 0 b 0 b 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 x 
-b 0 0 0 0 0 0 b 0 0 0 
-0 y y 0 0 0 y 0 y 0 0 
-0 0 0 b 0 a 0 0 0 0 0 
-0 y z 0 0 0 y 0 z 0 0 
-0 0 0 0 b 0 0 0 0 a 0 
-b 0 0 0 0 0 0 a 0 0 0 
-0 0 a 0 0 0 0 0 b 0 0 
-0 b 0 0 0 0 a 0 0 0 0 ";
-
-                    tmattext = tmattext.Replace("x", x.ToString());
-                    tmattext = tmattext.Replace("y", y.ToString());
-                    tmattext = tmattext.Replace("a", a.ToString());
-                    tmattext = tmattext.Replace("b", b.ToString());
-                    tmattext = tmattext.Replace("z", z.ToString());
-                    tmat = Helper.MatrixFromString(tmattext);
+                    tmattext =
+@"0 0 0 0 -0.707106781186548 0 0 0 0 -0.707106781186548 0 
+0 0 0 -0.707106781186548 0 -0.707106781186548 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 1 
+-0.707106781186548 0 0 0 0 0 0 -0.707106781186548 0 0 0 
+0 -0.5 -0.5 0 0 0 -0.5 0 -0.5 0 0 
+0 0 0 -0.707106781186548 0 0.707106781186548 0 0 0 0 0 
+0 -0.5 0.5 0 0 0 -0.5 0 0.5 0 0 
+0 0 0 0 -0.707106781186548 0 0 0 0 0.707106781186548 0 
+-0.707106781186548 0 0 0 0 0 0 0.707106781186548 0 0 0 
+0 0 0.707106781186548 0 0 0 0 0 -0.707106781186548 0 0 
+0 -0.707106781186548 0 0 0 0 0.707106781186548 0 0 0 0";
+                    break;
+                case 2:
+                    tmattext = 
+@"0.0 0.0 0.0 -1.0 -0.0 0.0 -0.0 -0.0 0.0 0.0 -0.0 
+-0.0 -0.0 0.5 0.0 0.5 0.0 0.0 0.0 0.5 0.5 0.0 
+-0.40825 -0.40825 0.0 0.0 0.0 -0.40825 -0.40825 -0.40825 0.0 0.0 -0.40825 
+-0.0 -0.0 -0.5 0.0 0.5 -0.0 -0.0 -0.0 0.5 -0.5 -0.0 
+-0.0 -0.0 -0.0 -0.0 -0.70711 0.0 -0.0 -0.0 0.70711 -0.0 -0.0 
+-0.0 -0.0 -0.70711 0.0 -0.0 -0.0 -0.0 -0.0 -0.0 0.70711 -0.0 
+-0.0 -0.11419 -0.0 0.0 0.0 -0.08909 0.79679 -0.58661 0.0 0.0 -0.0069 
+0.0 -0.25428 -0.0 -0.0 0.0 -0.26574 0.40518 0.64647 0.0 0.0 -0.53163 
+0.0 0.19331 -0.0 0.0 0.0 0.68911 -0.03097 -0.17641 0.0 0.0 -0.67504 
+0.0 -0.82761 0.0 -0.0 -0.0 0.49656 0.0 0.08276 0.0 -0.0 0.24828 
+-0.91287 0.18257 -0.0 -0.0 -0.0 0.18257 0.18257 0.18257 0.0 -0.0 0.18257";
                     break;
                 default:
                     throw new NotSupportedException("noch nicht implementiert");
             }
-            return tmat;
+            return Helper.MatrixFromString(tmattext);
         }
     }
 }
