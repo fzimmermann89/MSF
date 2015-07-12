@@ -39,7 +39,6 @@
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.layoutButton = new System.Windows.Forms.Button();
             this.initGraphButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.iterationTimer = new System.Windows.Forms.Timer(this.components);
             this.runButton = new System.Windows.Forms.Button();
@@ -88,6 +87,8 @@
             this.label16 = new System.Windows.Forms.Label();
             this.betaMaxUpDown = new System.Windows.Forms.NumericUpDown();
             this.betaMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.networkDropdown = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rmsChart)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -112,6 +113,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.stepsUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.betaMaxUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.betaMinUpDown)).BeginInit();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // elementHost1
@@ -148,19 +150,10 @@
             this.initGraphButton.UseVisualStyleBackColor = true;
             this.initGraphButton.Click += new System.EventHandler(this.initGraphButton_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 208);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(88, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Adjecency Matrix";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 410);
+            this.label3.Location = new System.Drawing.Point(12, 422);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(39, 13);
             this.label3.TabIndex = 6;
@@ -278,20 +271,22 @@
             this.clusterBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.clusterBox.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.clusterBox.Location = new System.Drawing.Point(12, 429);
+            this.clusterBox.Location = new System.Drawing.Point(12, 440);
             this.clusterBox.Name = "clusterBox";
             this.clusterBox.ReadOnly = true;
-            this.clusterBox.Size = new System.Drawing.Size(148, 148);
+            this.clusterBox.Size = new System.Drawing.Size(148, 133);
             this.clusterBox.TabIndex = 16;
             this.clusterBox.Text = "";
             // 
             // matrixBox
             // 
-            this.matrixBox.Location = new System.Drawing.Point(12, 236);
+            this.matrixBox.Enabled = false;
+            this.matrixBox.Location = new System.Drawing.Point(0, 46);
             this.matrixBox.Name = "matrixBox";
             this.matrixBox.Size = new System.Drawing.Size(148, 160);
             this.matrixBox.TabIndex = 17;
             this.matrixBox.Text = resources.GetString("matrixBox.Text");
+            this.matrixBox.TextChanged += new System.EventHandler(this.matrixBox_TextChanged);
             // 
             // groupBox1
             // 
@@ -310,7 +305,7 @@
             this.groupBox1.Controls.Add(this.betaUpDown);
             this.groupBox1.Location = new System.Drawing.Point(12, 36);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(133, 169);
+            this.groupBox1.Size = new System.Drawing.Size(133, 159);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = " Settings";
@@ -597,7 +592,7 @@
             this.betaRmsChart.Legends.Add(legend2);
             this.betaRmsChart.Location = new System.Drawing.Point(3, 3);
             this.betaRmsChart.Name = "betaRmsChart";
-            this.betaRmsChart.Size = new System.Drawing.Size(716, 189);
+            this.betaRmsChart.Size = new System.Drawing.Size(701, 189);
             this.betaRmsChart.TabIndex = 21;
             this.betaRmsChart.Text = "chart1";
             // 
@@ -626,7 +621,7 @@
             this.betaLjapChart.Legends.Add(legend3);
             this.betaLjapChart.Location = new System.Drawing.Point(3, 3);
             this.betaLjapChart.Name = "betaLjapChart";
-            this.betaLjapChart.Size = new System.Drawing.Size(716, 189);
+            this.betaLjapChart.Size = new System.Drawing.Size(701, 189);
             this.betaLjapChart.TabIndex = 22;
             this.betaLjapChart.Text = "chart1";
             // 
@@ -875,17 +870,42 @@
             0,
             -2147418112});
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.networkDropdown);
+            this.groupBox4.Controls.Add(this.matrixBox);
+            this.groupBox4.Location = new System.Drawing.Point(12, 201);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(148, 206);
+            this.groupBox4.TabIndex = 20;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Adjecency Matrix";
+            // 
+            // networkDropdown
+            // 
+            this.networkDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.networkDropdown.FormattingEnabled = true;
+            this.networkDropdown.Items.AddRange(new object[] {
+            "Network 1",
+            "Network 2",
+            "Network 3",
+            "Custom"});
+            this.networkDropdown.Location = new System.Drawing.Point(6, 19);
+            this.networkDropdown.Name = "networkDropdown";
+            this.networkDropdown.Size = new System.Drawing.Size(121, 21);
+            this.networkDropdown.TabIndex = 18;
+            this.networkDropdown.SelectedIndexChanged += new System.EventHandler(this.networkDropDown_SelectedIndexChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(917, 585);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.matrixBox);
             this.Controls.Add(this.clusterBox);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.initGraphButton);
             this.Name = "MainForm";
             this.Text = "ClusterNum";
@@ -919,6 +939,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.stepsUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.betaMaxUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.betaMinUpDown)).EndInit();
+            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -929,7 +950,6 @@
         private System.Windows.Forms.Integration.ElementHost elementHost1;
         private System.Windows.Forms.Button layoutButton;
         private System.Windows.Forms.Button initGraphButton;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Timer iterationTimer;
         private System.Windows.Forms.Button runButton;
@@ -978,6 +998,8 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.NumericUpDown pertUpDown;
         private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.ComboBox networkDropdown;
 
        }
 }

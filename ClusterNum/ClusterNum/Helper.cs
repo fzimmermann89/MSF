@@ -10,6 +10,40 @@ namespace ClusterNum
 {
     public class Helper
     {
+        public static string[] adjmatrix ={
+@"0 1 1 1 1 1 0 1 1 1 1
+1 0 1 0 1 1 1 1 0 1 1
+1 1 0 1 1 1 0 1 1 1 0
+1 0 1 0 1 1 1 1 1 1 0
+1 1 1 1 0 1 1 1 1 0 1
+1 1 1 1 1 0 0 1 1 0 1
+0 1 0 1 1 0 0 1 1 1 1
+1 1 1 1 1 1 1 0 1 1 1
+1 0 1 1 1 1 1 1 0 1 1
+1 1 1 1 0 0 1 1 1 0 1
+1 1 0 0 1 1 1 1 1 1 0",
+@"0 1 1 1 0 1 1 1 1 1 1
+1 0 1 1 1 1 0 1 1 1 1
+1 1 0 1 1 1 1 1 0 1 1
+1 1 1 0 1 1 1 1 1 1 1
+0 1 1 1 0 1 1 1 1 1 0
+1 1 1 1 1 0 1 1 1 1 1
+1 0 1 1 1 1 0 1 1 1 1
+1 1 1 1 1 1 1 0 1 0 1
+1 1 0 1 1 1 1 1 0 1 1
+1 1 1 1 1 1 1 0 1 0 0
+1 1 1 1 0 1 1 1 1 0 0",
+@"0 1 1 1 1 1 1 1 1 1 1
+1 0 1 1 1 1 1 1 1 1 1
+1 1 0 0 1 1 1 1 1 0 1
+1 1 0 0 0 1 1 1 0 0 1
+1 1 1 0 0 1 1 1 0 1 1
+1 1 1 1 1 0 1 1 1 1 1
+1 1 1 1 1 1 0 1 1 1 1
+1 1 1 1 1 1 1 0 1 1 1
+1 1 1 0 0 1 1 1 0 1 1
+1 1 0 0 1 1 1 1 1 0 1
+1 1 1 1 1 1 1 1 1 1 0"};
         public static double[,] MatrixFromString(string matrixstring)
         {
 
@@ -71,12 +105,13 @@ namespace ClusterNum
             }
             return cluster;
         }
-        public static double[,] tmat(int[][] cluster)
-            //berechnet transformation nach schwerpunkt/relativ-koordinaten
+        public static double[,] TMat(int[][] cluster)
+        //berechnet transformation nach schwerpunkt/relativ-koordinaten wenn calculate==true, ansosnten gib matrix für graph2 zurück
         {
             int nodecount = 0;
             foreach (int[] curcluster in cluster) nodecount += curcluster.Length;
             double[,] tmat = new double[nodecount, nodecount];
+
 
             //oberer block-schwerpunkt->synchrone bewegung
             for (int i = 0; i < cluster.Length; i++)
@@ -106,8 +141,44 @@ namespace ClusterNum
                 }
             }
 
+
             return tmat;
         }
+        public static double[,] TMat(int network)
+        {
+            double[,] tmat = new double[11, 11];
+            switch (network)
+            {
 
+                case 1:
+                    double x = 1.0;
+                    double y = -0.5;
+                    double a = Math.Sqrt(2.0) / 2.0;
+                    double b = -a;
+                    double z = 0.5;
+                    string tmattext = @"0 0 0 0 b 0 0 0 0 b 0 
+0 0 0 b 0 b 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 x 
+b 0 0 0 0 0 0 b 0 0 0 
+0 y y 0 0 0 y 0 y 0 0 
+0 0 0 b 0 a 0 0 0 0 0 
+0 y z 0 0 0 y 0 z 0 0 
+0 0 0 0 b 0 0 0 0 a 0 
+b 0 0 0 0 0 0 a 0 0 0 
+0 0 a 0 0 0 0 0 b 0 0 
+0 b 0 0 0 0 a 0 0 0 0 ";
+
+                    tmattext = tmattext.Replace("x", x.ToString());
+                    tmattext = tmattext.Replace("y", y.ToString());
+                    tmattext = tmattext.Replace("a", a.ToString());
+                    tmattext = tmattext.Replace("b", b.ToString());
+                    tmattext = tmattext.Replace("z", z.ToString());
+                    tmat = Helper.MatrixFromString(tmattext);
+                    break;
+                default:
+                    throw new NotSupportedException("noch nicht implementiert");
+            }
+            return tmat;
+        }
     }
 }

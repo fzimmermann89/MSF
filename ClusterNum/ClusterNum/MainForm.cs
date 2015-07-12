@@ -24,6 +24,7 @@ namespace ClusterNum
         private NodeGraph graph;
         private Vertex[] vertices;
         private double[,] adjmatrix;
+        private double[,] TMat;
         private int[][] cluster;
 
         public GraphSharpControl GraphControl { get; set; }
@@ -59,7 +60,7 @@ namespace ClusterNum
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-
+            networkDropdown.SelectedIndex = 1;
         }
 
         private void layoutButton_Click(object sender, EventArgs e)
@@ -168,6 +169,22 @@ namespace ClusterNum
                     gseries[nodenum].Color = Color.FromArgb(255, coltmp.R, coltmp.G, coltmp.B);
                 }
             }
+
+
+            //Tmat erstellen
+            if (networkDropdown.SelectedIndex == 3)
+            {//custom
+                TMat = Helper.TMat(cluster); //nutze relativkoordinaten
+            }
+            else if (networkDropdown.SelectedIndex == 1) //das if sollte raus wenn alle tmat implementiert sind
+            {
+                TMat = Helper.TMat(networkDropdown.SelectedIndex);
+            }
+            else //..ebenso dieser ganze block
+            {
+                TMat = Helper.TMat(cluster);
+            }
+
 
             //Parameter für die anordnung. einfach irgendwelche genommen. nochmal drüber nachdenken/nachlesen
             GraphControl = new GraphSharpControl();
@@ -356,7 +373,7 @@ namespace ClusterNum
                 }
                 stepsDone = 0;
                 Action<NumVariator.result> callback_action = callback;
-                variator = new NumVariator(adjmatrix, (double)betaMinUpDown.Value * Math.PI, (double)betaMaxUpDown.Value * Math.PI, (int)stepsUpDown.Value, sigma, delta, noise, pertubation, (int)preUpDown.Value, (int)recUpDown.Value, cluster, callback_action);
+                variator = new NumVariator(adjmatrix, TMat,(double)betaMinUpDown.Value * Math.PI, (double)betaMaxUpDown.Value * Math.PI, (int)stepsUpDown.Value, sigma, delta, noise, pertubation, (int)preUpDown.Value, (int)recUpDown.Value, cluster, callback_action);
                 variatorThread = new Thread(variator.DoWork);
                 variatorThread.Start();
 
@@ -418,7 +435,31 @@ namespace ClusterNum
             iterateButton.Enabled = false;
         }
 
+        private void matrixBox_TextChanged(object sender, EventArgs e)
+        {
+            int pos = matrixBox.SelectionStart; ;
+            string text = matrixBox.Text;
+            matrixBox.Clear();
+            matrixBox.Text = text;
+            matrixBox.SelectionStart = pos;
 
+        }
+
+
+
+        private void networkDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (networkDropdown.SelectedIndex > 2)
+            {
+                matrixBox.Enabled = true;
+            }
+            else
+            {
+                matrixBox.Enabled = false;
+                matrixBox.Text = Helper.adjmatrix[networkDropdown.SelectedIndex];
+            }
+
+        }
 
     }
 }

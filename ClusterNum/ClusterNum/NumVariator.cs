@@ -45,7 +45,7 @@ namespace ClusterNum
 
         Random rand = new Random();
 
-        public NumVariator(double[,] adjMatrix, double betamin, double betamax, int betasteps, double sigma, double delta, double noise, double pert, int pre, int rec, int[][] cluster, Action<result> callback)
+        public NumVariator(double[,] adjMatrix,double[,] TMat, double betamin, double betamax, int betasteps, double sigma, double delta, double noise, double pert, int pre, int rec, int[][] cluster, Action<result> callback)
         {
             this.betamax = betamax;
             this.betamin = betamin;
@@ -60,36 +60,9 @@ namespace ClusterNum
             this.callback = callback;
             this.cluster = cluster;
             this.nodeCount = adjmatrix.GetLength(0);
-
+            this.TMat = TMat;
 
             // Zeugs für BMat, JMats und clusterTransform berechnung, wird übergeben an Ljapunator
-            double x = 1.0;
-            double y = -0.5;
-            double a = Math.Sqrt(2.0) / 2.0;
-            double b = -a;
-            double z = 0.5;
-
-            string tmattext = @"0 0 0 0 b 0 0 0 0 b 0 
-0 0 0 b 0 b 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 x 
-b 0 0 0 0 0 0 b 0 0 0 
-0 y y 0 0 0 y 0 y 0 0 
-0 0 0 b 0 a 0 0 0 0 0 
-0 y z 0 0 0 y 0 z 0 0 
-0 0 0 0 b 0 0 0 0 a 0 
-b 0 0 0 0 0 0 a 0 0 0 
-0 0 a 0 0 0 0 0 b 0 0 
-0 b 0 0 0 0 a 0 0 0 0 ";
-            tmattext = tmattext.Replace("x", x.ToString());
-            tmattext = tmattext.Replace("y", y.ToString());
-            tmattext = tmattext.Replace("a", a.ToString());
-            tmattext = tmattext.Replace("b", b.ToString());
-            tmattext = tmattext.Replace("z", z.ToString());
-
-            TMat = Helper.MatrixFromString(tmattext);
-           //TMat = Helper.tmat(cluster); //nutze relativkoordinaten
-
-
             TMatInverse = TMat.Inverse().Round(5);
             EMats = new double[cluster.Length][,];
             JMats = new double[cluster.Length][,];
