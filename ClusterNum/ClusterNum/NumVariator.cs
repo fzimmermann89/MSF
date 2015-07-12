@@ -197,9 +197,9 @@ b 0 0 0 0 0 0 a 0 0 0
 
                             punator.etat[0][etanodenum] = ljapunowPertubation;
                             punator.iterate(rec);
-                            if (!double.IsNaN(punator.ljapunowSum[etanodenum]))
+                            if (!double.IsNaN(punator.ljapunowSum))
                             {
-                                ljapunow[m] = Math.Max(punator.ljapunowSum[etanodenum], ljapunow[m]);
+                                ljapunow[m] = Math.Max(punator.ljapunowSum, ljapunow[m]);
                             }
                         }
                     }
