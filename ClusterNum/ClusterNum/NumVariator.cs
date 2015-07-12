@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using Accord.Math;
 using System.Windows.Forms;
+using System.Threading;
+using System.Threading.Tasks;
+
+
 
 namespace ClusterNum
 {
@@ -138,8 +142,8 @@ b 0 0 0 0 0 0 a 0 0 0
         {
 
 
-
-            for (int ibeta = 0; ibeta <= betasteps; ibeta++)
+ 
+            Parallel.For (0, betasteps+1,ibeta=>
             {
                 double beta = betamin + ibeta * (betamax - betamin) / betasteps;
 
@@ -193,7 +197,7 @@ b 0 0 0 0 0 0 a 0 0 0
                         int etanodenum = clusterTransform[m][i];
                         if (etanodenum >= clusterTransform.Length) // unterer Block
                         {
-                            Ljapunator punator = new Ljapunator(JMats, BMat, cluster, smts, beta, sigma, delta);
+                            Ljapunator punator = new Ljapunator(JMats, BMat, cluster.Length, smts, beta, sigma, delta);
                             punator.etat[0][etanodenum] = pertubation;
                             punator.iterate(rec);
                             ljapunow[m] = Math.Max(punator.ljapunowSum / (double)rec, ljapunow[m]);
@@ -205,7 +209,7 @@ b 0 0 0 0 0 0 a 0 0 0
                 result ret_result = new result(beta, rms, ljapunow);
                 callback(ret_result);
 
-            }
+            });
         }
         private double[] MS(double[] xs)
         {
