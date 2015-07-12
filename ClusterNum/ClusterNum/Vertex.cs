@@ -15,7 +15,7 @@ namespace ClusterNum
     [DebuggerDisplay("{ID}-{Value}")]
     public class Vertex : INotifyPropertyChanged
     {
-        public static Color[] cluster_colors = new Color[] { Colors.Red, Colors.Magenta, Colors.Green, Colors.Blue, Colors.LightYellow };
+        public static Color[] cluster_colors = new Color[] { Colors.Red, Colors.Magenta, Colors.Green, Colors.Blue, Colors.LightYellow,Colors.Cyan,Colors.Orange,Colors.Yellow,Colors.Brown,Colors.Olive,Colors.Navy };
 
         public event PropertyChangedEventHandler PropertyChanged;
         public string ID { get; set; }
