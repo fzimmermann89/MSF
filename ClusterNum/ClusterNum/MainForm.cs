@@ -20,7 +20,7 @@ namespace ClusterNum
 {
     public partial class MainForm : Form
     {
-      
+
         private NodeGraph graph;
         private Vertex[] vertices;
         private double[,] adjmatrix;
@@ -137,10 +137,10 @@ namespace ClusterNum
             gseries = new Series[nodeCount];
             clusterBox.Text = "";
 
-            for (int nodenum = 0; nodenum < nodeCount;nodenum++ )
+            for (int nodenum = 0; nodenum < nodeCount; nodenum++)
             {
                 gseries[nodenum] = new Series();
-                gseries[nodenum].IsVisibleInLegend=false;
+                gseries[nodenum].IsVisibleInLegend = false;
                 gseries[nodenum].ChartArea = "ChartArea1";
                 rmsChart.Series.Add(gseries[nodenum]);
             }
@@ -158,7 +158,7 @@ namespace ClusterNum
                 System.Windows.Media.Color coltmp = Vertex.cluster_colors[i % Vertex.cluster_colors.Length];
                 foreach (int nodenum in cluster[i])
                 {
-                    if(nodenum==cluster[i][0])
+                    if (nodenum == cluster[i][0])
                     {
                         gseries[nodenum].LegendText = "Cluster " + i.ToString();
                         gseries[nodenum].IsVisibleInLegend = true;
@@ -230,7 +230,7 @@ namespace ClusterNum
             }
             for (int i = 0; i < cluster.Length; i++)
             {
-                
+
                 double mid = 0;
                 for (int j = 0; j < cluster[i].Length; j++)
                 {
@@ -241,7 +241,7 @@ namespace ClusterNum
                 for (int j = 0; j < cluster[i].Length; j++)
                 {
                     int nodenum = cluster[i][j];
-                    gseries[nodenum].Points.AddXY(iterator.xt.Count, xs[nodenum]-mid);
+                    gseries[nodenum].Points.AddXY(iterator.xt.Count, xs[nodenum] - mid);
                 }
             }
         }
@@ -262,7 +262,7 @@ namespace ClusterNum
             {
                 gseries[i].Points.Clear();
             }
-            iterator = new NumIterator(adjmatrix, beta, sigma, delta,pertubation);
+            iterator = new NumIterator(adjmatrix, beta, sigma, delta, pertubation);
             iterator.noise = noise;
             double[] xs = iterator.xt[iterator.xt.Count - 1];
             for (int i = 0; i < iterator.nodeCount; i++)
@@ -307,7 +307,7 @@ namespace ClusterNum
         private void tabPage1_Enter(object sender, EventArgs e)
         {
             betaUpDown.Enabled = true;
-            beta = (double)betaUpDown.Value*Math.PI;
+            beta = (double)betaUpDown.Value * Math.PI;
         }
 
         private void tabPage2_Enter(object sender, EventArgs e)
@@ -337,14 +337,14 @@ namespace ClusterNum
                     betarmsseries[i] = new Series("Cluster " + i.ToString());
                     betarmsseries[i].ChartArea = "ChartArea1";
                     betaRmsChart.Series.Add(betarmsseries[i]);
-                    betarmsseries[i].ChartType = SeriesChartType.FastLine;
+                    betarmsseries[i].ChartType = SeriesChartType.FastPoint;
                     betarmsseries[i].Color = Color.FromArgb(255, coltmp.R, coltmp.G, coltmp.B);
                     betarmsseries[i].BorderWidth = 2;
 
                     betaljapseries[i] = new Series("Cluster " + i.ToString());
                     betaljapseries[i].ChartArea = "ChartArea1";
                     betaLjapChart.Series.Add(betaljapseries[i]);
-                    betaljapseries[i].ChartType = SeriesChartType.FastLine;
+                    betaljapseries[i].ChartType = SeriesChartType.FastPoint;
                     betaljapseries[i].Color = Color.FromArgb(255, coltmp.R, coltmp.G, coltmp.B);
                     betaljapseries[i].BorderWidth = 2;
                     if (i % 2 != 0)
@@ -356,7 +356,7 @@ namespace ClusterNum
                 }
                 stepsDone = 0;
                 Action<NumVariator.result> callback_action = callback;
-                variator = new NumVariator(adjmatrix, (double)betaMinUpDown.Value * Math.PI, (double)betaMaxUpDown.Value * Math.PI, (int)stepsUpDown.Value, sigma, delta, noise,pertubation, (int)preUpDown.Value, (int)recUpDown.Value, cluster, callback_action);
+                variator = new NumVariator(adjmatrix, (double)betaMinUpDown.Value * Math.PI, (double)betaMaxUpDown.Value * Math.PI, (int)stepsUpDown.Value, sigma, delta, noise, pertubation, (int)preUpDown.Value, (int)recUpDown.Value, cluster, callback_action);
                 variatorThread = new Thread(variator.DoWork);
                 variatorThread.Start();
 
@@ -385,12 +385,19 @@ namespace ClusterNum
                 if (result.ljapunow[i] > -50 && result.ljapunow[i] < 50) betaljapseries[i].Points.AddXY(result.beta / Math.PI, result.ljapunow[i]);
             }
 
-            if (stepsDone>(int) stepsUpDown.Value)
+            if (stepsDone > (int)stepsUpDown.Value)
             {
-
+                for (int i = 0; i < result.ljapunow.Length; i++)
+                {
+                    betaljapseries[i].Sort(PointSortOrder.Ascending, "X");
+                    betarmsseries[i].Sort(PointSortOrder.Ascending, "X");
+                    betarmsseries[i].ChartType = SeriesChartType.FastLine;
+                    betaljapseries[i].ChartType = SeriesChartType.FastLine;
+                }
                 //wir sind fertig
                 betaRunButton.Text = "Run Simulation";
             }
+
             Application.DoEvents();
         }
 
@@ -406,7 +413,7 @@ namespace ClusterNum
 
         private void pertUpDown_ValueChanged(object sender, EventArgs e)
         {
-            pertubation = (double)pertUpDown.Value*Math.PI;
+            pertubation = (double)pertUpDown.Value * Math.PI;
             runButton.Enabled = false;
             iterateButton.Enabled = false;
         }
