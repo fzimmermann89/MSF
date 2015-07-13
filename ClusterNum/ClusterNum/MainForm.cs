@@ -404,8 +404,10 @@ namespace ClusterNum
                 {
                     betaljapseries[i].Sort(PointSortOrder.Ascending, "X");
                     betarmsseries[i].Sort(PointSortOrder.Ascending, "X");
-                    betarmsseries[i].ChartType = SeriesChartType.FastLine;
-                    betaljapseries[i].ChartType = SeriesChartType.FastLine;
+                    betarmsseries[i].ChartType = SeriesChartType.Spline;
+                    betarmsseries[i]["LineTension"] = "0.65";
+                    betaljapseries[i].ChartType = SeriesChartType.Spline;
+                    betaljapseries[i]["LineTension"] = "0.65";
                 }
                 //wir sind fertig
                 betaRunButton.Text = "Run Simulation";
