@@ -1,5 +1,5 @@
 \section{Stabilität der Synchronisation}
-Ein synchroner Zustand eines Netzwerks lässt sich hinsichtlicht seiner Stabilität untersuchen. Dabei wird eine kleine Abweichung der Anfangsbedingungen des synchronen Zustandes angenommen und berechnet, wie sich diese Störung zeitlich weiterentwickelt.
+Ein synchroner Zustand eines Netzwerks lässt sich hinsichtlicht seiner Stabilität untersuchen. Dabei wird eine kleine Abweichung $\boldsymbol{x}_i(t)$ der Anfangsbedingungen des synchronen Zustandes angenommen und berechnet, wie sich diese Störung zeitlich weiterentwickelt.
 \begin{align}\label{eq:deltaxi}
 \delta \boldsymbol{x}_i(t) &= \boldsymbol{x}_i - \boldsymbol{s}(t)\\
 \delta \overset{\cdot}{\boldsymbol{x}}_i(t) &= \boldsymbol{f}(\boldsymbol{x}_i(t))+\sigma\sum_j A_{ij}\boldsymbol{h}\left(\boldsymbol{x}_j(t)\right) - \overset{\cdot}{\boldsymbol{s}}(t)
@@ -25,6 +25,8 @@ Wird die Abweichung zu $\delta\boldsymbol{x}_i(0)$ größer, so ist der Quotient
 Positive Ljapunow-Exponenten weisen eine instabile Synchronisation nach und negative eine stabile. Der Stabilitätsbegriff bezieht sich hierbei auf Invarianz der Bahnkurven gegenüber Änderungen der Anfangsbedingungen (für lange Zeiten). 
 \subsection*{Master Stability Function}
 Da es für Instabilität genügt, wenn einer der Exponenten größer als 0 ist, ist es sinnvoll nur den größten zu betrachten. Dieser wird Master Stability Function (MSF) gennant. Die MSF hat dabei als Parameter die Eigenschaften des Systems, z.b. die Kopplungsstärke $\sigma$.
+%und aller anderen sachen? was heißt das hier?
+XXXX
 
 
 
