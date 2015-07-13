@@ -578,10 +578,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.betaRmsChart.BackColor = System.Drawing.Color.Transparent;
+            chartArea2.AxisX.LabelStyle.Format = "F2";
             chartArea2.AxisX.Title = "β/π";
+            chartArea2.AxisX.Minimum = -0.5D;
+            chartArea2.AxisX.Maximum = 2D;
             chartArea2.AxisY.ScrollBar.IsPositionedInside = false;
             chartArea2.AxisY.Title = "<RMS>";
             chartArea2.BackColor = System.Drawing.Color.Transparent;
+            chartArea2.CursorX.AutoScroll = false;
             chartArea2.CursorY.Interval = 0.01D;
             chartArea2.CursorY.IsUserEnabled = true;
             chartArea2.CursorY.IsUserSelectionEnabled = true;
@@ -603,6 +607,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.betaLjapChart.BackColor = System.Drawing.Color.Transparent;
             chartArea3.AxisX.Title = "β/π";
+            chartArea3.AxisX.LabelStyle.Format = "F2";
+            chartArea3.AxisX.Minimum = -0.5D;
+            chartArea3.AxisX.Maximum = 2D;
             chartArea3.AxisY.Interval = 0.5D;
             chartArea3.AxisY.MajorGrid.Interval = 0.5D;
             chartArea3.AxisY.MajorTickMark.Interval = 0.5D;

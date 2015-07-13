@@ -343,6 +343,11 @@ namespace ClusterNum
                 betarmsseries = new Series[cluster.Length];
                 betaljapseries = new Series[cluster.Length];
 
+                betaRmsChart.ChartAreas[0].AxisX.Minimum = (double)betaMinUpDown.Value;
+                betaRmsChart.ChartAreas[0].AxisX.Maximum = (double)betaMaxUpDown.Value;
+                betaLjapChart.ChartAreas[0].AxisX.Minimum = (double)betaMinUpDown.Value;
+                betaLjapChart.ChartAreas[0].AxisX.Maximum = (double)betaMaxUpDown.Value;
+
                 for (int i = 0; i < cluster.Length; i++)
                 {
                     System.Windows.Media.Color coltmp = Vertex.cluster_colors[i % Vertex.cluster_colors.Length];
@@ -365,14 +370,13 @@ namespace ClusterNum
                         betaljapseries[i].BorderDashStyle = ChartDashStyle.Dash;
                     }
 
-
                 }
+
                 stepsDone = 0;
                 Action<NumVariator.result> callback_action = callback;
                 variator = new NumVariator(adjmatrix, TMat, (double)betaMinUpDown.Value * Math.PI, (double)betaMaxUpDown.Value * Math.PI, (int)stepsUpDown.Value, sigma, delta, noise, pertubation, (int)preUpDown.Value, (int)recUpDown.Value, cluster, callback_action);
                 variatorThread = new Thread(variator.DoWork);
                 variatorThread.Start();
-
 
             }
         }
