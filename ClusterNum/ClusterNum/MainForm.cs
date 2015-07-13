@@ -21,15 +21,16 @@ namespace ClusterNum
     public partial class MainForm : Form
     {
 
-        private NodeGraph graph;
-        private Vertex[] vertices;
-        private double[,] adjmatrix;
-        private double[,] TMat;
-        private int[][] cluster;
+        bool graph_loaded = false;
+        Vertex[] vertices;
+        double[,] adjmatrix;
+        double[,] TMat;
+        int[][] cluster;
 
-        public GraphSharpControl GraphControl { get; set; }
+        GraphSharpControl GraphControl;
+        NodeGraph graph;
 
-        public NumIterator iterator;
+        NumIterator iterator;
         NumVariator variator;
         Thread variatorThread;
         delegate void callbackDelegate(NumVariator.result result);
@@ -46,15 +47,10 @@ namespace ClusterNum
         Series[] betaljapseries;
 
 
-
         public MainForm()
         {
             InitializeComponent();
             Application.EnableVisualStyles();
-
-
-
-
 
         }
 
@@ -62,6 +58,96 @@ namespace ClusterNum
         {
             networkDropdown.SelectedIndex = 1;
         }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //beim form schließen thread anhalten, sonst macht invoke einen fehler.
+            if (variatorThread != null && variatorThread.IsAlive)
+            {
+                variatorThread.Abort();
+
+            }
+        }
+
+        private void betaUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            beta = (double)betaUpDown.Value * Math.PI;
+            iterator_reset();
+
+        }
+
+        private void sigmaUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            sigma = (double)sigmaUpDown.Value * Math.PI;
+            iterator_reset();
+        }
+
+        private void deltaUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            delta = (double)deltaUpDown.Value;
+            iterator_reset();
+        }
+
+        private void noiseUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            noise = (double)noiseUpDown.Value;
+            iterator_reset();
+        }
+
+        private void pertUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            pertubation = (double)pertUpDown.Value * Math.PI;
+            runButton.Enabled = false;
+            iterateButton.Enabled = false;
+        }
+
+        private void networkDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            iterator_reset();
+            graph_loaded = false;
+            runButton.Enabled = false;
+            iterateButton.Enabled = false;
+            layoutButton.Enabled = false;
+            betaRunButton.Enabled = false;
+
+            if (networkDropdown.SelectedIndex > 2)
+            {
+                matrixBox.Enabled = true;
+            }
+            else
+            {
+                matrixBox.Enabled = false;
+                matrixBox.Text = Helper.adjmatrix[networkDropdown.SelectedIndex];
+            }
+
+        }
+
+        private void matrixBox_TextChanged(object sender, EventArgs e)
+        {
+            graph_loaded = false;
+            runButton.Enabled = false;
+            iterateButton.Enabled = false;
+            layoutButton.Enabled = false;
+            betaRunButton.Enabled = false;
+
+            int pos = matrixBox.SelectionStart; ;
+            string text = matrixBox.Text;
+            matrixBox.Clear();
+            matrixBox.Text = text;
+            matrixBox.SelectionStart = pos;
+        }
+
+        private void tabPage1_Enter(object sender, EventArgs e)
+        {
+            betaUpDown.Enabled = true;
+            beta = (double)betaUpDown.Value * Math.PI;
+        }
+
+        private void tabPage2_Enter(object sender, EventArgs e)
+        {
+            betaUpDown.Enabled = false;
+        }
+
 
         private void layoutButton_Click(object sender, EventArgs e)
         {
@@ -199,25 +285,47 @@ namespace ClusterNum
             GraphControl.layout.Graph = graph;
             elementHost1.Child = GraphControl;
 
-
-            runButton.Enabled = false;
-            iterateButton.Enabled = false;
-            initIteratorButton.Enabled = true;
+            graph_loaded = true;
+            iterator_init();
+            runButton.Enabled = true;
+            iterateButton.Enabled = true;
             layoutButton.Enabled = true;
             betaRunButton.Enabled = true;
+        }
 
+        private void iterator_init()
+        {
+            if (graph_loaded)
+            {
+                foreach (Series serie in gseries)
+                {
+                    serie.Points.Clear();
+                }
 
+                iterator = new NumIterator(adjmatrix, beta, sigma, delta, pertubation);
+                iterator.noise = noise;
+                double[] xs = iterator.xt[iterator.xt.Count - 1];
+
+                for (int i = 0; i < xs.Length; i++)
+                {
+                    vertices[i].Value = (xs[i] / (2.0 * Math.PI));
+                }
+                rmsChart.ChartAreas[0].AxisY.ScaleView.ZoomReset();
+            }
+        }
+
+        private void iterator_reset()
+        {
+            iterationTimer.Stop();
+            runButton.Text = "Run Simulation";
+            iterator_init();
 
         }
 
-
-
         private void runButton_Click(object sender, EventArgs e)
         {
-
             if (iterationTimer.Enabled == false)
             {
-
                 iterationTimer.Start();
                 runButton.Text = "Stop Simulation";
             }
@@ -267,65 +375,6 @@ namespace ClusterNum
         private void iterateButton_Click(object sender, EventArgs e)
         {
             iterate();
-        }
-
-        private void initIteratorButton_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < cluster.Length; i++)
-            {
-                gseries[i].Points.Clear();
-            }
-            iterator = new NumIterator(adjmatrix, beta, sigma, delta, pertubation);
-            iterator.noise = noise;
-            double[] xs = iterator.xt[iterator.xt.Count - 1];
-            for (int i = 0; i < iterator.nodeCount; i++)
-            {
-                vertices[i].Value = (xs[i] / (2.0 * Math.PI));
-            }
-            runButton.Enabled = true;
-            iterateButton.Enabled = true;
-            rmsChart.ChartAreas[0].AxisY.ScaleView.ZoomReset();
-
-        }
-
-        private void betaUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            beta = (double)betaUpDown.Value * Math.PI;
-            runButton.Enabled = false;
-            iterateButton.Enabled = false;
-
-        }
-
-        private void sigmaUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            sigma = (double)sigmaUpDown.Value * Math.PI;
-            runButton.Enabled = false;
-            iterateButton.Enabled = false;
-        }
-
-        private void deltaUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            delta = (double)deltaUpDown.Value;
-            runButton.Enabled = false;
-            iterateButton.Enabled = false;
-        }
-
-        private void noiseUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            noise = (double)noiseUpDown.Value;
-            runButton.Enabled = false;
-            iterateButton.Enabled = false;
-        }
-
-        private void tabPage1_Enter(object sender, EventArgs e)
-        {
-            betaUpDown.Enabled = true;
-            beta = (double)betaUpDown.Value * Math.PI;
-        }
-
-        private void tabPage2_Enter(object sender, EventArgs e)
-        {
-            betaUpDown.Enabled = false;
         }
 
         private void betaRunButton_Click(object sender, EventArgs e)
@@ -418,49 +467,6 @@ namespace ClusterNum
             }
 
             Application.DoEvents();
-        }
-
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //beim form schließen thread anhalten, sonst macht invoke einen fehler.
-            if (variatorThread != null && variatorThread.IsAlive)
-            {
-                variatorThread.Abort();
-
-            }
-        }
-
-        private void pertUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            pertubation = (double)pertUpDown.Value * Math.PI;
-            runButton.Enabled = false;
-            iterateButton.Enabled = false;
-        }
-
-        private void matrixBox_TextChanged(object sender, EventArgs e)
-        {
-            int pos = matrixBox.SelectionStart; ;
-            string text = matrixBox.Text;
-            matrixBox.Clear();
-            matrixBox.Text = text;
-            matrixBox.SelectionStart = pos;
-
-        }
-
-
-
-        private void networkDropDown_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (networkDropdown.SelectedIndex > 2)
-            {
-                matrixBox.Enabled = true;
-            }
-            else
-            {
-                matrixBox.Enabled = false;
-                matrixBox.Text = Helper.adjmatrix[networkDropdown.SelectedIndex];
-            }
-
         }
 
     }

@@ -46,7 +46,6 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.iterateButton = new System.Windows.Forms.Button();
-            this.initIteratorButton = new System.Windows.Forms.Button();
             this.rmsChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.clusterBox = new System.Windows.Forms.RichTextBox();
             this.matrixBox = new System.Windows.Forms.RichTextBox();
@@ -132,9 +131,9 @@
             // layoutButton
             // 
             this.layoutButton.Enabled = false;
-            this.layoutButton.Location = new System.Drawing.Point(10, 297);
+            this.layoutButton.Location = new System.Drawing.Point(10, 131);
             this.layoutButton.Name = "layoutButton";
-            this.layoutButton.Size = new System.Drawing.Size(83, 23);
+            this.layoutButton.Size = new System.Drawing.Size(101, 23);
             this.layoutButton.TabIndex = 1;
             this.layoutButton.Text = "Relayout";
             this.layoutButton.UseVisualStyleBackColor = true;
@@ -167,9 +166,9 @@
             // runButton
             // 
             this.runButton.Enabled = false;
-            this.runButton.Location = new System.Drawing.Point(10, 119);
+            this.runButton.Location = new System.Drawing.Point(10, 19);
             this.runButton.Name = "runButton";
-            this.runButton.Size = new System.Drawing.Size(117, 23);
+            this.runButton.Size = new System.Drawing.Size(101, 23);
             this.runButton.TabIndex = 8;
             this.runButton.Text = "Run Simulation";
             this.runButton.UseVisualStyleBackColor = true;
@@ -178,7 +177,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 77);
+            this.label2.Location = new System.Drawing.Point(7, 60);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 13);
             this.label2.TabIndex = 10;
@@ -191,7 +190,7 @@
             0,
             0,
             0});
-            this.numericUpDown1.Location = new System.Drawing.Point(13, 93);
+            this.numericUpDown1.Location = new System.Drawing.Point(13, 76);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             6000,
             0,
@@ -215,7 +214,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(91, 98);
+            this.label4.Location = new System.Drawing.Point(91, 81);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(20, 13);
             this.label4.TabIndex = 12;
@@ -224,24 +223,13 @@
             // iterateButton
             // 
             this.iterateButton.Enabled = false;
-            this.iterateButton.Location = new System.Drawing.Point(10, 35);
+            this.iterateButton.Location = new System.Drawing.Point(10, 102);
             this.iterateButton.Name = "iterateButton";
-            this.iterateButton.Size = new System.Drawing.Size(75, 23);
+            this.iterateButton.Size = new System.Drawing.Size(101, 23);
             this.iterateButton.TabIndex = 13;
-            this.iterateButton.Text = "Iterate";
+            this.iterateButton.Text = "Singe Step";
             this.iterateButton.UseVisualStyleBackColor = true;
             this.iterateButton.Click += new System.EventHandler(this.iterateButton_Click);
-            // 
-            // initIteratorButton
-            // 
-            this.initIteratorButton.Enabled = false;
-            this.initIteratorButton.Location = new System.Drawing.Point(10, 6);
-            this.initIteratorButton.Name = "initIteratorButton";
-            this.initIteratorButton.Size = new System.Drawing.Size(75, 23);
-            this.initIteratorButton.TabIndex = 14;
-            this.initIteratorButton.Text = "Init Iterator";
-            this.initIteratorButton.UseVisualStyleBackColor = true;
-            this.initIteratorButton.Click += new System.EventHandler(this.initIteratorButton_Click);
             // 
             // rmsChart
             // 
@@ -281,9 +269,9 @@
             // matrixBox
             // 
             this.matrixBox.Enabled = false;
-            this.matrixBox.Location = new System.Drawing.Point(0, 46);
+            this.matrixBox.Location = new System.Drawing.Point(6, 46);
             this.matrixBox.Name = "matrixBox";
-            this.matrixBox.Size = new System.Drawing.Size(148, 160);
+            this.matrixBox.Size = new System.Drawing.Size(136, 154);
             this.matrixBox.TabIndex = 17;
             this.matrixBox.Text = resources.GetString("matrixBox.Text");
             this.matrixBox.TextChanged += new System.EventHandler(this.matrixBox_TextChanged);
@@ -524,7 +512,6 @@
             this.tabPage1.Controls.Add(this.layoutButton);
             this.tabPage1.Controls.Add(this.iterateButton);
             this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.initIteratorButton);
             this.tabPage1.Controls.Add(this.numericUpDown1);
             this.tabPage1.Controls.Add(this.runButton);
             this.tabPage1.Controls.Add(this.label2);
@@ -579,9 +566,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.betaRmsChart.BackColor = System.Drawing.Color.Transparent;
             chartArea2.AxisX.LabelStyle.Format = "F2";
-            chartArea2.AxisX.Title = "β/π";
-            chartArea2.AxisX.Minimum = -0.5D;
             chartArea2.AxisX.Maximum = 2D;
+            chartArea2.AxisX.Minimum = -0.5D;
+            chartArea2.AxisX.Title = "β/π";
             chartArea2.AxisY.ScrollBar.IsPositionedInside = false;
             chartArea2.AxisY.Title = "<RMS>";
             chartArea2.BackColor = System.Drawing.Color.Transparent;
@@ -606,10 +593,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.betaLjapChart.BackColor = System.Drawing.Color.Transparent;
-            chartArea3.AxisX.Title = "β/π";
             chartArea3.AxisX.LabelStyle.Format = "F2";
-            chartArea3.AxisX.Minimum = -0.5D;
             chartArea3.AxisX.Maximum = 2D;
+            chartArea3.AxisX.Minimum = -0.5D;
+            chartArea3.AxisX.Title = "β/π";
             chartArea3.AxisY.Interval = 0.5D;
             chartArea3.AxisY.MajorGrid.Interval = 0.5D;
             chartArea3.AxisY.MajorTickMark.Interval = 0.5D;
@@ -899,7 +886,7 @@
             "Custom"});
             this.networkDropdown.Location = new System.Drawing.Point(6, 19);
             this.networkDropdown.Name = "networkDropdown";
-            this.networkDropdown.Size = new System.Drawing.Size(121, 21);
+            this.networkDropdown.Size = new System.Drawing.Size(136, 21);
             this.networkDropdown.TabIndex = 18;
             this.networkDropdown.SelectedIndexChanged += new System.EventHandler(this.networkDropDown_SelectedIndexChanged);
             // 
@@ -964,7 +951,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button iterateButton;
-        private System.Windows.Forms.Button initIteratorButton;
         private System.Windows.Forms.DataVisualization.Charting.Chart rmsChart;
         private System.Windows.Forms.RichTextBox clusterBox;
         private System.Windows.Forms.RichTextBox matrixBox;
