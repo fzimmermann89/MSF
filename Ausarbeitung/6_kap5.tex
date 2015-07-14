@@ -10,15 +10,23 @@ Die vorgestellten Methoden zur lokalen Stabilitätsanalyse eines Netzwerks werde
 Die betrachteten Netzwerke sind symmetrisch und bestehen aus $N=11$ Knoten. Die verwendeten Kopplungsmatrizen (\ref{Amat}) sind Pecora et al. \cite{pecora2014} entnommen. Eines der betrachteten Netwerke ist exemplarisch in Abb. \ref{fig:cluster}, die zugehörige Kopplungsmatrix in Abb. \ref{fig:abmat} dargestellt. 
 \begin{figure}
 	 \centering
-	 \includegraphics[width=0.5\textwidth]{abb/misc/cluster.png}
-	 \caption{Eines der verwendeten Netzwerke. Die Knoten eines Cluster sind in der gleichen Farbe eingefärbt.}
+	 \subfloat[Netzwerk 1]{
+	 \includegraphics[width=0.25\textwidth]{abb/misc/cluster1.png}
+	 }
+	 \subfloat[Netzwerk 2]{
+	 	\includegraphics[width=0.25\textwidth]{abb/misc/cluster2.png}
+	 }
+	 \subfloat[Netzwerk 3]{
+	 	\includegraphics[width=0.25\textwidth]{abb/misc/cluster3.png}
+	 }
+	 \caption[In der Simulation verwendete Netzwerke]{Die drei verwendeten Netzwerke. Die Knoten eines Cluster sind in der gleichen Farbe eingefärbt.}
 	 \label{fig:cluster}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.5\textwidth]{abb/misc/ABMat.png}
-	\caption{Kopplungsmatrix $\boldsymbol{A}$ des in Abb. \ref{fig:cluster} dargestellten Netwerks sowie die transformierte Kopplungsmatrix $\boldsymbol{B}$ in der die Zeilen nach den zugehörigen Clustern markiert sind\cite{pecora2014}.}
+	\caption[Kopplungsmatritzen und ihre Transformierten]{Kopplungsmatrizen $\boldsymbol{A}$ der in Abb. \ref{fig:cluster} dargestellten Netwerke sowie die transformierten Kopplungsmatrizen $\boldsymbol{B}$ in der die Zeilen nach den zugehörigen Clustern markiert sind\cite{pecora2014}.}
 \label{fig:abmat}
 \end{figure}
 
