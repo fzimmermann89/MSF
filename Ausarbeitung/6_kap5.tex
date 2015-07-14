@@ -1,5 +1,5 @@
 \section{Simulationsbeispiel}
-Die vorgestellten Methoden zur lokalen Stabilitätsanalyse eines Netzwerks werden in diesem Abschnitt auf ein Beispiel angewendet. Bisher wurden nur dynamische Systeme mit kontinuierlichen Variablen betrachtet. Die zugrunde liegende Theorie lässt sich auch auf diskrete Systeme anwenden. Dabei ist die Dynamik nicht durch ein Differentialgleichungssystem gegeben, sondern durch eine Iterationsvorschrift. Das hier betrachtete Netzwerk \cite{pecora2014} folgt der Dynamik in Gleichung (\ref{eq:bspdyn}).
+Die vorgestellten Methoden zur lokalen Stabilitätsanalyse eines Netzwerks werden in diesem Abschnitt auf ein Beispiel angewendet. Bisher wurden nur dynamische Systeme mit kontinuierlichen Variablen betrachtet. Die zugrunde liegende Theorie lässt sich auch auf diskrete Systeme anwenden. Dabei ist die Dynamik nicht durch ein Differentialgleichungssystem gegeben, sondern durch eine Iterationsvorschrift. Das hier betrachtete Netzwerk \cite{pecora2014} folgt der Dynamik in Gleichung \ref{eq:bspdyn}.
 \begin{align}
 \label{eq:bspdyn}
 	x_i^{t+1}&=\left[\beta\mathcal{I}(x_i^t)+\sigma \sum_j^N A_{ij}\mathcal{I}(x_j^t)+\delta\right] \text{mod}\quad 2\pi
@@ -7,7 +7,7 @@ Die vorgestellten Methoden zur lokalen Stabilitätsanalyse eines Netzwerks werde
 	\\\notag  & \delta \text{ Offset}
 	\\\notag &\mathcal{I}(x)=\frac{1-Cos(x)}{2}
 \end{align}
-Die betrachteten Netzwerke (siehe Abb. \ref{fig:cluster}) sind symmetrisch und bestehen aus $N=11$ Knoten. Die verwendeten Kopplungsmatrizen (\ref{Amat}) sind Pecora et al. \cite{pecora2014} entnommen und in Abb. \ref{fig:abmat} dargestellt. 
+Die betrachteten Netzwerke sind symmetrisch und bestehen aus $N=11$ Knoten  (Abb. \ref{fig:cluster}). Die verwendeten Kopplungsmatrizen sind Pecora et al. \cite{pecora2014} entnommen und in Abb. \ref{fig:abmat} dargestellt (siehe auch Anhang). 
 \begin{figure}
 	 \centering
 	 \subfloat[Netzwerk 1]{
@@ -30,7 +30,7 @@ Die betrachteten Netzwerke (siehe Abb. \ref{fig:cluster}) sind symmetrisch und b
 \label{fig:abmat}
 \end{figure}
 
-Für diese Netwerken ergibt die Suche nach Automorphismen der zugrundeliegenden Graphen mit \textit{Nauty} 0, 32 bzw 5760 Symmetrien und 11 (triviale, nur aus einem Knoten bestehende), 5 bzw. 3 Cluster (siehe Tab. \ref{tab:netzwerke})
+Für diese Netwerken ergibt die Suche nach Automorphismen der zugrundeliegenden Graphen mit \textit{Nauty} 0, 32 bzw 5760 Symmetrien und 11 (triviale, nur aus einem Knoten bestehende), 5 bzw. 3 Cluster (Tab. \ref{tab:netzwerke})
 
 \begin{table}[]
 	\begin{center}
@@ -55,7 +55,7 @@ Zur Berechnung der Ljaponow-Exponenten für die verschiedenen Cluster wurde eine
 	\label{fig:ljapResult}
 \end{figure}
 Abbildung \ref{fig:ljapResult} zeigt die Simulationsergebnisse für das zweite Netzwerk. Dabei beschreibt RMS die mittlere quadratische Abweichung vom Mittelwert für ein Cluster, also ein Maß für die Asychronizität eines Clusters. Die Anfangswerte $x_i^0$ sind gaußverteilt um $\pi$ mit einer Standardabweichung von 0,01$\pi$ gewählt, also zunächst asynchron. Ein geringes Rauschen von 0,002 ist in jedem Iterationsschritt eingefügt, sodass die Synchronisation zusätzlich gestört wird.
-Das RMS geht gegen null, sobald die MSF negativ ist. Dies stimmt mit den Überlegungen aus \ref{stabtheorie} überein, da die Bahnkurven sich für lange Zeiten wieder annähern, also synchron laufen.
-Alle Cluster außer 0 (Rot) und 3 (Blau) weisen eine isolierte Synchronisation auf (siehe \ref{synch}). Die Synchronisation innerhalb eines Clusters ist unabhängig vom Zustand der anderen. Das blaue und rote Cluster hingegen verlieren (bzw. erreichen) die Synchronizität gemeinsam, sind also interwinded Cluster. Dies wird durch den identischen Verlauf der MSF deutlich.
+Das RMS geht gegen null, sobald die MSF negativ ist. Dies stimmt mit den Überlegungen aus \ref{stabilitaet} überein, da die Bahnkurven sich für lange Zeiten wieder annähern, also synchron laufen.
+Alle Cluster außer 0 (Rot) und 3 (Blau) weisen eine isolierte Synchronisation auf. Die Synchronisation innerhalb eines Clusters ist unabhängig vom Zustand der anderen. Das blaue und rote Cluster hingegen verlieren (bzw. erreichen) die Synchronizität gemeinsam, sind also interwinded Cluster. Dies wird durch den identischen Verlauf der MSF deutlich.
 
 
