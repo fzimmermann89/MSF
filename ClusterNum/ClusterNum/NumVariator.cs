@@ -136,13 +136,12 @@ b 0 0 0 0 0 0 a 0 0 0
         {
 
 
-
             for (int ibeta = 0; ibeta <= betasteps; ibeta++)
             {
                 double beta = betamin + ibeta * (betamax - betamin) / betasteps;
 
                 //RMS
-                NumIterator rmsIterator = new NumIterator(adjmatrix, beta, sigma, delta,pertubation);
+                NumIterator rmsIterator = new NumIterator(adjmatrix, beta, sigma, delta, pertubation);
                 rmsIterator.noise = noise;
                 double[] rms = new double[cluster.Length];
                 rmsIterator.iterate(pre);
@@ -165,7 +164,7 @@ b 0 0 0 0 0 0 a 0 0 0
                 //synchrone orbits berechnen
 
 
-                NumIterator smIterator = new NumIterator(adjmatrix, beta, sigma, delta,pertubation);
+                NumIterator smIterator = new NumIterator(adjmatrix, beta, sigma, delta, pertubation);
                 smIterator.iterate(pre + rec);
 
                 List<double[]> transDoneSynchManifolds = smIterator.xt.GetRange(pre, rec);
@@ -214,6 +213,76 @@ b 0 0 0 0 0 0 a 0 0 0
 
             }
         }
+
+        public double[][][] variateSigmaBeta(double betamin, double betamax, int betastep, double sigmamin, double sigmamax, int sigmasteps)
+        {
+            double[][][] ret = new double[sigmasteps+1][][];
+            for (int isigma = 0; isigma <= sigmasteps; isigma++)
+            {
+                double sigma = sigmamin + isigma * (sigmamax - sigmamin) / sigmasteps;
+                ret[isigma] = variateBeta(betamin, betamax, betastep, sigma);
+            }
+            return ret;
+        }
+
+
+        public double[][] variateBeta(double betamin, double betamax, int betastep, double sigma)
+        {
+            double[][] ret = new double[betasteps + 1][];
+            for (int ibeta = 0; ibeta <= betasteps; ibeta++)
+            {
+                double beta = betamin + ibeta * (betamax - betamin) / betasteps;
+
+                //Ljapunow    
+                double[] ljapunow = new double[cluster.Length];
+                //synchrone orbits berechnen
+
+                NumIterator smIterator = new NumIterator(adjmatrix, beta, sigma, delta, pertubation);
+                smIterator.iterate(pre + rec);
+
+                List<double[]> transDoneSynchManifolds = smIterator.xt.GetRange(pre, rec);
+
+                List<double[]> smts = new List<double[]>();
+                for (int i = 0; i < transDoneSynchManifolds.Count; i++)
+                {
+                    double[] add = new double[cluster.Length];
+                    for (int j = 0; j < cluster.Length; j++)
+                    {
+                        int node0 = cluster[j][0];
+                        add[j] = transDoneSynchManifolds[i][node0];
+                    }
+                    smts.Add(add);
+                }
+
+                ljapunow = ljapunow.Add(Double.MinValue);
+
+                for (int m = 0; m < clusterTransform.Length; m++)
+                {
+                    for (int i = 0; i < clusterTransform[m].Length; i++)
+                    {
+                        int etanodenum = clusterTransform[m][i];
+                        if (etanodenum >= clusterTransform.Length) // unterer Block
+                        {
+                            Ljapunator punator = new Ljapunator(JMats, BMat, cluster, smts, beta, sigma, delta);
+
+                            punator.etat[0][etanodenum] = ljapunowPertubation;
+                            punator.iterate(rec);
+                            if (!double.IsNaN(punator.ljapunowSum[etanodenum]))
+                            {
+                                ljapunow[m] = Math.Max(punator.ljapunowSum[etanodenum], ljapunow[m]);
+                            }
+                        }
+                    }
+                }
+                for (int m = 0; m < clusterTransform.Length; m++)
+                {
+                    ljapunow[m] /= (double)rec;
+                }
+                ret[ibeta] = ljapunow;
+            }
+            return ret;
+        }
+
         private double[] MS(double[] xs)
         {
             double[] ms = new double[cluster.Length];

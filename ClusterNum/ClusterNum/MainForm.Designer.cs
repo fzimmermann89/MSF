@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend10 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend11 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend12 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.layoutButton = new System.Windows.Forms.Button();
             this.initGraphButton = new System.Windows.Forms.Button();
@@ -88,6 +88,7 @@
             this.label16 = new System.Windows.Forms.Label();
             this.betaMaxUpDown = new System.Windows.Forms.NumericUpDown();
             this.betaMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.variate2dButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rmsChart)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -255,18 +256,18 @@
             this.rmsChart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rmsChart.BackColor = System.Drawing.SystemColors.Control;
-            chartArea1.AxisX.Title = "Iteration";
-            chartArea1.AxisY.ScrollBar.IsPositionedInside = false;
-            chartArea1.AxisY.Title = " Δx";
-            chartArea1.BackColor = System.Drawing.SystemColors.Control;
-            chartArea1.CursorY.Interval = 0.01D;
-            chartArea1.CursorY.IsUserEnabled = true;
-            chartArea1.CursorY.IsUserSelectionEnabled = true;
-            chartArea1.Name = "ChartArea1";
-            this.rmsChart.ChartAreas.Add(chartArea1);
-            legend1.BackColor = System.Drawing.SystemColors.Control;
-            legend1.Name = "Legend1";
-            this.rmsChart.Legends.Add(legend1);
+            chartArea10.AxisX.Title = "Iteration";
+            chartArea10.AxisY.ScrollBar.IsPositionedInside = false;
+            chartArea10.AxisY.Title = " Δx";
+            chartArea10.BackColor = System.Drawing.SystemColors.Control;
+            chartArea10.CursorY.Interval = 0.01D;
+            chartArea10.CursorY.IsUserEnabled = true;
+            chartArea10.CursorY.IsUserSelectionEnabled = true;
+            chartArea10.Name = "ChartArea1";
+            this.rmsChart.ChartAreas.Add(chartArea10);
+            legend10.BackColor = System.Drawing.SystemColors.Control;
+            legend10.Name = "Legend1";
+            this.rmsChart.Legends.Add(legend10);
             this.rmsChart.Location = new System.Drawing.Point(10, 340);
             this.rmsChart.Name = "rmsChart";
             this.rmsChart.Size = new System.Drawing.Size(707, 189);
@@ -544,6 +545,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage2.Controls.Add(this.variate2dButton);
             this.tabPage2.Controls.Add(this.splitContainer1);
             this.tabPage2.Controls.Add(this.groupBox3);
             this.tabPage2.Controls.Add(this.betaRunButton);
@@ -583,18 +585,18 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.betaRmsChart.BackColor = System.Drawing.Color.Transparent;
-            chartArea2.AxisX.Title = "β/π";
-            chartArea2.AxisY.ScrollBar.IsPositionedInside = false;
-            chartArea2.AxisY.Title = "<RMS>";
-            chartArea2.BackColor = System.Drawing.Color.Transparent;
-            chartArea2.CursorY.Interval = 0.01D;
-            chartArea2.CursorY.IsUserEnabled = true;
-            chartArea2.CursorY.IsUserSelectionEnabled = true;
-            chartArea2.Name = "ChartArea1";
-            this.betaRmsChart.ChartAreas.Add(chartArea2);
-            legend2.BackColor = System.Drawing.Color.Transparent;
-            legend2.Name = "Legend1";
-            this.betaRmsChart.Legends.Add(legend2);
+            chartArea11.AxisX.Title = "β/π";
+            chartArea11.AxisY.ScrollBar.IsPositionedInside = false;
+            chartArea11.AxisY.Title = "<RMS>";
+            chartArea11.BackColor = System.Drawing.Color.Transparent;
+            chartArea11.CursorY.Interval = 0.01D;
+            chartArea11.CursorY.IsUserEnabled = true;
+            chartArea11.CursorY.IsUserSelectionEnabled = true;
+            chartArea11.Name = "ChartArea1";
+            this.betaRmsChart.ChartAreas.Add(chartArea11);
+            legend11.BackColor = System.Drawing.Color.Transparent;
+            legend11.Name = "Legend1";
+            this.betaRmsChart.Legends.Add(legend11);
             this.betaRmsChart.Location = new System.Drawing.Point(3, 3);
             this.betaRmsChart.Name = "betaRmsChart";
             this.betaRmsChart.Size = new System.Drawing.Size(716, 189);
@@ -607,23 +609,23 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.betaLjapChart.BackColor = System.Drawing.Color.Transparent;
-            chartArea3.AxisX.Title = "β/π";
-            chartArea3.AxisY.Interval = 0.5D;
-            chartArea3.AxisY.MajorGrid.Interval = 0.5D;
-            chartArea3.AxisY.MajorTickMark.Interval = 0.5D;
-            chartArea3.AxisY.Maximum = 1D;
-            chartArea3.AxisY.Minimum = -1D;
-            chartArea3.AxisY.ScrollBar.IsPositionedInside = false;
-            chartArea3.AxisY.Title = "Max. Lyapunov";
-            chartArea3.BackColor = System.Drawing.Color.Transparent;
-            chartArea3.CursorY.Interval = 0.01D;
-            chartArea3.CursorY.IsUserEnabled = true;
-            chartArea3.CursorY.IsUserSelectionEnabled = true;
-            chartArea3.Name = "ChartArea1";
-            this.betaLjapChart.ChartAreas.Add(chartArea3);
-            legend3.BackColor = System.Drawing.Color.Transparent;
-            legend3.Name = "Legend1";
-            this.betaLjapChart.Legends.Add(legend3);
+            chartArea12.AxisX.Title = "β/π";
+            chartArea12.AxisY.Interval = 0.5D;
+            chartArea12.AxisY.MajorGrid.Interval = 0.5D;
+            chartArea12.AxisY.MajorTickMark.Interval = 0.5D;
+            chartArea12.AxisY.Maximum = 2D;
+            chartArea12.AxisY.Minimum = -2D;
+            chartArea12.AxisY.ScrollBar.IsPositionedInside = false;
+            chartArea12.AxisY.Title = "Max. Lyapunov";
+            chartArea12.BackColor = System.Drawing.Color.Transparent;
+            chartArea12.CursorY.Interval = 0.01D;
+            chartArea12.CursorY.IsUserEnabled = true;
+            chartArea12.CursorY.IsUserSelectionEnabled = true;
+            chartArea12.Name = "ChartArea1";
+            this.betaLjapChart.ChartAreas.Add(chartArea12);
+            legend12.BackColor = System.Drawing.Color.Transparent;
+            legend12.Name = "Legend1";
+            this.betaLjapChart.Legends.Add(legend12);
             this.betaLjapChart.Location = new System.Drawing.Point(3, 3);
             this.betaLjapChart.Name = "betaLjapChart";
             this.betaLjapChart.Size = new System.Drawing.Size(716, 189);
@@ -862,7 +864,7 @@
             0,
             0});
             this.betaMinUpDown.Minimum = new decimal(new int[] {
-            1,
+            2,
             0,
             0,
             -2147483648});
@@ -870,10 +872,20 @@
             this.betaMinUpDown.Size = new System.Drawing.Size(51, 20);
             this.betaMinUpDown.TabIndex = 0;
             this.betaMinUpDown.Value = new decimal(new int[] {
-            5,
+            2,
             0,
             0,
-            -2147418112});
+            -2147483648});
+            // 
+            // variate2dButton
+            // 
+            this.variate2dButton.Location = new System.Drawing.Point(522, 19);
+            this.variate2dButton.Name = "variate2dButton";
+            this.variate2dButton.Size = new System.Drawing.Size(147, 23);
+            this.variate2dButton.TabIndex = 26;
+            this.variate2dButton.Text = "Variate Beta+Sigma";
+            this.variate2dButton.UseVisualStyleBackColor = true;
+            this.variate2dButton.Click += new System.EventHandler(this.variate2dButton_Click);
             // 
             // MainForm
             // 
@@ -978,6 +990,7 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.NumericUpDown pertUpDown;
         private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Button variate2dButton;
 
        }
 }
