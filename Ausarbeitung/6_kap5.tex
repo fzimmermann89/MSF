@@ -30,7 +30,7 @@ Die betrachteten Netzwerke sind symmetrisch und bestehen aus $N=11$ Knoten  (Abb
 \label{fig:abmat}
 \end{figure}
 
-Für diese Netwerken ergibt die Suche nach Automorphismen der zugrundeliegenden Graphen mit \textit{Nauty} 0, 32 bzw 5760 Symmetrien und 11 (triviale, nur aus einem Knoten bestehende), 5 bzw. 3 Cluster (Tab. \ref{tab:netzwerke})
+Für diese Netwerken ergibt die Suche nach Automorphismen der zugrundeliegenden Graphen mit \textit{Nauty} 0, 32 bzw. 5760 Symmetrien und 11 (triviale, nur aus einem Knoten bestehende), 5 bzw. 3 Cluster (Tab. \ref{tab:netzwerke})
 
 \begin{table}[]
 	\begin{center}
@@ -47,15 +47,20 @@ Für diese Netwerken ergibt die Suche nach Automorphismen der zugrundeliegenden 
 	\end{center}
 \end{table}
 
-Zur Berechnung der Ljaponow-Exponenten für die verschiedenen Cluster wurde eine Basistransformation (siehe \ref{stabilitaet}) mit den im Anhang dargestellten Transformationsmatrizen vorgenommen \cite{pecora2014,sagenotebook}
+Zur Berechnung der Ljaponow-Exponenten für die verschiedenen Cluster wurde eine Basistransformation (siehe \ref{stabilitaet}) mit den im Anhang dargestellten Transformationsmatrizen vorgenommen \cite{pecora2014,sagenotebook}.
 \begin{figure}
 	\centering
 	\includegraphics[width=1.0\textwidth]{abb/misc/ljapResult.png}
 	\caption{Ergebnisse der Simulation. Die obere Grafik zeigt die mittlere quadratische Abweichung vom Mittelwert für das jeweilige Cluster. Im unteren Bild ist der maximale Ljapunow-Exponent für die Cluster über $\beta$ aufgetragen. Nach einer Transienten von 200 Zeitschritten wurden die mittleren Abweichungen über 1000 weitere Schritte gemittelt.}
 	\label{fig:ljapResult}
 \end{figure}
-Abbildung \ref{fig:ljapResult} zeigt die Simulationsergebnisse für das zweite Netzwerk. Dabei beschreibt RMS die mittlere quadratische Abweichung vom Mittelwert für ein Cluster, also ein Maß für die Asychronizität eines Clusters. Die Anfangswerte $x_i^0$ sind gaußverteilt um $\pi$ mit einer Standardabweichung von 0,01$\pi$ gewählt, also zunächst asynchron. Ein geringes Rauschen von 0,002 ist in jedem Iterationsschritt eingefügt, sodass die Synchronisation zusätzlich gestört wird.
-Das RMS geht gegen null, sobald die MSF negativ ist. Dies stimmt mit den Überlegungen aus \ref{stabilitaet} überein, da die Bahnkurven sich für lange Zeiten wieder annähern, also synchron laufen.
+Für Netzwerk 1 erübrigt sich aufgrund des Fehlens von Clustern die Stabilitätsanalyse.
+
+Abbildung \ref{fig:ljapResult} zeigt exemplarisch die Simulationsergebnisse für das zweite Netzwerk. Dabei beschreibt RMS die mittlere quadratische Abweichung vom Mittelwert für ein Cluster, also ein Maß für die Asychronizität eines Clusters. Die Anfangswerte $x_i^0$ sind gaußverteilt um $\pi$ mit einer Standardabweichung von 0,01$\pi$ gewählt, also zunächst asynchron. Ein geringes Rauschen von 0,002 ist in jedem Iterationsschritt eingefügt, sodass die Synchronisation zusätzlich gestört wird.
+
+Das RMS geht gegen Null, sobald die MSF negativ ist. Dies stimmt mit den Überlegungen aus \ref{stabilitaet} überein, da die Bahnkurven sich für lange Zeiten wieder annähern, also synchron laufen.
 Alle Cluster außer 0 (Rot) und 3 (Blau) weisen eine isolierte Synchronisation auf. Die Synchronisation innerhalb eines Clusters ist unabhängig vom Zustand der anderen. Das blaue und rote Cluster hingegen verlieren (bzw. erreichen) die Synchronizität gemeinsam, sind also interwinded Cluster. Dies wird durch den identischen Verlauf der MSF deutlich.
+
+Analoge Beobachtungen können bei dem dritten Netzwerk gemacht werden. Auch hier verschwindet die Asynchronität der Cluster bei negativer MSF (nicht dargestellt).
 
 

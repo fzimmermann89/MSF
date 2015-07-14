@@ -15,7 +15,7 @@ Die Ljapunow-Exponenten beschreiben, wie weit sich Bahnkurven für große Zeiten
 \begin{align}\label{eq:ljapunow}
 \lambda_i=\lim_{t\rightarrow\infty}\frac{1}{t} ln\left(\frac{|\delta \boldsymbol{x}_i(t)|}{|\delta \boldsymbol{x}_i(0)|}\right)
 \end{align}
-Wird die Abweichung zu $\delta\boldsymbol{x}_i(0)$ größer, so ist der Quotient größer als 1, sonst kleiner. Es gilt also folgende Unterscheidung für die Werte der Ljapunow-Exponenten.
+Wird die Abweichung zu $\delta\boldsymbol{x}_i(t)$ im Vergleich mit $\delta\boldsymbol{x}_i(0)$ größer, so ist der Quotient größer als 1, sonst kleiner. Es gilt also folgende Unterscheidung für die Werte der Ljapunow-Exponenten.
 \begin{equation}
 \begin{cases}
 \lambda_i < 0, \text{ Abweichung vom synchronen Zustand verschwindet}\\
@@ -24,7 +24,7 @@ Wird die Abweichung zu $\delta\boldsymbol{x}_i(0)$ größer, so ist der Quotient
 \end{equation}
 Positive Ljapunow-Exponenten weisen eine instabile Synchronisation nach und negative eine stabile. Der Stabilitätsbegriff bezieht sich hierbei auf Invarianz der Bahnkurven gegenüber Änderungen der Anfangsbedingungen (für lange Zeiten). 
 \subsection*{Master Stability Function}
-Durch eine Diagonalisierung der Kopplungsmatrix lässt sich bei Betrachtung entlang ihrer Eigenvektoren die Kopplungsmatrix in (\ref{eq:mse}) durch ihre Eigenwerte $\alpha+i\beta$ darstellen. In dieser Form lassen sich die Ljapunow-Exponenten zu den Richtungen transversal zur Synchronisation berechnen. Da es für Instabilität genügt, wenn einer dieser Ljapunow-Exponenten größer als 0 ist, ist es sinnvoll nur den größten zu betrachten. Dieser wird Master Stability Function (MSF) gennant. 
+Durch eine Diagonalisierung der Kopplungsmatrix lässt sich bei Betrachtung entlang ihrer Eigenvektoren die Kopplungsmatrix in (\ref{eq:mse}) durch ihre Eigenwerte $(\alpha+i\beta)$ darstellen. In dieser Form lassen sich die Ljapunow-Exponenten zu den Richtungen transversal zur Synchronisation berechnen. Da es für Instabilität genügt, wenn einer dieser Ljapunow-Exponenten größer als 0 ist, ist es sinnvoll nur den größten zu betrachten. Dieser wird Master Stability Function (MSF) gennant. 
 
 
 
