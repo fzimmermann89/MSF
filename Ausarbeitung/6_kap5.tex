@@ -7,27 +7,38 @@ Die vorgestellten Methoden zur lokalen Stabilitätsanalyse eines Netzwerks werde
 	\\\notag  & \delta \text{ Offset}
 	\\\notag &\mathcal{I}(x)=\frac{1-Cos(x)}{2}
 \end{align}
-Die betrachteten Netzwerke sind symmetrisch und bestehen aus $N=11$ Knoten. Die verwendeten Kopplungsmatrizen (\ref{Amat}) sind Pecora et al. \cite{pecora2014} entnommen. Eines der betrachteten Netwerke ist exemplarisch in Abb. \ref{fig:cluster}, die zugehörige Kopplungsmatrix in Abb. \ref{fig:abmat} dargestellt. 
+Die betrachteten Netzwerke (siehe Abb. \ref{fig:cluster}) sind symmetrisch und bestehen aus $N=11$ Knoten. Die verwendeten Kopplungsmatrizen (\ref{Amat}) sind Pecora et al. \cite{pecora2014} entnommen und in Abb. \ref{fig:abmat} dargestellt. 
 \begin{figure}
 	 \centering
 	 \includegraphics[width=0.5\textwidth]{abb/misc/cluster.png}
-	 \caption{Eines der verwendeten Netzwerke. Die Knoten eines Cluster sind in der gleichen Farbe eingefärbt.}
+	 \caption{Die für die Simulation verwendeten Netzwerke. Die Knoten eines Cluster sind in der gleichen Farbe eingefärbt.}
 	 \label{fig:cluster}
 \end{figure}
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.5\textwidth]{abb/misc/ABMat.png}
-	\caption{Kopplungsmatrix $\boldsymbol{A}$ des in Abb. \ref{fig:cluster} dargestellten Netwerks sowie die transformierte Kopplungsmatrix $\boldsymbol{B}$ in der die Zeilen nach den zugehörigen Clustern markiert sind\cite{pecora2014}.}
+	\includegraphics[width=0.75\textwidth]{abb/misc/ABMat.png}
+	\caption{Kopplungsmatrizen $\boldsymbol{A}$ der in Abb. \ref{fig:cluster} dargestellten Netwerke sowie die transformierte Kopplungsmatrizen $\boldsymbol{B}$ in der die Zeilen nach den zugehörigen Clustern markiert sind\cite{pecora2014}.}
 \label{fig:abmat}
 \end{figure}
 
-In diesen Netwerken ergibt die Clustersuche mit Nauty..
+Für diese Netwerken ergibt die Suche nach Automorphismen der zugrundeliegenden Graphen mit \textit{Nauty} 0, 32 bzw 5760 Symmetrien und 11 (triviale, nur aus einem Knoten bestehende), 5 bzw. 3 Cluster (siehe Tab. \ref{tab:netzwerke})
 
+\begin{table}[]
+	\begin{center}
+	\caption{Symmetrien und Cluster der betrachteten Netzwerke}
+	\label{tab:netzwerke}
+\begin{tabular}{lll}
+	Netzwerk & Symmetrien & Cluster                           \\
+	\hline
+	1        & 0          & 11 triviale Cluster               \\
+	2        & 32         & (1,8) (2,3,7,9) (4,6) (5,10) (11) \\
+	3        & 5760       & (1,2,6,7,8,11) (3,5,9,10) (4) \\  
+	\hline
+\end{tabular}
+	\end{center}
+\end{table}
 
--bild vom netzwerk
-
--cluster, anzahl symmetrien
 
 -rms
 
