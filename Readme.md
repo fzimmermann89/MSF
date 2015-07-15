@@ -5,11 +5,11 @@ Permutationssymmetrien
 
 
 
-[Präsentation](Präsentation/Präsentation.pdf)
+[Präsentation](build/Präsentation.pdf)
 
-[Ausarbeitung](Ausarbeitung/Hauptdatei.pdf)
+[Ausarbeitung](build/Hauptdatei.pdf)
 
-[Simulation](ClusterNum/build/ClusterNum.exe)
+[Simulation](build/ClusterNum.exe)
 
 [Sage Worksheet](https://cloud.sagemath.com/projects/0c0bf93d-e265-4db2-adef-d4bfadf125ad/files/TMat/Tmat.sagews)
 
