@@ -53,7 +53,7 @@ Permutationssymmetrien}
 \frame{
 	\titlepage
 	\begin{figure}
-		\includegraphics[width=0.12\textwidth]{tulogo.pdf}
+		\includegraphics[width=0.12\textwidth]{abb/tulogo.pdf}
 	\end{figure}
 }
 
@@ -184,7 +184,7 @@ Permutationssymmetrien}
 	\item Kopplungsmatrix $\boldsymbol{A}_1$
 	\item Diskrete dynamische Gleichung gegeben durch
 	\begin{align*}
-	x_i^{t+1}&=\left[\beta\mathcal{I}(x_i^t)+\sigma \sum_j^N A_{ij}\mathcal{I}(x_j^t)\right] \text{mod}\quad 2\pi
+	x_i^{t+1}&=\left[\beta\mathcal{I}(x_i^t)+\sigma \sum_j^N A_{ij}\mathcal{I}(x_j^t)+\delta\right] \text{mod}\quad 2\pi
 	\\\notag & \beta,\sigma \text{ Kopplungsparameter}
 	\\\notag &\mathcal{I}(x)=\frac{1-Cos(x)}{2}
 	\end{align*}
@@ -209,7 +209,7 @@ Permutationssymmetrien}
 		\item $\Rightarrow$ Cluster
 	\end{itemize}
 	\begin{figure}
-		\includegraphics[width=0.75\textwidth]{cluster.png}
+		\includegraphics[width=0.75\textwidth]{abb/cluster.png}
 	\end{figure}
 }
 
@@ -288,7 +288,7 @@ Permutationssymmetrien}
 	\item
 		Betrachte Dynamik eines Knotens aus Cluster A unter Permutation von Cluster B (A wird nicht verändert):
 	\begin{figure}
-		\includegraphics[width=0.75\textwidth]{perm_b.png}
+		\includegraphics[width=0.75\textwidth]{abb/perm_b.png}
 	\end{figure}
 	\item 
 		Da sich bei Permutationssymmetrie die Dynamik nicht ändert, muss jeder Knoten aus B gleich starken Input an einen Knoten aus A geben.
@@ -302,7 +302,7 @@ Permutationssymmetrien}
 	\item
 		Betrachte nun Dynamik eines Knotens aus Cluster A unter Permutation dieses Clusters	(B wird nicht verändert):
 	\begin{figure}
-		\includegraphics[width=0.75\textwidth]{perm_a.png}
+		\includegraphics[width=0.75\textwidth]{abb/perm_a.png}
 	\end{figure}
 	\item
 		Auch hier: Dynamik bleibt gleich. 
@@ -340,7 +340,7 @@ Permutationssymmetrien}
 	\item oberer $M$x$M$ Block beschreibt die Bewegung innerhalb der Synchronisationsmannigfaltigkeit 
 	\end{itemize}
 	\begin{figure}
-			\includegraphics[width=0.6\textwidth]{ABMat.png}
+			\includegraphics[width=0.6\textwidth]{abb/ABMat.png}
 	\end{figure}
 	(Pecora et al. 2014)
 }
@@ -367,7 +367,7 @@ Permutationssymmetrien}
 	\frametitle{Simulation lokale MSF}
 	\centering
 		\begin{figure}
-			\includegraphics[width=1\textwidth]{ljapunow.png}
+			\includegraphics[width=1\textwidth]{abb/ljapunow.png}
 		\end{figure}
 }
 \section{Fazit}
