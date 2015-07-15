@@ -4,7 +4,7 @@ Können in einem Graphen zwei Knoten miteinander vertauscht werden, ohne dass si
 PAP^{-1}=A.
 \end{equation}
 
-Zur Untersuchung eines Netzwerkes auf Symmetrien eignet sich die Suche von Automorphismen des dem Netzwerk zugrunde liegenden Graphen mit Hilfe der Bibliothek \textit{nauty} \cite{nauty}. Mit dieser lassen sich neben den Generatoren der Permutationssymmetrien auch die Orbits der Knoten bestimmen. Als Orbit werden hierbei die Positionen bezeichnet, an die ein Knoten durch Anwendung aller Permutationen gelangen kann. Alle Knoten eines Orbits lassen sich folglich durch eine Hintereinaderreihung der Permutationen vertauschen, ohne dass sich die Dynamik des Netzwerkes verändert. Eine solche Gruppe von Knoten wird als Cluster bezeichnet. Sollte bei der für die Vertauschung nötigen Hintereinanderreihung von Permutationen ebenfalls Knoten eines weiteren Clusters miteinander vertauscht werden, so liegt eine Verschränkung der Cluster vor (Pecora\citep{pecora2014} \textit{"interwinded Clusters"}).
+Zur Untersuchung eines Netzwerkes auf Symmetrien, eignet sich die Suche von Automorphismen des dem Netzwerk zugrunde liegenden Graphen mit Hilfe der Bibliothek \textit{nauty} \cite{nauty}. Mit dieser lassen sich neben den Generatoren der Permutationssymmetrien, auch die Orbits der Knoten bestimmen. Als Orbit werden hierbei die Positionen bezeichnet, an die ein Knoten durch Anwendung aller Permutationen gelangen kann. Alle Knoten eines Orbits lassen sich folglich durch eine Hintereinaderreihung der Permutationen vertauschen, ohne dass sich die Dynamik des Netzwerkes verändert. Eine solche Gruppe von Knoten wird als Cluster bezeichnet. Sollte bei der für die Vertauschung nötigen Hintereinanderreihung von Permutationen ebenfalls Knoten eines weiteren Clusters miteinander vertauscht werden, so liegt eine Verschränkung der Cluster vor (Pecora\citep{pecora2014} \textit{"interwinded Clusters"}).
 
 \section{Synchronisation in symmetrischen Netzwerken}
 Da Knoten eines Clusters ohne Veränderung der Dynamik vertauschbar sind, erhalten diese den gleichen Input der anderen Knoten und können synchron laufen. In einem aus M Clustern $C_m$ bestehenden Netzwerk existieren somit M Gruppen von Knoten, die isolierte Synchronisation aufweisen können mit synchronen Orbits $s_m$
@@ -12,10 +12,10 @@ Da Knoten eines Clusters ohne Veränderung der Dynamik vertauschbar sind, erhalt
 x_i(t)=s_m(t) \text{ mit } \textit{Knoten } i\in C_m.
 \end{equation}
 
-{\subsection*{isolierte Desynchronisation}}
+{\subsection*{iIsolierte Desynchronisation}}
 In einem symmetrischen Netzwerk können einzelne Cluster synchron sein, während andere nicht synchron sind. Die Desynchronisation scheint also die Synchronisation eines anderen Clusters nicht zwangsläufig zu stören.
 
-Unter einer Permutation $\pi$ eines Clusters A mit Permutationsmatrix $P_A$ ändert sich die Dynamik eines Knotens $i$ aus einem disjunkten Cluster B nicht, es gilt
+Unter einer Permutation $\pi$, eines Clusters A, mit Permutationsmatrix $P_A$, ändert sich die Dynamik eines Knotens $i$ aus einem disjunkten Cluster B nicht, es gilt
 
 
 
@@ -64,15 +64,14 @@ Zur Betrachtung der Stabilität der isolierten Synchronisation lässt sich die M
 	\left[\sum_{m=1}^{M} \boldsymbol{E}^{(m)} \otimes D\boldsymbol{F}(\boldsymbol{s}_m(t))+\sigma\boldsymbol{A}\otimes \boldsymbol{I}_n\sum_{m=1}^{M} 			\boldsymbol{E}^{(m)}\otimes D\boldsymbol{H}(\boldsymbol{s}_m(t))\right]\boldsymbol{X}(t)
 	\end{align}
 	
-Gleichung \ref{eq:clustermse} lässt sich unter Verwendung der Gruppentheorie in eine neue Basis transformieren. Hierbei wird die Basis der irreduziblen Darstellungen (IRRs) der den Permutationssymmetrien zugrundeliegenden Gruppe gewählt. In dieser Basis nimmt die Kopplungsmatrix Blockdiagonalform an. Die oberen M Koordinaten $\eta(t)$ in der neuen Darstellung entsprechen einer Bewegung longitudinal innerhalb der Synchronisationsmannigfaltigkeit, die weiteren einer Bewegung transversal zur ihr. Die Transformationsmatrix $\boldsymbol{T}$ lässt sich mithilfe einer geeigneten Software für diskrete Mathematik (z.B. sage) bestimmen \citep{sagenotebook}. Diese Basistransformation entspricht einer einer Transformation in $M$ Schwerpunktkoordinaten und $(N-M)$ Relativkoordinaten (die die Abweichung der Knoten eines Clusters zueinander beschreiben) mit orthogonalen Basisvektoren.
-
-Aus der so transformierten MSE (Gleichung \ref{eq:irrmse}) lässt sich die MSF berechnen um die Stabilität der Clustersynchronisation zu beurteilen.
+Gleichung \ref{eq:clustermse} lässt sich unter Verwendung der Gruppentheorie in eine neue Basis transformieren. Hierbei wird die Basis der irreduziblen Darstellungen (IRR,), der den Permutationssymmetrien zugrundeliegenden Gruppe gewählt. In dieser Basis nimmt die Kopplungsmatrix Blockdiagonalform an. Die oberen M Koordinaten $\eta(t)$ in der neuen Darstellung entsprechen einer Bewegung longitudinal innerhalb der Synchronisationsmannigfaltigkeit, die weiteren einer Bewegung transversal zur ihr. Die Transformationsmatrix $\boldsymbol{T}$ lässt sich mithilfe einer geeigneten Software für diskrete Mathematik (z.B. sage) bestimmen \citep{sagenotebook}. Diese Basistransformation entspricht einer Transformation in $M$ Schwerpunktkoordinaten und $(N-M)$ Relativkoordinaten (die die Abweichung der Knoten eines Clusters zueinander beschreiben) mit orthogonalen Basisvektoren.
+Aus der so transformierten MSE (Gleichung \ref{eq:irrmse} lässt sich die MSF berechnen um die Stabilität der Clustersynchronisation zu beurteilen.
 \begin{align}
 	\label{eq:irrmse}
 		\overset{\cdot}{\boldsymbol{\eta}}(t)&=
 				\left[\sum_{m=1}^{M} \boldsymbol{J}^{(m)} \otimes D\boldsymbol{F}(\boldsymbol{s}_m(t))+\sigma\boldsymbol{B}\otimes \boldsymbol{I}_n\sum_{m=1}^{M} \boldsymbol{J}^{(m)}\otimes D\boldsymbol{H}(\boldsymbol{s}_m(t))\right]\boldsymbol{\eta}(t)
 		\end{align}
-		mit der transformierten Kopplungsmatrix $\boldsymbol{B}$ und den transformierten Clustermatrizen $\boldsymbol{J}^{(m}$
+		mit der transformierten Kopplungsmatrix $\boldsymbol{B}$ und den transformierten Clustermatrizen $\boldsymbol{J}^{(m)}$
 		\begin{align}
 				 \boldsymbol{\eta}(t)&=\boldsymbol{T}\otimes\boldsymbol{I}_n\delta\boldsymbol{X}(t)
 				\\\notag \boldsymbol{B}&=\boldsymbol{T}\boldsymbol{A}\boldsymbol{T}^{-1}
