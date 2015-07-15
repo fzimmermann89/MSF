@@ -4,14 +4,14 @@ Ein synchroner Zustand eines Netzwerks lässt sich hinsichtlicht seiner Stabilit
 \delta \boldsymbol{x}_i(t) &= \boldsymbol{x}_i - \boldsymbol{s}(t)\\
 \delta \overset{\cdot}{\boldsymbol{x}}_i(t) &= \boldsymbol{f}(\boldsymbol{x}_i(t))+\sigma\sum_j A_{ij}\boldsymbol{h}\left(\boldsymbol{x}_j(t)\right) - \overset{\cdot}{\boldsymbol{s}}(t)
 \end{align}
-Eine Linearisierung dieser Gleichung um die Bahnkurve $\boldsymbol{s}(t)$ liefert in der Kronecker-Produkt Schreibweise die Master Stability Equation (MSE) in Gleichung (\ref*{eq:mse}).
+Eine Linearisierung dieser Gleichung um die Bahnkurve $\boldsymbol{s}(t)$ liefert in der Kronecker-Produkt Schreibweise die Master Stability Equation (MSE) in (\ref{eq:mse}).
 \begin{align}\label{eq:mse}
 \delta\overset{\cdot}{\boldsymbol{X}}(t)=
 \left[D\boldsymbol{F}(\boldsymbol{s}(t))+\sigma\boldsymbol{A}\otimes D\boldsymbol{H}(\boldsymbol{s}(t))\right]\delta\boldsymbol{X}(t)
 \end{align}
 
 \subsection*{Ljapunow-Exponenten}
-Die Ljapunow-Exponenten beschreiben, wie weit sich Bahnkurven für große Zeiten von einander entfernen, verglichen mit der Abweichung zum Zeitpunkt $t=0$. Eine mögliche Definition ist in Gleichung (\ref{eq:ljapunow}) gegeben \cite{lyapunow}.
+Die Ljapunow-Exponenten beschreiben, wie weit sich Bahnkurven für große Zeiten von einander entfernen, verglichen mit der Abweichung zum Zeitpunkt $t=0$. Eine mögliche Definition ist in  (\ref{eq:ljapunow}) gegeben \cite{lyapunow}.
 \begin{align}\label{eq:ljapunow}
 \lambda_i=\lim_{t\rightarrow\infty}\frac{1}{t} ln\left(\frac{|\delta \boldsymbol{x}_i(t)|}{|\delta \boldsymbol{x}_i(0)|}\right)
 \end{align}
