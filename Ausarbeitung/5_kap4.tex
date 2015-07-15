@@ -1,5 +1,5 @@
 \section{Symmetrien}
-Können in einem Graphen zwei Knoten miteinander vertauscht werden, ohne dass sich der Graph verändert, liegt eine Permutationssymmetrie vor. Für die betrachteten Netzwerke bedeutet dies, dass sich bei Vorliegen einer Permutationssymmetrie zwei Knoten tauschen lassen, indem sowohl die zugehörigen Spalten als auch Zeilen der Kopplungsmatrix getauscht werden, ohne dass sich die Dynamik des Systems verändert. Die Vertauschung der Knoten lässt sich durch eine Permutationsmatrix $P$ darstellen. Vorraussetzung für eine Permutationssymmetrie ist somit
+Können in einem Graphen zwei Knoten miteinander vertauscht werden, ohne dass sich der Graph verändert, liegt eine Permutationssymmetrie vor \cite{symmetrie}. Für die betrachteten Netzwerke bedeutet dies, dass sich bei Vorliegen einer Permutationssymmetrie zwei Knoten tauschen lassen, indem sowohl die zugehörigen Spalten als auch Zeilen der Kopplungsmatrix getauscht werden, ohne dass sich die Dynamik des Systems verändert. Die Vertauschung der Knoten lässt sich durch eine Permutationsmatrix $P$ darstellen. Vorraussetzung für eine Permutationssymmetrie ist somit\cite{pecora2014}
 \begin{equation}
 PAP^{-1}=A.
 \end{equation}
@@ -13,7 +13,7 @@ x_i(t)=s_m(t) \text{ mit } \textit{Knoten } i\in C_m.
 \end{equation}
 
 {\subsection*{Isolierte Desynchronisation}}
-In einem symmetrischen Netzwerk können einzelne Cluster synchron sein, während andere nicht synchron sind. Die Desynchronisation scheint also die Synchronisation eines anderen Clusters nicht zwangsläufig zu stören.
+In einem symmetrischen Netzwerk können einzelne Cluster synchron sein, während andere nicht synchron sind. Die Desynchronisation scheint also die Synchronisation eines anderen Clusters nicht zwangsläufig zu stören\cite{pecora2014}.
 
 Unter einer Permutation $\pi$, eines Clusters A, mit Permutationsmatrix $P_A$, ändert sich die Dynamik eines Knotens $i$ aus einem disjunkten Cluster B nicht, es gilt
 
@@ -56,7 +56,7 @@ Zur Betrachtung der Stabilität der isolierten Synchronisation lässt sich die M
 \begin{align}
  \boldsymbol{E}^{(m)}_{ii} =1\text{ wenn Knoten }i \in C_m.
 \end{align}
- umschreiben zu:
+ umschreiben zu\cite{pecora2014}:
 \begin{align}
 	\label{eq:clustermse}
 \notag	\delta\overset{\cdot}{\boldsymbol{X}}(t)&=	
@@ -64,7 +64,7 @@ Zur Betrachtung der Stabilität der isolierten Synchronisation lässt sich die M
 	\left[\sum_{m=1}^{M} \boldsymbol{E}^{(m)} \otimes D\boldsymbol{F}(\boldsymbol{s}_m(t))+\sigma\boldsymbol{A}\otimes \boldsymbol{I}_n\sum_{m=1}^{M} 			\boldsymbol{E}^{(m)}\otimes D\boldsymbol{H}(\boldsymbol{s}_m(t))\right]\boldsymbol{X}(t)
 	\end{align}
 	
-Gleichung \ref{eq:clustermse} lässt sich unter Verwendung der Gruppentheorie in eine neue Basis transformieren. Hierbei wird die Basis der irreduziblen Darstellungen (IRR), der den Permutationssymmetrien zugrundeliegenden Gruppe gewählt. In dieser Basis nimmt die Kopplungsmatrix Blockdiagonalform an. Die oberen M Koordinaten $\eta(t)$ in der neuen Darstellung entsprechen einer Bewegung longitudinal innerhalb der Synchronisationsmannigfaltigkeit, die weiteren einer Bewegung transversal zur ihr. Die Transformationsmatrix $\boldsymbol{T}$ lässt sich mithilfe einer geeigneten Software für diskrete Mathematik (z.B. sage) bestimmen \citep{sagenotebook}. Diese Basistransformation entspricht einer Transformation in $M$ Schwerpunktkoordinaten und $(N-M)$ Relativkoordinaten (die die Abweichung der Knoten eines Clusters zueinander beschreiben) mit orthogonalen Basisvektoren.
+Gleichung \ref{eq:clustermse} lässt sich unter Verwendung der Gruppentheorie in eine neue Basis transformieren\cite{pecora2014}. Hierbei wird die Basis der irreduziblen Darstellungen (IRR), der den Permutationssymmetrien zugrundeliegenden Gruppe gewählt. In dieser Basis nimmt die Kopplungsmatrix Blockdiagonalform an. Die oberen M Koordinaten $\eta(t)$ in der neuen Darstellung entsprechen einer Bewegung longitudinal innerhalb der Synchronisationsmannigfaltigkeit, die weiteren einer Bewegung transversal zur ihr. Die Transformationsmatrix $\boldsymbol{T}$ lässt sich mithilfe einer geeigneten Software für diskrete Mathematik (z.B. sage) bestimmen \citep{sagenotebook}. Diese Basistransformation entspricht einer Transformation in $M$ Schwerpunktkoordinaten und $(N-M)$ Relativkoordinaten (die die Abweichung der Knoten eines Clusters zueinander beschreiben) mit orthogonalen Basisvektoren.
 Aus der so transformierten MSE (Gleichung \ref{eq:irrmse} lässt sich die MSF berechnen um die Stabilität der Clustersynchronisation zu beurteilen.
 \begin{align}
 	\label{eq:irrmse}
