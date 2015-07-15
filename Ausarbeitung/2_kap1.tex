@@ -1,6 +1,6 @@
 
 \section{Netzwerke}
-Netzwerke setzen sich im allgmeinen aus $N$ Knoten (Nodes) zusammen, die über gewichtete Verbindungen (Edges) miteinander verbunden sind. Besteht zwischen zwei Knoten eine Verbindung in beide Richtungen, so spricht man von einem ungerichteten Netzwerk. Wenn alle Knoten untereinander verbunden sind, so handelt es sich um ein vollständiges Netzwerk (siehe Abbildung \ref{fig:GraphBsp}). Die Verbindungen der Knoten lassen sich durch eine $M\times M$ Verbindungsmatrix $\boldsymbol{A}$ darstellen, in der ein Eintrag von $1$ an Position $i,j$ eine Verbindung zwischen dem Knoten $i$ und dem Knoten $j$, eine $0$ keine Verbindung zwischen diesen Knoten bedeutet.
+Netzwerke setzen sich im allgmeinen aus $N$ Knoten (Nodes) zusammen, die über gewichtete Verbindungen (Edges) miteinander verbunden sind. Besteht zwischen zwei Knoten eine Verbindung in beide Richtungen, so spricht man von einem ungerichteten Netzwerk (siehe Abbildung \ref{fig:GraphBsp}). Die Verbindungen der Knoten lassen sich durch eine $M\times M$ Verbindungsmatrix $\boldsymbol{A}$ darstellen, in der ein Eintrag von $1$ an Position $i,j$ eine Verbindung zwischen dem Knoten $i$ und dem Knoten $j$, eine $0$ keine Verbindung zwischen diesen Knoten bedeutet.
 
 \begin{figure}[t]
 	 \centering
@@ -11,7 +11,7 @@ Netzwerke setzen sich im allgmeinen aus $N$ Knoten (Nodes) zusammen, die über g
 
 
 \subsection*{Dynamik auf Netzwerken}
-Um Prozesse auf Netzwerken zu beschreiben kann man jedem Knoten eine $n$-dimensionale dynamische Variable $x_i$ zuordnen. Die Dynamik wird dann für jeden Knoten über eine Differentialgleichung beschrieben, die die Kopplung an die anderen Knoten enthält. Die allgemeine Form dieser Differentialgleichung ist in Gleichung (\ref*{eq:dyneqcommon}) gezeigt.
+Um Prozesse auf Netzwerken zu beschreiben kann man jedem Knoten eine $n$-dimensionale dynamische Variable $x_i$ zuordnen. Die Dynamik wird dann für jeden Knoten über eine Differentialgleichung beschrieben, die die Kopplung an die anderen Knoten enthält. Die allgemeine Form dieser Differentialgleichung ist in Gleichung (\ref*{eq:dyneqcommon}) gezeigt \citep{pecora1998}.
 
 %was ist das mit der rückkopplung? die ist doch da drin? haben wir mal rausgenommen
 
@@ -22,7 +22,7 @@ Um Prozesse auf Netzwerken zu beschreiben kann man jedem Knoten eine $n$-dimensi
 \\\notag & A_{ij}\text{ Element der Kopplungsmatrix}
 \\\notag & \boldsymbol{f},\boldsymbol{h}:\mathbb{R}^n\rightarrow\mathbb{R}^n
 \end{align}
-Die Verbindungsmatrix $\boldsymbol{A}$ wird hierbei zu einer Kopplungsmatrix, die die Kopplung der Differentialgleichungen der Knoten untereinander beschreibt. Im folgenden werden nur solche Systeme betrachtete, bei denen $\boldsymbol{A}$ symmetrisch ist, das Netzwerk also ungerichtet. Die Abbildung $\boldsymbol{h}$ beschreibt auf welche Art und Weise die Komponenten der Variablen $\boldsymbol{x}_i$ aneinander koppeln. Das Differentialgleichungssystem in (\ref*{eq:dyneqcommon}) lässt sich über das Kronecker-Produkt in einer einzigen Gleichung darstellen \citep{pecora1998},
+Die Verbindungsmatrix $\boldsymbol{A}$ wird hierbei zu einer Kopplungsmatrix, die die Kopplung der Differentialgleichungen der Knoten untereinander beschreibt. Im Folgenden werden nur solche Systeme betrachtet, bei denen $\boldsymbol{A}$ symmetrisch ist, das Netzwerk also ungerichtet. Die Abbildung $\boldsymbol{h}$ beschreibt auf welche Art und Weise die Komponenten der Variablen $\boldsymbol{x}_i$ aneinander koppeln. Das Differentialgleichungssystem in (\ref*{eq:dyneqcommon}) lässt sich über das Kronecker-Produkt in einer einzigen Gleichung darstellen \citep{pecora1998},
 \begin{align}
 \overset{\cdot}{\boldsymbol{X}}(t)=\boldsymbol{F}(\boldsymbol{X}(t))+\sigma\boldsymbol{A}\otimes\boldsymbol{H}(\boldsymbol{X}(t))
 \end{align}
