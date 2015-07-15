@@ -13,7 +13,9 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
+using System.IO;
 using Accord.Math;
+using System.Globalization;
 
 
 namespace ClusterNum
@@ -34,6 +36,7 @@ namespace ClusterNum
         NumVariator variator;
         Thread variatorThread;
         delegate void callbackDelegate(NumVariator.result result);
+        delegate void sigmaVariationCallbackDelegate(int isigma, int sigmasteps);
         private int stepsDone = 0;
 
         double beta = 0.72 * Math.PI;
@@ -308,7 +311,7 @@ namespace ClusterNum
 
                 for (int i = 0; i < xs.Length; i++)
                 {
-                    vertices[i].Value = (xs[i] / (2.0 * Math.PI));
+                    vertices[i].Value = 2.0 * Math.PI;
                 }
                 rmsChart.ChartAreas[0].AxisY.ScaleView.ZoomReset();
             }
@@ -467,6 +470,105 @@ namespace ClusterNum
             }
 
             Application.DoEvents();
+        }
+
+        private void variateSigmaBetaButton_Click(object sender, EventArgs e)
+        {
+            Thread variateSigmaThread = new Thread(variateSigma);
+            variateSigmaThread.Start();
+
+        }
+
+        Stopwatch sigmaStopwatch = new Stopwatch();
+
+        private void variateSigma()
+        {
+            outerisigma = 0;
+            CultureInfo cinf = new CultureInfo("en-gb");
+
+            string filepath = "Result2d\\ljapunow_Cluster";
+
+            variator = new NumVariator(adjmatrix, TMat, (double)betaMinUpDown.Value * Math.PI, (double)betaMaxUpDown.Value * Math.PI, (int)stepsUpDown.Value, sigma, delta, noise, pertubation, (int)preUpDown.Value, (int)recUpDown.Value, cluster, null);
+            variator.sigmaVariationCallback = sigmaVariationCallback;
+            double pi2 = Math.PI * 2;
+            variator.pre = 100;
+            variator.rec = 1000;
+            int div = 199;
+            sigmaStopwatch.Start();
+            double[][][] ljapunow = variator.VariateSigmaBeta(-pi2, pi2, div, -pi2, pi2, div);
+            for (int icluster = 0; icluster < cluster.Length; icluster++)  // Für jedes Cluster
+            {
+                string nfilepath = filepath + icluster.ToString() + ".txt";
+                StreamWriter sw = new StreamWriter(nfilepath);
+                for (int isigma = 0; isigma < ljapunow.Length; isigma++)     // Für jedes Sigma wird Zeile mit Ljapunow über Beta generiert
+                {
+                    string line = "";                                           // Zeilenstring mit Tabgetrennte geht beta durch
+                    for (int ibeta = 0; ibeta < ljapunow[isigma].Length; ibeta++)
+                    {
+                        double ljap = ljapunow[isigma][ibeta][icluster];
+                        if(double.IsNaN(ljap))        // Falls NaN
+                        {
+                            ljap = -1.0;
+                            /*  Mittelwert Geschichte
+                            ljap = 0;
+                            double cnt=0;
+                            for(int midsigma=-1;midsigma<=1;midsigma++)
+                                for(int midbeta=-1;midbeta<=1;midbeta++)
+                                {
+                                    if(ibeta+midbeta<ljapunow[isigma].Length && ibeta+midbeta>0)
+                                    {
+                                        if (!Double.IsNaN(ljapunow[isigma][ibeta + midbeta][icluster]))
+                                        {
+                                            ljap += ljapunow[isigma][ibeta + midbeta][icluster];
+                                            cnt++;
+                                        }
+                                    }
+                                    if (isigma + midsigma < ljapunow.Length && isigma + midsigma > 0)
+                                    {
+                                        if (!Double.IsNaN(ljapunow[isigma+midsigma][ibeta][icluster]))
+                                        {
+                                            ljap += ljapunow[isigma+midsigma][ibeta][icluster];
+                                            cnt++;
+                                        }
+                                    }
+                                }
+                            ljap /= cnt;*/
+                        }
+                        line += ljap.ToString(CultureInfo.InvariantCulture);
+                        if (ibeta != ljapunow[isigma].Length - 1)  // am Ende der Zeile kein Tab einfügen
+                            line += "\t";
+                    }
+                    
+                    sw.WriteLine(line);
+                }
+                sw.Close();
+            }
+        }
+
+        private void sigmaVariationCallback(int isigma, int sigmasteps)
+        {
+            //wird auf dem anderen thread aufgerufen. damit winforms sachen geändert werden können muss das anscheinend über invoke gehen
+            sigmaVariationCallbackDelegate callbackD = new sigmaVariationCallbackDelegate(sigmaVariationCallback_invoke);
+            this.Invoke(callbackD, isigma, sigmasteps);
+        }
+
+
+        int outerisigma;
+        private void sigmaVariationCallback_invoke(int isigma, int sigmasteps)
+        {
+            double done = ((double)outerisigma / (double)sigmasteps);
+            string percentage = (done * 100.0).ToString();
+            sigmaProgressLable.Text = "Sigma: " + outerisigma.ToString() + " von " + sigmasteps.ToString() + " (" + percentage + " %)";
+            double elapsedms = sigmaStopwatch.ElapsedMilliseconds;
+            double msPerStep = elapsedms / (double)outerisigma;
+            int stepsleft = sigmasteps - outerisigma;
+            double todoSeconds = (msPerStep * (double)stepsleft) / 1000.0;
+            double todoMinutes = todoSeconds / 60.0;
+            todoMinutes = Math.Round(todoMinutes, 2);
+
+            timeLeftLabel.Text = todoMinutes.ToString() + " min";
+            outerisigma++;
+
         }
 
     }

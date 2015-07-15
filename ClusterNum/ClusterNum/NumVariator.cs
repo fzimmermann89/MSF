@@ -6,6 +6,7 @@ using Accord.Math;
 using System.Windows.Forms;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 
 
@@ -26,13 +27,14 @@ namespace ClusterNum
             }
         }
 
-       // private const double ljapunowPertubation = 0.01;
+        // private const double ljapunowPertubation = 0.01;
         public double betamin, betamax, sigma, delta, noise, pertubation;
         public int betasteps, pre, rec;
 
         double[,] adjmatrix;
         int[][] cluster;
         Action<result> callback;
+        public Action<int, int> sigmaVariationCallback;
 
         double[,] TMat;
         double[,] TMatInverse;
@@ -45,7 +47,7 @@ namespace ClusterNum
 
         Random rand = new Random();
 
-        public NumVariator(double[,] adjMatrix,double[,] TMat, double betamin, double betamax, int betasteps, double sigma, double delta, double noise, double pert, int pre, int rec, int[][] cluster, Action<result> callback)
+        public NumVariator(double[,] adjMatrix, double[,] TMat, double betamin, double betamax, int betasteps, double sigma, double delta, double noise, double pert, int pre, int rec, int[][] cluster, Action<result> callback)
         {
             this.betamax = betamax;
             this.betamin = betamin;
@@ -83,7 +85,7 @@ namespace ClusterNum
             }
 
             BMat = TMat.Multiply(adjmatrix).Multiply(TMatInverse).Round(5);
-           // MessageBox.Show(BMat.ToString(DefaultMatrixFormatProvider.CurrentCulture)); //bmat anzeigen. hilfreich für debug
+            // MessageBox.Show(BMat.ToString(DefaultMatrixFormatProvider.CurrentCulture)); //bmat anzeigen. hilfreich für debug
             double[,] clusterTransformMatrix = new double[nodeCount, nodeCount];
             for (int i = 0; i < nodeCount; i++)
             {
@@ -111,17 +113,90 @@ namespace ClusterNum
             }
         }
 
+        public double[][] VariateBeta(double _betamin, double _betamax, int _betasteps, double _sigma)
+        {
+            // [beta][m] (m: Cluster)
+            double[][] ljapunow = new double[_betasteps+1][];
+            for (int ibeta = 0; ibeta <= _betasteps; ibeta++)
+            {
+                double _beta = _betamin + ibeta * (_betamax - _betamin) / _betasteps;
+
+                //Ljapunow 
+                //synchrone orbits berechnen
+
+                NumIterator smIterator = new NumIterator(adjmatrix, _beta, _sigma, delta, pertubation);
+                smIterator.iterate(pre + rec);
+
+                List<double[]> transDoneSynchManifolds = smIterator.xt.GetRange(pre, rec);
+
+                List<double[]> smts = new List<double[]>();
+                for (int i = 0; i < transDoneSynchManifolds.Count; i++)
+                {
+                    double[] add = new double[cluster.Length];
+                    for (int j = 0; j < cluster.Length; j++)
+                    {
+                        int node0 = cluster[j][0];
+                        add[j] = transDoneSynchManifolds[i][node0];
+                    }
+                    smts.Add(add);
+                }
+
+                ljapunow[ibeta] = new double[cluster.Length];
+                ljapunow[ibeta] = ljapunow[ibeta].Add(Double.MinValue);
+
+                for (int m = 0; m < clusterTransform.Length; m++)
+                {
+
+                    for (int i = 0; i < clusterTransform[m].Length; i++)
+                    {
+                        int etanodenum = clusterTransform[m][i];
+                        if (etanodenum >= clusterTransform.Length) // unterer Block
+                        {
+                            Ljapunator punator = new Ljapunator(JMats, BMat, cluster.Length, smts, _beta, _sigma, delta);
+                            punator.etat[0][etanodenum] = pertubation;
+                            punator.iterate(rec);
+                            ljapunow[ibeta][m] = Math.Max(punator.ljapunowSum / (double)rec, ljapunow[ibeta][m]);
+                        }
+                    }
+                }
+
+
+            }
+            return ljapunow;
+        }
+
+        public double[][][] VariateSigmaBeta(double _betamin, double _betamax, int _betasteps, double _sigmamin, double _sigmamax, int _sigmasteps)
+        {
+
+            // etwas dämlich aber so war es am einfachsten
+            // [sigma][beta][m] (m: Cluster)
+            double[][][] ljapunow = new double[_sigmasteps+1][][];
+            Parallel.For(0, _sigmasteps + 1, isigma =>
+            {
+
+                double _sigma = _betamin + isigma * (_sigmamax - _sigmamin) / _sigmasteps;
+
+
+                // [beta][m] (m: Cluster)
+                double[][] tmpLjapunow = VariateBeta(_betamin, _betamax, _betasteps, _sigma);
+
+                ljapunow[isigma] = tmpLjapunow;
+                if (sigmaVariationCallback != null)
+                    sigmaVariationCallback(isigma, _sigmasteps);
+            });
+
+            return ljapunow;
+        }
+
         public void DoWork()
         {
 
-
- 
-            Parallel.For (0, betasteps+1,ibeta=>
+            Parallel.For(0, betasteps + 1, ibeta =>
             {
                 double beta = betamin + ibeta * (betamax - betamin) / betasteps;
 
                 //RMS
-                NumIterator rmsIterator = new NumIterator(adjmatrix, beta, sigma, delta,pertubation);
+                NumIterator rmsIterator = new NumIterator(adjmatrix, beta, sigma, delta, pertubation);
                 rmsIterator.noise = noise;
                 double[] rms = new double[cluster.Length];
                 rmsIterator.iterate(pre);
@@ -144,7 +219,7 @@ namespace ClusterNum
                 //synchrone orbits berechnen
 
 
-                NumIterator smIterator = new NumIterator(adjmatrix, beta, sigma, delta,pertubation);
+                NumIterator smIterator = new NumIterator(adjmatrix, beta, sigma, delta, pertubation);
                 smIterator.iterate(pre + rec);
 
                 List<double[]> transDoneSynchManifolds = smIterator.xt.GetRange(pre, rec);
@@ -175,8 +250,8 @@ namespace ClusterNum
                             punator.iterate(rec);
                             ljapunow[m] = Math.Max(punator.ljapunowSum / (double)rec, ljapunow[m]);
 
+                        }
                     }
-                }
                 }
 
                 result ret_result = new result(beta, rms, ljapunow);

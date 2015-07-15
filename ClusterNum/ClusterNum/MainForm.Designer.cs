@@ -66,6 +66,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.variateSigmaBetaButton = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.betaRmsChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.betaLjapChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -88,6 +89,8 @@
             this.betaMinUpDown = new System.Windows.Forms.NumericUpDown();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.networkDropdown = new System.Windows.Forms.ComboBox();
+            this.sigmaProgressLable = new System.Windows.Forms.Label();
+            this.timeLeftLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rmsChart)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -526,6 +529,9 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage2.Controls.Add(this.timeLeftLabel);
+            this.tabPage2.Controls.Add(this.sigmaProgressLable);
+            this.tabPage2.Controls.Add(this.variateSigmaBetaButton);
             this.tabPage2.Controls.Add(this.splitContainer1);
             this.tabPage2.Controls.Add(this.groupBox3);
             this.tabPage2.Controls.Add(this.betaRunButton);
@@ -537,6 +543,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "β-Variation";
             this.tabPage2.Enter += new System.EventHandler(this.tabPage2_Enter);
+            // 
+            // variateSigmaBetaButton
+            // 
+            this.variateSigmaBetaButton.Location = new System.Drawing.Point(486, 19);
+            this.variateSigmaBetaButton.Name = "variateSigmaBetaButton";
+            this.variateSigmaBetaButton.Size = new System.Drawing.Size(212, 23);
+            this.variateSigmaBetaButton.TabIndex = 26;
+            this.variateSigmaBetaButton.Text = "Variate Sigma+Beta";
+            this.variateSigmaBetaButton.UseVisualStyleBackColor = true;
+            this.variateSigmaBetaButton.Click += new System.EventHandler(this.variateSigmaBetaButton_Click);
             // 
             // splitContainer1
             // 
@@ -890,6 +906,24 @@
             this.networkDropdown.TabIndex = 18;
             this.networkDropdown.SelectedIndexChanged += new System.EventHandler(this.networkDropDown_SelectedIndexChanged);
             // 
+            // sigmaProgressLable
+            // 
+            this.sigmaProgressLable.AutoSize = true;
+            this.sigmaProgressLable.Location = new System.Drawing.Point(483, 51);
+            this.sigmaProgressLable.Name = "sigmaProgressLable";
+            this.sigmaProgressLable.Size = new System.Drawing.Size(80, 13);
+            this.sigmaProgressLable.TabIndex = 27;
+            this.sigmaProgressLable.Text = "Sigma Progress";
+            // 
+            // timeLeftLabel
+            // 
+            this.timeLeftLabel.AutoSize = true;
+            this.timeLeftLabel.Location = new System.Drawing.Point(483, 66);
+            this.timeLeftLabel.Name = "timeLeftLabel";
+            this.timeLeftLabel.Size = new System.Drawing.Size(79, 13);
+            this.timeLeftLabel.TabIndex = 28;
+            this.timeLeftLabel.Text = "Sigma Time left";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -918,6 +952,7 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -993,6 +1028,9 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.ComboBox networkDropdown;
+        private System.Windows.Forms.Button variateSigmaBetaButton;
+        private System.Windows.Forms.Label sigmaProgressLable;
+        private System.Windows.Forms.Label timeLeftLabel;
 
        }
 }
